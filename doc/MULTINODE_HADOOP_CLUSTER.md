@@ -55,7 +55,7 @@ You will need to edit hadoop's configuration file(s) on master node.
 
 All the files will be located at `<HADOOP-INSTALL-DIR>/etc/hadoop/`. 
 
-> Note: In my case, HADOOP-INSTALL-DIR=BDM_Software/hadoop/
+> Note: In my case, HADOOP-INSTALL-DIR=~/BDM_Software/hadoop/
 
 
 #### 2.1. core-site.xml
@@ -114,7 +114,22 @@ You can find all the configuration option [here](https://hadoop.apache.org/docs/
 
 ---
 
-### 3. Sync the configuration setting across all nodes
+### 3. Add slave node details
+
+Now, edit the `slaves` configuration file to tell your master node about the workers/slave nodes
+
+For e.g:
+
+```
+10.4.41.79
+10.4.41.80
+```
+
+Just add the IPs for your slave nodes. Also, make sure to do the public-private key exchange (to avoid entering passport again and again).
+
+---
+
+### 4. Sync the configuration setting across all nodes
 
 In order to let the worker/slave nodes know who the master node is, you need to sync all the changes you have down on the master node in previous step to all the slave nodes.
 
@@ -128,7 +143,7 @@ This will copy all 3 files to `abra` node.
 
 ---
 
-### 4. Format Namenode
+### 5. Format Namenode
 
 Make sure that Hadoop's binaries are in your path
 
@@ -148,9 +163,44 @@ hdfs namenode -format
 
 ---
 
-### 5. 
+### 6. Start DFS
+
+Now, you can start your distributed file system (DFS) via:
+
+```bash
+start-dfs.sh
+```
+
+Now, browse to `10.4.41.81:9870` and see the details about your DFS. You can see the datanodes as well.
+
+> In case you don't see any datanodes, follow the below mentioned step
+
+---
+
+### 7. Manually start worker nodes
+
+You can manually add your datanodes via running the below mentioned command in your worker/slave nodes' terminal:
+
+```bash
+hadoop-deamon.sh start datanode
+```
+
+This should start the datanode manually.
 
 
+---
+
+### 8. Troubleshooting
+
+In case, that didn't help, you may need to clear the data first. (both on master and worker/slave nodes)
+
+```bash
+cd ~/BDM_Software/data/hadoop_data/dfs/ 
+rm -r */current/*
+cd -
+```
+
+This will clear/flush the old cluster details. Now, retry the above solutions.
 
 --- 
 
