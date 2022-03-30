@@ -29,5 +29,5 @@ This repo is all about what we have done in Big Data Management (BDM) during our
 
 #### 2. Guide
 
-You can find some helpful guides [here]()
+You can find some helpful guides [here](https://github.com/mohammadzainabbas/BDM/blob/main/doc/GUIDE.md)
 
