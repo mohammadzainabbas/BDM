@@ -18,7 +18,9 @@ source $(dirname $0)/utils.sh
 usage() 
 {
 cat << HEREDOC
+
 Generate file structure for maven project
+
 Usage: 
     
     $progname [OPTION] [Value]
