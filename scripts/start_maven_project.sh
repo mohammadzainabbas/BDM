@@ -18,16 +18,17 @@ source $(dirname $0)/utils.sh
 usage() 
 {
 cat << HEREDOC
+
 Generate file structure for maven project
+
 Usage: 
     
     $progname [OPTION] [Value]
 
 Options:
     
-    -gid, --group-id                Group/Package ID for your project. (by default "com.upc.bdm")
-    -n, --name                      Name of your project. (by default "bdm")
-    -v, --version                   Version of your project. (by default "1.0.0")
+    -gid, --group-id                Group/Package ID for your project. (by default "$group_id")
+    -n, --name                      Name of your project. (by default "$name")
     -h, --help                      Show usage
 
 Examples:
@@ -38,19 +39,20 @@ Examples:
 HEREDOC
 }
 
+# -v, --version                   Version of your project. (by default "$version")
 #Get program name
 progname=$(basename $0)
 
 group_id="com.upc.bdm"
 name="bdm"
-version="1.0.0"
+# version="1.0.0"
 
 #Get all the arguments and update accordingly
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -gid|--group-id) group_id="$2"; shift ;;
         -n|--name) name="$2"; shift ;;
-        -v|--version) version="$2"; shift ;;
+        # -v|--version) version="$2"; shift ;;
         -h|--help)
         usage
         exit 1
@@ -67,15 +69,15 @@ log """Creating Java-Maven Project with:
 
 name: $name
 package-id: $group_id
-version: $version
 
 """
+# version: $version
 
 start=$(date +%s)
 
-mvn archetype:generate -DgroupId=$group_id -DartifactId=$name -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=$version -DinteractiveMode=false
+mvn archetype:generate -DgroupId=$group_id -DartifactId=$name -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
 
 end=$(date +%s)
 time_took=$((end-start))
 
-log "⚑ Boilerplate for project: $name was created in $time_took seconds ..."
+log "⚑ Boilerplate for project: '$name' was created in $time_took seconds ..."
