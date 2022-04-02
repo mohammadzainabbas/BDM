@@ -67,21 +67,22 @@ public class Arguments {
         Utils.print("is_desc: " + is_desc_file_path_specified);
         Utils.print("desc: " + desc_file_path);
     }
-
+    
     private void print_error() {
         Utils.print("\n");
         print_args();
         Utils.print("\nPlease provide all required arguments!\n");
         System.exit(1);
     }
-
+    
     public void check_sanity_checks() {
-        Utils.print("I am here");
         if (!is_write || !is_desc_file_path_specified || !is_file_format_specified || !is_src_file_path_specified || format.length() == 0 || src_file_path.length() == 0 || desc_file_path.length() == 0) {
             print_error();
         }
-        if ((format == Constants.AVRO || format == Constants.PARQUET) && !is_schema_file_format_specified && schema_file.length() == 0) {
-            print_error();
+        if (format.equals(Constants.AVRO) || format.equals(Constants.PARQUET)) {
+            if (!is_schema_file_format_specified || schema_file.length() == 0) {
+                print_error();
+            }    
         }
     }
 }
