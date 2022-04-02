@@ -13,15 +13,7 @@ import org.apache.parquet.avro.AvroParquetWriter;
 import org.apache.parquet.hadoop.ParquetWriter;
 import org.apache.parquet.hadoop.metadata.CompressionCodecName;
 
-public class Parquet implements HDFSWriter {
+// public class Parquet implements HDFSWriter {
+public class Parquet {
 
-    public void open(String file) throws IOException;
-	
-	public void put(Object obj);
-	
-	public void reset();
-	
-	public int flush() throws IOException;
-	
-	public void close() throws IOException;
 }
