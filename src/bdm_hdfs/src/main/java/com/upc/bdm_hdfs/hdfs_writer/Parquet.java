@@ -16,12 +16,14 @@ import org.apache.parquet.avro.AvroParquetWriter;
 import org.apache.parquet.hadoop.ParquetWriter;
 import org.apache.parquet.hadoop.metadata.CompressionCodecName;
 
+import com.upc.bdm_hdfs.common.Constants;
+
 public class Parquet implements HDFSWriter {
 
 	private Configuration configuration;
 	private FileSystem fileSystem;
 	private Schema schema;
-	private AvroParquetWriter avroParquetWriter;
+	private AvroParquetWriter<GenericRecord> avroParquetWriter;
 
 	public Parquet() throws IOException {
 		this.configuration = new Configuration();
@@ -29,7 +31,7 @@ public class Parquet implements HDFSWriter {
 		this.reset();
 	}
 
-	public void open(String file, File schemaFile) throws IOException {
+	public void open(String filePath, File schemaFile) throws IOException {
 		if (schemaFile != null) {
 			this.schema = new Schema.Parser().parse(schemaFile);
 		}
@@ -45,17 +47,18 @@ public class Parquet implements HDFSWriter {
 			e.printStackTrace();
 		}
 
-		Path path = new Path(Constants.hdfs_address + file);
+		Path path = new Path(Constants.hdfs_address + filePath);
 
 		if (this.fileSystem.exists(path)) {
-			System.out.println("File " + file + " already exists!");
+			System.out.println("File " + filePath + " already exists!");
 			System.exit(1);
 		}
-		this.avroParquetWriter = new AvroParquetWriter<GenericRecord>(path, Adult.SCHEMA$,
+		this.avroParquetWriter = new AvroParquetWriter<GenericRecord>(path, this.schema,
 				CompressionCodecName.UNCOMPRESSED,
-		          ParquetWriter.DEFAULT_BLOCK_SIZE,
-		          ParquetWriter.DEFAULT_PAGE_SIZE,
-		          true,config);
+				ParquetWriter.DEFAULT_BLOCK_SIZE,
+				ParquetWriter.DEFAULT_PAGE_SIZE,
+				true,
+				this.configuration);
 		/*try {
 			parquetWriter = (AvroParquetWriter<Object>) AvroParquetWriter.builder(new Path(new URI("hdfs://10.4.41.154:27000/"+file))).build();
 		} catch (URISyntaxException e) {
@@ -64,6 +67,22 @@ public class Parquet implements HDFSWriter {
 		}*/
 	}
 
-
-
+	public void put(GenericRecord object) {
+		try {
+			this.avroParquetWriter.write(object);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void reset() {	
+	}
+	
+	public int flush() throws IOException {
+		return 1;
+	}
+	
+	public void close() throws IOException {
+		this.avroParquetWriter.close();
+	}
 }
