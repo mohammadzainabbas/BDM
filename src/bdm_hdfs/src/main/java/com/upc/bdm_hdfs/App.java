@@ -37,5 +37,7 @@ public class App
         print("args: " + args_parser.all_args);
 
         check_sanity_checks(args_parser);
+
+        
     }
 }
