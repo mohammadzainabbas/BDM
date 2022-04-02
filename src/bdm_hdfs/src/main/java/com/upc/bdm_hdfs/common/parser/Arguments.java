@@ -1,6 +1,9 @@
 package com.upc.bdm_hdfs.common.parser;
 
 import java.lang.String;
+import com.upc.bdm_hdfs.common.Utils;
+
+import org.apache.commons.math3.analysis.function.Constant;
 
 public class Arguments {
     
@@ -11,6 +14,8 @@ public class Arguments {
     public boolean is_desc_file_path_specified = false;
     public String format = "";
     public boolean is_file_format_specified = false;
+    public String schema_file = "";
+    public boolean is_schema_file_format_specified = false;
     public String all_args = "";
 
     public void parse(String[] args) {
@@ -24,6 +29,11 @@ public class Arguments {
                 case "-format":
                     is_file_format_specified = true;
                     format = args[i + 1];       
+                    break;
+
+                case "-schema":
+                    is_schema_file_format_specified = true;
+                    schema_file = args[i + 1];       
                     break;
 
                 case "-src":
@@ -40,5 +50,31 @@ public class Arguments {
                     break;
             }
         }
+    }
+
+    /** Temp. usage */
+    public void print_args() {
+        Utils.print("is_write: " + is_write);
+        Utils.print("is_format: " + is_file_format_specified);
+        Utils.print("format: " + format);
+        Utils.print("is_src: " + is_src_file_path_specified);
+        Utils.print("src: " + src_file_path);
+        Utils.print("is_desc: " + is_desc_file_path_specified);
+        Utils.print("desc: " + desc_file_path);
+    }
+
+    private void print_error() {
+        Utils.print("\n");
+        print_args();
+        Utils.print("\nPlease provide all required arguments!\n");
+        System.exit(1);
+    }
+
+    public void check_sanity_checks() {
+        if (!is_write || !is_desc_file_path_specified || !is_file_format_specified || !is_src_file_path_specified || format.length() == 0 || src_file_path.length() == 0 || desc_file_path.length() == 0) {
+            print_error();
+        }
+
+        if (format = Constant)
     }
 }
