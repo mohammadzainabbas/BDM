@@ -1,7 +1,6 @@
 package com.upc.bdm_hdfs.common.parser;
 
 import java.lang.String;
-import java.util.List;
 
 public class Arguments {
     
@@ -17,7 +16,6 @@ public class Arguments {
     public void parse(String[] args) {
         all_args = String.join(" ", args);
         for (int i = 0; (i < args.length) && (args[i] != null); i++) {
-        //     all_args = all_args.concat(str).concat(" ");
             switch (args[i]) {
                 case "-write":
                     is_write = true;       
