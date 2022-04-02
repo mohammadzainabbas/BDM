@@ -6,9 +6,12 @@ import java.io.IOException;
 import org.apache.avro.generic.GenericRecord;
 
 public interface HDFSWriter {
-    public void open(String file, File schemaFile) throws IOException;
+
+    public void open(String filePath, File schemaFile) throws IOException;
 	
-	public void put(GenericRecord obj);
+	public void put(GenericRecord object);
+
+	public void write(String src, String desc, File schemaFile) throws IOException;
 	
 	public void reset();
 	

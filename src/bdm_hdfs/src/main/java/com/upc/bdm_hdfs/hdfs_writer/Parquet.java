@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.apache.commons.io.FileUtils;
+
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericRecord;
 
@@ -17,6 +19,7 @@ import org.apache.parquet.hadoop.ParquetWriter;
 import org.apache.parquet.hadoop.metadata.CompressionCodecName;
 
 import com.upc.bdm_hdfs.common.Constants;
+import com.upc.bdm_hdfs.common.Utils;
 
 public class Parquet implements HDFSWriter {
 
@@ -73,6 +76,29 @@ public class Parquet implements HDFSWriter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void write(String src, String desc, File schemaFile) throws IOException {
+		try {
+			open(desc, schemaFile);
+			
+			File srcFile = new File(src);
+			if (!srcFile.exists()) { 
+				Utils.print("[Error]: File not found");
+				System.exit(1);
+			}
+			for(String line: FileUtils.readLines(srcFile) {
+				put((GenericRecord) line);
+
+    			System.out.println(line);
+			}
+
+
+
+		} catch (IOException e) {
+			//TODO: handle exception
+		}
+
 	}
 	
 	public void reset() {	
