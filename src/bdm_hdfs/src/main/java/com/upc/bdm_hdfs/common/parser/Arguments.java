@@ -2,6 +2,7 @@ package com.upc.bdm_hdfs.common.parser;
 
 import java.lang.String;
 import com.upc.bdm_hdfs.common.Utils;
+import com.upc.bdm_hdfs.common.Constants;
 
 import org.apache.commons.math3.analysis.function.Constant;
 
@@ -58,6 +59,10 @@ public class Arguments {
         Utils.print("is_format: " + is_file_format_specified);
         Utils.print("format: " + format);
         Utils.print("is_src: " + is_src_file_path_specified);
+        if (format == Constants.AVRO || format == Constants.PARQUET) {
+            Utils.print("schema_file: " + schema_file);
+            Utils.print("is_schema: " + is_schema_file_format_specified);
+        }
         Utils.print("src: " + src_file_path);
         Utils.print("is_desc: " + is_desc_file_path_specified);
         Utils.print("desc: " + desc_file_path);
@@ -71,10 +76,12 @@ public class Arguments {
     }
 
     public void check_sanity_checks() {
+        Utils.print("I am here");
         if (!is_write || !is_desc_file_path_specified || !is_file_format_specified || !is_src_file_path_specified || format.length() == 0 || src_file_path.length() == 0 || desc_file_path.length() == 0) {
             print_error();
         }
-
-        if (format = Constant)
+        if ((format == Constants.AVRO || format == Constants.PARQUET) && !is_schema_file_format_specified && schema_file.length() == 0) {
+            print_error();
+        }
     }
 }
