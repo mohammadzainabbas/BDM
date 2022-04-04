@@ -1,0 +1,10 @@
+/home/bdm/BDM/src/bdm_hdfs/src/main/java/com/upc/bdm_hdfs/hdfs_writer/SequenceFile.java
+/home/bdm/BDM/src/bdm_hdfs/src/main/java/com/upc/bdm_hdfs/hdfs_reader/Avro.java
+/home/bdm/BDM/src/bdm_hdfs/src/main/java/com/upc/bdm_hdfs/App.java
+/home/bdm/BDM/src/bdm_hdfs/src/main/java/com/upc/bdm_hdfs/hdfs_reader/Parquet.java
+/home/bdm/BDM/src/bdm_hdfs/src/main/java/com/upc/bdm_hdfs/hdfs_writer/PlainFile.java
+/home/bdm/BDM/src/bdm_hdfs/src/main/java/com/upc/bdm_hdfs/common/Constants.java
+/home/bdm/BDM/src/bdm_hdfs/src/main/java/com/upc/bdm_hdfs/hdfs_reader/SequenceFile.java
+/home/bdm/BDM/src/bdm_hdfs/src/main/java/com/upc/bdm_hdfs/hdfs_reader/PlainFile.java
+/home/bdm/BDM/src/bdm_hdfs/src/main/java/com/upc/bdm_hdfs/hdfs_writer/Avro.java
+/home/bdm/BDM/src/bdm_hdfs/src/main/java/com/upc/bdm_hdfs/hdfs_writer/Parquet.java
