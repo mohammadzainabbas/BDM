@@ -1,0 +1,2 @@
+# Ignore all the data that will be generated (Umm maybe remove this in the future for test and development. Have to decide for sure tho!)
+data/*
