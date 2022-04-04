@@ -26,7 +26,7 @@ public class Parquet implements HDFSWriter {
 	private Configuration configuration;
 	private FileSystem fileSystem;
 	private Schema schema;
-	private AvroParquetWriter<GenericRecord> avroParquetWriter;
+	private AvroParquetWriter<Object> avroParquetWriter;
 
 	public Parquet() throws IOException {
 		this.configuration = new Configuration();
@@ -56,7 +56,7 @@ public class Parquet implements HDFSWriter {
 			System.out.println("File " + filePath + " already exists!");
 			System.exit(1);
 		}
-		this.avroParquetWriter = new AvroParquetWriter<GenericRecord>(path, this.schema,
+		this.avroParquetWriter = new AvroParquetWriter<Object>(path, this.schema,
 				CompressionCodecName.UNCOMPRESSED,
 				ParquetWriter.DEFAULT_BLOCK_SIZE,
 				ParquetWriter.DEFAULT_PAGE_SIZE,
@@ -70,7 +70,7 @@ public class Parquet implements HDFSWriter {
 		}*/
 	}
 
-	public void put(GenericRecord object) {
+	public void put(Object object) {
 		try {
 			this.avroParquetWriter.write(object);
 		} catch (IOException e) {
@@ -80,6 +80,7 @@ public class Parquet implements HDFSWriter {
 
 	public void write(String src, String desc, File schemaFile) throws IOException {
 		try {
+			
 			open(desc, schemaFile);
 			
 			File srcFile = new File(src);
@@ -87,14 +88,13 @@ public class Parquet implements HDFSWriter {
 				Utils.print("[Error]: File not found");
 				System.exit(1);
 			}
+			
 			for(String line: FileUtils.readLines(srcFile) {
-				put((GenericRecord) line);
-
-    			System.out.println(line);
+				put(line);
 			}
-
-
-
+			
+			close();
+		
 		} catch (IOException e) {
 			//TODO: handle exception
 		}

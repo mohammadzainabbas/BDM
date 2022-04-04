@@ -9,7 +9,7 @@ public interface HDFSWriter {
 
     public void open(String filePath, File schemaFile) throws IOException;
 	
-	public void put(GenericRecord object);
+	public void put(Object object);
 
 	public void write(String src, String desc, File schemaFile) throws IOException;
 	

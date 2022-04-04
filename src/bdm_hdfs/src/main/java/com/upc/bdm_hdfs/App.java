@@ -37,10 +37,10 @@ public class App
                     Utils.print("Work in progress for: ".concat(args_parser.format));
                     break;
                 case Constants.PARQUET:
+                    Utils.print("Writing as '" + args_parser.format + "' format.");
                     writer = new Parquet();
                     schemaFile = new File(args_parser.schema_file);
                     writer.write(args_parser.src_file_path, args_parser.desc_file_path, schemaFile);
-                    Utils.print("Work in progress for: ".concat(args_parser.format));
                     break;
                 default:
                     Utils.print(args_parser.format.concat(" is a non-supported HDFS file format."));
