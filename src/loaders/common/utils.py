@@ -8,6 +8,7 @@ from .constants import HDFS_ADDRESS, HDFS_HOME, HDFS_USER
 from hdfs import InsecureClient
 # from hdfs.ext.avro import AvroWriter
 # from hdfs.ext.avro import AvroReader
+from hdfs.util import HdfsError
 import glob
 import re
 import shutil
@@ -24,6 +25,17 @@ def get_hdfs_user_home():
 def get_hdfs_client():
     return InsecureClient(url=get_hdfs_address(), user=get_hdfs_user())
 
+def print_log(text):
+    """
+    Logger
+    """
+    print("[ log ] {}".format(text))
+
+def print_error(text):
+    """
+    Logger for error
+    """
+    print("[ error ] {}".format(text))
 
 # client = InsecureClient('http://10.4.41.44:9870', user='bdm')
 
@@ -47,14 +59,10 @@ def json_to_hdfs(file_path, json_object):
 
 def write_to_hdfs(hdfs_path, local_path):
     client = get_hdfs_client()
-    client.upload(hdfs_path, local_path)
-
-
-def print_log(text):
-    """
-    Logger
-    """
-    print("[ log ] {}".format(text))
+    try:
+        client.upload(hdfs_path, local_path)
+    except HdfsError as e:
+        print_error("{}".format(e))
 
 def json_to_csv(records, path):
     """
