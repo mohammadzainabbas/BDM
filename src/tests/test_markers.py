@@ -6,6 +6,8 @@ from folium.plugins import MousePosition
 from folium.plugins import fullscreen
 import os
 
+# Probably a good resource for our use case https://github.com/yanghs6/220509_Python_Rider_Analysis/blob/572bbf083b8e0ca0a0d99aea689ac073095688d2/foliumMap.py
+
 app = Flask(__name__)
 
 @app.route('/')
