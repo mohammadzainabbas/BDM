@@ -10,8 +10,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    # start_coords = (-15.79340,-47.88232)
-    # start_coords = (41.3927755,2.0701489)
     start_coords, zoom_start = (41.389, 2.15), 14
     folium_map = folium.Map(location=start_coords, zoom_start=zoom_start)
     draw = Draw()
