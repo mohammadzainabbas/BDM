@@ -5,6 +5,7 @@
 #====================================================================================
 # This script is used to install neo4j in ubuntu. 
 # helping doc: https://neo4j.com/docs/operations-manual/current/installation/linux/debian/
+# helping doc: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-neo4j-on-ubuntu-20-04 (for remote access)
 # helping doc: https://linuxhint.com/install-neo4j-ubuntu/
 #====================================================================================
 
@@ -91,4 +92,10 @@ log "⚑ Installed Neo4j in $time_took seconds ..."
 #====================================================================================
 # To start Neo4j service
 # sudo systemctl start neo4j.service
+#====================================================================================
+
+#====================================================================================
+# cypher-shell (to start cypher shell) [:exit to quit]
+# username: neo4j
+# password: zainzain
 #====================================================================================
