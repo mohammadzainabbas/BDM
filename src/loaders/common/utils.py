@@ -1,17 +1,14 @@
 from os import makedirs
 from os.path import exists
 from datetime import datetime
-import requests
-import json
-import csv
-from .constants import HDFS_ADDRESS, HDFS_HOME, HDFS_USER
+import pandas as pd
+import glob, re, shutil, requests, json, csv
+from pyspark.sql import SparkSession, session
 from hdfs import InsecureClient
+from hdfs.util import HdfsError
 # from hdfs.ext.avro import AvroWriter
 # from hdfs.ext.avro import AvroReader
-from hdfs.util import HdfsError
-import glob
-import re
-import shutil
+from .constants import HDFS_ADDRESS, HDFS_HOME, HDFS_USER
 
 def get_hdfs_address():
     return HDFS_ADDRESS
@@ -24,6 +21,9 @@ def get_hdfs_user_home():
 
 def get_hdfs_client():
     return InsecureClient(url=get_hdfs_address(), user=get_hdfs_user())
+
+def get_spark_session() -> session.SparkSession:
+    return SparkSession.builder.appName("bdm").getOrCreate()
 
 def print_log(text):
     """
@@ -50,6 +50,10 @@ def save_as_avro_hdfs(file_path, parsed_data, schema):
         for record in parsed_data:
             writer.write(record)
         return True
+
+def save_df_as_parquet(file_path: str, df: pd.DataFrame) -> None:
+    spark = get_spark_session()
+    spark.createDataFrame(df).write.parquet(file_path)
 
 def json_to_hdfs(file_path, json_object):
     client = get_hdfs_client()
