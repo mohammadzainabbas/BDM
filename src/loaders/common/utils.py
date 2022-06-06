@@ -59,6 +59,7 @@ def save_df_as_parquet(file_path: str, df: pd.DataFrame) -> None:
 
 def csv_to_parquet(file_path: str) -> str:
     table = pcsv.read_csv(file_path)
+    file_name = str(file_path).split("/")[-1]
     pq.write_table(table, './tmp/pyarrow_out/people1.parquet')
 
     

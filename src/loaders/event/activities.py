@@ -9,7 +9,7 @@ def main():
     for file in files:
         file_name = str(file).split("/")[-1]
         print_log("File '{}' moved to HDFS at '{}'".format(file, hdfs_path))
-        write_to_hdfs(join(hdfs_path, file_name), file)
+        # write_to_hdfs(join(hdfs_path, file_name), file)
     print_log("Saved {} file(s) of '{}' into HDFS at '{}'".format(len(files), activity_type, hdfs_path))
 
 if __name__ == '__main__':
