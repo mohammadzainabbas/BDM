@@ -11,6 +11,7 @@ def get_activities():
     data = list()
     schema = list()
     is_first = True
+    total_data = 1000
     while(True):
         _data_ = fetch_data("{}{}".format(BASE_URL, START_URL), verbose=True)
         data.extend(_data_['result']['records'])
