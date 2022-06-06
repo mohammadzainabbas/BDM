@@ -20,6 +20,8 @@ def get_activities():
         if _data_['_links']['next']
     return data, schema
 
+https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c
+https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?offset=100&resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c
 
 
 def main():
