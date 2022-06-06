@@ -17,7 +17,8 @@ def get_activities():
         if is_first:
             schema = parse_schema(_data_['result']['fields'])
             is_first = False
-        if _data_['']
+        if _data_['_links']['next']
+    return data, schema
 
 
 
