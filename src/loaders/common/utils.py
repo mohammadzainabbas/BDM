@@ -4,6 +4,8 @@ from datetime import datetime
 import pandas as pd
 import glob, re, shutil, requests, json, csv
 from pyspark.sql import SparkSession, session
+import pyarrow.csv as pcsv
+import pyarrow.parquet as pq
 from hdfs import InsecureClient
 from hdfs.util import HdfsError
 # from hdfs.ext.avro import AvroWriter
@@ -54,6 +56,19 @@ def save_as_avro_hdfs(file_path, parsed_data, schema):
 def save_df_as_parquet(file_path: str, df: pd.DataFrame) -> None:
     spark = get_spark_session()
     spark.createDataFrame(df).write.parquet(file_path)
+
+def csv_to_parquet(file_path: str) -> tuple:
+    """
+    Save CSV file in parquet format
+
+    Link: https://mungingdata.com/python/writing-parquet-pandas-pyspark-koalas/
+    """
+    _file_path = file_path.split('/')
+    path, file_name = str("/".join(_file_path[:-1])), "".join(_file_path[-1].split(".")[:-1])
+    file_name = "{}.parquet".format(file_name)
+    full_path = '{}/{}'.format(path, file_name)
+    pq.write_table( pcsv.read_csv(file_path) , full_path)
+    return full_path, file_name
 
 def json_to_hdfs(file_path, json_object):
     client = get_hdfs_client()
