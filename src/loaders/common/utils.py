@@ -58,8 +58,9 @@ def save_df_as_parquet(file_path: str, df: pd.DataFrame) -> None:
     spark.createDataFrame(df).write.parquet(file_path)
 
 def csv_to_parquet(file_path: str) -> str:
-    path = str("/".join(file_path.split('/')[:-1]))
-    file_name = str(file_path).split("/")[-1]
+    _file_path = file_path.split('/')
+    path = str("/".join(_file_path[:-1]))
+    file_name = _file_path[-1]
 
     table = pcsv.read_csv(file_path)
     pq.write_table(table, './tmp/pyarrow_out/people1.parquet')
