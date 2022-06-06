@@ -1,6 +1,25 @@
 from os.path import join
 from utils import get_today_date, get_parent, fetch_data, json_to_csv, print_log
 
+BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
+
+def get_activities() -> list:
+    start_url = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
+    data, is_first, total_data = list(), True, 0
+    # Fetch till we have all the records (a parameter 'total' in the API call)
+    while(True):
+        _result_ = fetch_data("{}{}".format(BASE_URL, start_url), verbose=True)
+        _data_ = _result_['result']['records']
+        data.extend(_result_['result']['records'])
+        if is_first:
+            total_data = _result_['result']['total']
+            is_first = False
+        total_data = total_data - len(_data_)
+        if total_data == 0: break
+        start_url = _result_['result']['_links']['next']
+    return data
+
+
 def main():
     url = "https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=31431b23-d5b9-42b8-bcd0-a84da9d8c7fa"
     activity_type = "tourist_points"

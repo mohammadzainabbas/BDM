@@ -20,15 +20,13 @@ def get_cultural_events() -> list:
     return data
 
 def main():
-    url = "https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=3abb2414-1ee0-446e-9c25-380e938adb73"
     activity_type = "culture"
     today_date = get_today_date()
     path = get_parent(join(today_date, activity_type))
-    data = fetch_data(url, verbose=True)
-    records = data['result']['records']
+    data = get_cultural_events()
     file_path = join(path, '{}_{}.csv'.format(activity_type, today_date))
-    json_to_csv(records, file_path)
-    print_log("Fetched {} records on {} for '{}' from url '{}' and saved to '{}'".format(len(records), today_date, activity_type, url, file_path))
+    json_to_csv(data, file_path)
+    print_log("Fetched {} records on {} for '{}' from base url '{}' and saved to '{}'".format(len(data), today_date, activity_type, BASE_URL, file_path))
 
 if __name__ == '__main__':
     main()
