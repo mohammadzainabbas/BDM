@@ -6,10 +6,14 @@ START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95
 
 def get_activities():
     data = list()
+    schema = list()
     is_first = True
     while(True):
         _data_ = fetch_data("{}{}".format(BASE_URL, START_URL), verbose=True)
         data.extend(_data_['result']['records'])
+        if is_first:
+            schema = parse_schema(_data_['_links'])
+
         if _data_['']
 
 
