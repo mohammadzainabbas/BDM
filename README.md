@@ -31,6 +31,11 @@ This repo is all about what we have done in Big Data Management (BDM) during our
 
 #### 2. About the Data
 
+Since, the aim of this project is to develop a proof of concept (aka a prototype) for our startup `TripHawk` and to get a hands-on practice on typical workflows usually seen in any big data project, we had decided to go with _events_ data in Barcelona. List below is the external data sources which we are using right now:
+
+- [x] Open Data BCN
+
+> Note: For more details, please refer to the notebook for each part. For visualizations, you can have a look at [this](https://www.python-graph-gallery.com/)
 
 
 ---
