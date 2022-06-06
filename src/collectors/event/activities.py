@@ -13,7 +13,7 @@ def get_activities():
     schema = list()
     is_first = True
     total_data = 1000
-    while(total_data > 0):
+    while(True):
         _result_ = fetch_data("{}{}".format(BASE_URL, START_URL), verbose=True)
         _data_ = _result_['result']['records']
         data.extend(_result_['result']['records'])
@@ -22,7 +22,9 @@ def get_activities():
             schema = parse_schema(_result_['result']['fields'])
             is_first = False
         total_data = total_data - len(_data_)
-        if _result_['_links']['next']
+        if total_data == 0:
+            break
+        START_URL = _result_['_links']['next']
     return data, schema
 
 https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c
