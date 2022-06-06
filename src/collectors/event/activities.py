@@ -4,6 +4,9 @@ from utils import get_today_date, get_parent, fetch_data, json_to_csv, print_log
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
 
+def parse_schema(fields):
+    return fields
+
 def get_activities():
     data = list()
     schema = list()
@@ -12,8 +15,8 @@ def get_activities():
         _data_ = fetch_data("{}{}".format(BASE_URL, START_URL), verbose=True)
         data.extend(_data_['result']['records'])
         if is_first:
-            schema = parse_schema(_data_['_links'])
-
+            schema = parse_schema(_data_['result']['fields'])
+            is_first = False
         if _data_['']
 
 
