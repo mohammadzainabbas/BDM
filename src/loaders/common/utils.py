@@ -58,6 +58,11 @@ def save_df_as_parquet(file_path: str, df: pd.DataFrame) -> None:
     spark.createDataFrame(df).write.parquet(file_path)
 
 def csv_to_parquet(file_path: str) -> tuple:
+    """
+    Save CSV file in parquet format
+
+    Link: https://mungingdata.com/python/writing-parquet-pandas-pyspark-koalas/
+    """
     _file_path = file_path.split('/')
     path, file_name = str("/".join(_file_path[:-1])), "".join(_file_path[-1].split(".")[:-1])
     file_name = "{}.parquet".format(file_name)
