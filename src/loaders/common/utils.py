@@ -60,11 +60,9 @@ def save_df_as_parquet(file_path: str, df: pd.DataFrame) -> None:
 def csv_to_parquet(file_path: str) -> str:
     _file_path = file_path.split('/')
     path, file_name = str("/".join(_file_path[:-1])), "".join(_file_path[-1].split(".")[:-1])
-    pq.write_table( pcsv.read_csv(file_path) , '{}/{}.parquet'.format(path, file_name))
-    
-
-    
-
+    full_path = '{}/{}.parquet'.format(path, file_name)
+    pq.write_table( pcsv.read_csv(file_path) , full_path)
+    return full_path
 
 def json_to_hdfs(file_path, json_object):
     client = get_hdfs_client()
