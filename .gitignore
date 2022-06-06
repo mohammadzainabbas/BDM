@@ -1,7 +1,11 @@
 # Ignore logs
-
 logs/*
+
+# Ignore __pycache__ dirs
+
+*/__pycache__
 
 # Ignore auto-update scripts
 commit.sh
 update_git.py
+
