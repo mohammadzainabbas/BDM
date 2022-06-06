@@ -1,3 +1,4 @@
+from functools import total_ordering
 from os.path import join
 from utils import get_today_date, get_parent, fetch_data, json_to_csv, print_log
 
@@ -12,13 +13,13 @@ def get_activities():
     schema = list()
     is_first = True
     total_data = 1000
-    while(True):
-        _data_ = fetch_data("{}{}".format(BASE_URL, START_URL), verbose=True)
-        data.extend(_data_['result']['records'])
+    while(total_data > 0):
+        _result_ = fetch_data("{}{}".format(BASE_URL, START_URL), verbose=True)
+        data.extend(_result_['result']['records'])
         if is_first:
-            schema = parse_schema(_data_['result']['fields'])
+            schema = parse_schema(_result_['result']['fields'])
             is_first = False
-        if _data_['_links']['next']
+        if _result_['_links']['next']
     return data, schema
 
 https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c
