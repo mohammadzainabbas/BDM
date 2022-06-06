@@ -5,10 +5,11 @@ BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
 
 def get_activities():
-    data = dict()
+    data = list()
+    is_first = True
     while(True):
         _data_ = fetch_data("{}{}".format(BASE_URL, START_URL), verbose=True)
-        data.update(_data_['result']['records'])
+        data.extend(_data_['result']['records'])
         if _data_['']
 
 
