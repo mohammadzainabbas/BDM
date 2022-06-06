@@ -3,7 +3,7 @@ from utils import get_today_date, get_parent, fetch_data, json_to_csv, print_log
 
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 
-def get_activities():
+def get_activities() -> list:
     start_url = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
     data, is_first, total_data = list(), True, 0
     # Fetch till we have all the records (a parameter 'total' in the API call)
@@ -24,9 +24,9 @@ def main():
     today_date = get_today_date()
     path = get_parent(join(today_date, activity_type))
     data = get_activities()
-    # file_path = join(path, '{}_{}.csv'.format(activity_type, today_date))
-    # json_to_csv(data, file_path)
-    # print_log("Fetched {} records on {} for '{}' from base url '{}' and saved to '{}'".format(len(data), today_date, activity_type, BASE_URL, file_path))
+    file_path = join(path, '{}_{}.csv'.format(activity_type, today_date))
+    json_to_csv(data, file_path)
+    print_log("Fetched {} records on {} for '{}' from base url '{}' and saved to '{}'".format(len(data), today_date, activity_type, BASE_URL, file_path))
 
 if __name__ == '__main__':
     main()
