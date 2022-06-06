@@ -3,6 +3,8 @@ from pyspark.sql import SparkSession, SQLContext, functions as SF
 from pyspark import SparkContext, SQLContext
 from utils import get_hdfs_user_home, get_files, write_to_hdfs, print_log
 
+cols = ['']
+
 def main():
     activity_type = "activities"
     files, prefix = get_files(activity_type)
