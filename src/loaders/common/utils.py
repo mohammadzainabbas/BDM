@@ -55,6 +55,12 @@ def save_df_as_parquet(file_path: str, df: pd.DataFrame) -> None:
     spark = get_spark_session()
     spark.createDataFrame(df).write.parquet(file_path)
 
+def csv_to_parquet(file_path: str) -> str:
+    
+
+    
+
+
 def json_to_hdfs(file_path, json_object):
     client = get_hdfs_client()
     with client.write("{}{}".format(get_hdfs_user_home(), file_path), encoding="utf-8",permission=777, overwrite=True) as writer:
