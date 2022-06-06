@@ -12,11 +12,8 @@ def main():
         print_log("File '{}' converted to parquet format and saved temporarily at '{}'".format(file, full_path))
         write_to_hdfs(join(hdfs_path, file_name), full_path)
         print_log("File '{}' moved to HDFS at '{}'".format(full_path, hdfs_path))
-        
-
-
-        break
-        # write_to_hdfs(join(hdfs_path, file_name), file)
+        remove(full_path) # Remove parquet file
+        print_log("Deleted parquet file '{}' from local".format(full_path))
     print_log("Saved {} file(s) of '{}' into HDFS at '{}'".format(len(files), activity_type, hdfs_path))
 
 if __name__ == '__main__':
