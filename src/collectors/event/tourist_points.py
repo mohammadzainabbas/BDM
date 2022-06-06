@@ -3,8 +3,8 @@ from utils import get_today_date, get_parent, fetch_data, json_to_csv, print_log
 
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 
-def get_activities() -> list:
-    start_url = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
+def get_touristic_points() -> list:
+    start_url = "/api/action/datastore_search?resource_id=31431b23-d5b9-42b8-bcd0-a84da9d8c7fa"
     data, is_first, total_data = list(), True, 0
     # Fetch till we have all the records (a parameter 'total' in the API call)
     while(True):
@@ -21,7 +21,6 @@ def get_activities() -> list:
 
 
 def main():
-    url = "https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=31431b23-d5b9-42b8-bcd0-a84da9d8c7fa"
     activity_type = "tourist_points"
     today_date = get_today_date()
     path = get_parent(join(today_date, activity_type))
