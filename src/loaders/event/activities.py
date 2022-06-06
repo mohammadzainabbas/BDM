@@ -1,3 +1,4 @@
+from os import remove
 from os.path import join
 from utils import get_hdfs_user_home, get_files, write_to_hdfs, print_log, csv_to_parquet
 
