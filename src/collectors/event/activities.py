@@ -1,14 +1,6 @@
 from os.path import join
 from utils import get_today_date, get_parent, fetch_data, json_to_csv, print_log
 
-def parse_schema(fields):
-    schema = list()
-    for index, field in enumerate(fields):
-        field_type = field['type']
-        field_name = field['id']
-        
-    return schema
-
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 
 def get_activities():
