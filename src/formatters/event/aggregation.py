@@ -4,9 +4,9 @@ from pyspark import SparkContext, SQLContext
 from utils import get_hdfs_user_home, get_files, write_to_hdfs, print_log
 
 activities_cols = ['register_id', 'name', 'geo_epgs_4326_x', 'geo_epgs_4326_y', # Must
-    'addresses_neighborhood_id', 'addresses_neighborhood_name', 
-    'addresses_district_id', 'addresses_district_name', 
-    'addresses_road_name', 'addresses_road_id'
+    'addresses_neighborhood_id', 'addresses_neighborhood_name', # For neighborhood's query
+    'addresses_district_id', 'addresses_district_name', # For district query
+    'addresses_road_name', 'addresses_road_id' # Maybe useful to search events on that road
 ]
 
 def main():
