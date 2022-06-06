@@ -34,11 +34,8 @@ def main():
     path = get_parent(join(today_date, activity_type))
     data, schema = get_activities()
     file_path = join(path, '{}_{}.csv'.format(activity_type, today_date))
-    json_to_csv(records, file_path)
-    # print_log("Fetched {} records on {} for '{}' from url '{}' and saved to '{}'".format(len(records), today_date, activity_type, url, file_path))
-
-
-    print("Total data: {}".format(len(data)))
+    json_to_csv(data, file_path)
+    print_log("Fetched {} records on {} for '{}' from base url '{}' and saved to '{}'".format(len(data), today_date, activity_type, BASE_URL, file_path))
 
 if __name__ == '__main__':
     main()
