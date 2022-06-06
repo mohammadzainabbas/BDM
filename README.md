@@ -13,6 +13,7 @@
 ### Table of contents
 
 - [Introduction](#introduction)
+- [About the Data](#about-the-data)
 - [Guides](#guide)
 
 ---
@@ -25,9 +26,22 @@ This repo is all about what we have done in Big Data Management (BDM) during our
 
 ---
 
+
+<a id="about-the-data" />
+
+#### 2. About the Data
+
+Since, the aim of this project is to develop a proof of concept (aka a prototype) for our startup `TripHawk` and to get a hands-on practice on typical workflows usually seen in any big data project, we had decided to go with _events_ data in Barcelona. List below is the external data sources which we are using right now:
+
+- [x] [_Cultural Agenda in the city of Barcelona_](https://opendata-ajuntament.barcelona.cat/data/en/dataset/agenda-cultural)
+- [x] [_Tourist points of interest in the city of Barcelona_](https://opendata-ajuntament.barcelona.cat/data/en/dataset/punts-informacio-turistica)
+- [x] [_Agenda of events and activities of the city of Barcelona_](https://opendata-ajuntament.barcelona.cat/data/en/dataset/agenda-diaria)
+
+---
+
 <a id="guide" />
 
-#### 2. Guide
+#### 3. Guide
 
 You can find some helpful guides [here](https://github.com/mohammadzainabbas/BDM/blob/main/doc/GUIDE.md)
 
