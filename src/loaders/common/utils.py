@@ -4,6 +4,8 @@ from datetime import datetime
 import pandas as pd
 import glob, re, shutil, requests, json, csv
 from pyspark.sql import SparkSession, session
+import pyarrow.csv as pcsv
+import pyarrow.parquet as pq
 from hdfs import InsecureClient
 from hdfs.util import HdfsError
 # from hdfs.ext.avro import AvroWriter
@@ -56,7 +58,8 @@ def save_df_as_parquet(file_path: str, df: pd.DataFrame) -> None:
     spark.createDataFrame(df).write.parquet(file_path)
 
 def csv_to_parquet(file_path: str) -> str:
-    
+    table = pcsv.read_csv(file_path)
+    pq.write_table(table, './tmp/pyarrow_out/people1.parquet')
 
     
 
