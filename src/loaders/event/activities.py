@@ -8,9 +8,9 @@ def main():
     hdfs_path = "{}/{}/{}".format(get_hdfs_user_home(), prefix, activity_type)
     for file in files:
         full_path, file_name = csv_to_parquet(file)
-        print_log("File '{}' converted to parquet format".format(file))
+        print_log("File '{}' converted to parquet format and saved temporarily at '{}'".format(file, full_path))
         write_to_hdfs(join(hdfs_path, file_name), full_path)
-        print_log("File '{}' moved to HDFS at '{}'".format(file, hdfs_path))
+        print_log("File '{}' moved to HDFS at '{}'".format(full_path, hdfs_path))
         
 
 
