@@ -1,5 +1,5 @@
 from os.path import join
-from utils import get_hdfs_user_home, get_files, write_to_hdfs, print_log
+from utils import get_hdfs_user_home, get_files, write_to_hdfs, print_log, csv_to_parquet
 
 def main():
     activity_type = "activities"
@@ -7,8 +7,7 @@ def main():
     print_log("Loading {} files of '{}' into HDFS".format(len(files), activity_type))
     hdfs_path = "{}/{}/{}".format(get_hdfs_user_home(), prefix, activity_type)
     for file in files:
-        file_name = str(file).split("/")[-1]
-        
+        full_path, file_name = csv_to_parquet(file)
         print_log("File '{}' moved to HDFS at '{}'".format(file, hdfs_path))
 
 
