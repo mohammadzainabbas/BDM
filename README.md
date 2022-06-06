@@ -13,6 +13,7 @@
 ### Table of contents
 
 - [Introduction](#introduction)
+- [About the Data](#about-the-data)
 - [Guides](#guide)
 
 ---
@@ -25,9 +26,16 @@ This repo is all about what we have done in Big Data Management (BDM) during our
 
 ---
 
+
+<a id="about-the-data" />
+
+#### 2. About the Data
+
+---
+
 <a id="guide" />
 
-#### 2. Guide
+#### 3. Guide
 
 You can find some helpful guides [here](https://github.com/mohammadzainabbas/BDM/blob/main/doc/GUIDE.md)
 
