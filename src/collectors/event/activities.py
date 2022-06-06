@@ -15,6 +15,7 @@ def get_activities():
     total_data = 1000
     while(total_data > 0):
         _result_ = fetch_data("{}{}".format(BASE_URL, START_URL), verbose=True)
+        total_data = _result_['result']['total']
         data.extend(_result_['result']['records'])
         if is_first:
             schema = parse_schema(_result_['result']['fields'])
