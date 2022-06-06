@@ -1,4 +1,4 @@
-from os import listdir, walk
+from os import walk
 from os.path import join, abspath, pardir, dirname, isfile
 from sys import path
 parent_dir = abspath(join(dirname(abspath(__file__)), pardir))
