@@ -19,6 +19,8 @@ def get_activities():
         if is_first:
             total_data = _result_['result']['total']
             schema = parse_schema(_result_['result']['fields'])
+            print(schema)
+            break
             is_first = False
         total_data = total_data - len(_data_)
         if total_data == 0:
@@ -31,9 +33,9 @@ def main():
     today_date = get_today_date()
     path = get_parent(join(today_date, activity_type))
     data, schema = get_activities()
-    file_path = join(path, '{}_{}.csv'.format(activity_type, today_date))
-    json_to_csv(data, file_path)
-    print_log("Fetched {} records on {} for '{}' from base url '{}' and saved to '{}'".format(len(data), today_date, activity_type, BASE_URL, file_path))
+    # file_path = join(path, '{}_{}.csv'.format(activity_type, today_date))
+    # json_to_csv(data, file_path)
+    # print_log("Fetched {} records on {} for '{}' from base url '{}' and saved to '{}'".format(len(data), today_date, activity_type, BASE_URL, file_path))
 
 if __name__ == '__main__':
     main()
