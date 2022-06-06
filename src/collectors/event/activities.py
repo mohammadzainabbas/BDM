@@ -25,7 +25,7 @@ def get_activities():
         total_data = total_data - len(_data_)
         if total_data == 0:
             break
-        START_URL = _result_['_links']['next']
+        START_URL = _result_['result']['_links']['next']
     return data, schema
 
 def main():
