@@ -1,6 +1,8 @@
 from os.path import join
 from utils import get_today_date, get_parent, fetch_data, json_to_csv, print_log
 
+BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
+
 def main():
     url = "https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=3abb2414-1ee0-446e-9c25-380e938adb73"
     activity_type = "culture"
