@@ -15,11 +15,13 @@ def get_activities():
     total_data = 1000
     while(total_data > 0):
         _result_ = fetch_data("{}{}".format(BASE_URL, START_URL), verbose=True)
-        total_data = _result_['result']['total']
+        _data_ = _result_['result']['records']
         data.extend(_result_['result']['records'])
         if is_first:
+            total_data = _result_['result']['total']
             schema = parse_schema(_result_['result']['fields'])
             is_first = False
+        total_data = total_data - len(_data_)
         if _result_['_links']['next']
     return data, schema
 
