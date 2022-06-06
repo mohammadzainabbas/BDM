@@ -8,7 +8,10 @@ def main():
     hdfs_path = "{}/{}/{}".format(get_hdfs_user_home(), prefix, activity_type)
     for file in files:
         file_name = str(file).split("/")[-1]
+        print(file_name)
         print_log("File '{}' moved to HDFS at '{}'".format(file, hdfs_path))
+
+        break
         # write_to_hdfs(join(hdfs_path, file_name), file)
     print_log("Saved {} file(s) of '{}' into HDFS at '{}'".format(len(files), activity_type, hdfs_path))
 
