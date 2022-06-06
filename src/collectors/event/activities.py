@@ -32,13 +32,11 @@ def main():
     activity_type = "activities"
     today_date = get_today_date()
     path = get_parent(join(today_date, activity_type))
-    # data = fetch_data(url, verbose=True)
-    # records = data['result']['records']
-    # file_path = join(path, '{}_{}.csv'.format(activity_type, today_date))
-    # json_to_csv(records, file_path)
+    data, schema = get_activities()
+    file_path = join(path, '{}_{}.csv'.format(activity_type, today_date))
+    json_to_csv(records, file_path)
     # print_log("Fetched {} records on {} for '{}' from url '{}' and saved to '{}'".format(len(records), today_date, activity_type, url, file_path))
 
-    data, schema = get_activities()
 
     print("Total data: {}".format(len(data)))
 
