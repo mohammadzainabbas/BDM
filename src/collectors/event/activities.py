@@ -2,7 +2,11 @@ from os.path import join
 from utils import get_today_date, get_parent, fetch_data, json_to_csv, print_log
 
 def parse_schema(fields):
-    return fields
+    schema = list()
+    for index, field in enumerate(fields):
+        _type = field['type']
+        _name = field['id']
+    return schema
 
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 
