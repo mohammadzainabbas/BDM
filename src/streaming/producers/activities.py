@@ -33,6 +33,7 @@ def fetch_all_activities() -> list:
 
 def get_activities(server: KafkaProducer, stream_name: str):
     __total = 0
+    __timer = 2 * 60 # 2 min
     # Continuously get the data
     while(True):
 
