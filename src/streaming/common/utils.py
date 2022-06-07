@@ -46,4 +46,7 @@ def create_if_not_exists(path):
     """
     if not exists(path): makedirs(path)
 
-def get_
+def get_kafka_config() -> dict:
+    return {
+        
+    }
