@@ -9,7 +9,7 @@ def get_activities() -> list:
     data, is_first, total_data = list(), True, 0
     # Fetch till we have all the records (a parameter 'total' in the API call)
     while(True):
-        _result_ = fetch_data("{}{}".format(BASE_URL, start_url), verbose=True)
+        _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, start_url), verbose=True) )
         _data_ = _result_['result']['records']
         data.extend(_data_)
         if is_first:
@@ -18,6 +18,7 @@ def get_activities() -> list:
         total_data = total_data - len(_data_)
         if total_data == 0: break
         start_url = _result_['result']['_links']['next']
+        if not start_url: break
     return data
 
 def main():
