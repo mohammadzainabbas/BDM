@@ -1,5 +1,7 @@
 from os.path import join, abspath, pardir, dirname
 from sys import path
+
+from traitlets import Any
 parent_dir = abspath(join(dirname(abspath(__file__)), pardir))
 path.append(parent_dir)
 from common.utils import *
@@ -11,6 +13,10 @@ def get_parent(par_dir):
     create_if_not_exists(path)
     return path
 
-def send_data_as_stream(records: list, server: KafkaProducer, stream_name: str) -> None:
+def send_list_data_as_stream(records: list, server: KafkaProducer, stream_name: str) -> None:
+    for record in records:
+        server.send(stream_name, value=record)
+
+def send_data_as_stream(records, server: KafkaProducer, stream_name: str) -> None:
     for record in records:
         server.send(stream_name, value=record)
