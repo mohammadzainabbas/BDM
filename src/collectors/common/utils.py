@@ -4,6 +4,7 @@ from datetime import datetime
 import requests
 import json
 import csv
+from collections import defaultdict
 
 def print_log(text):
     """
