@@ -8,9 +8,9 @@ def get_hello():
     test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
     print(test_data)
     config = get_kafka_config()
-    server = KafkaConsumer(**config)
     stream = get_kafka_topic()
-    server.send(stream, value=dumps(test_data, indent=2).encode('utf-8'))
+    consumer = KafkaConsumer(topics=stream, **config)
+    consumer.send(stream, value=dumps(test_data, indent=2).encode('utf-8'))
     
 def main():
     get_hello()    
