@@ -57,3 +57,4 @@ sh $KAFKA_DIR/bin/kafka-topics.sh --create --topic $topic --bootstrap-server loc
 
 log "Kafka topic/stream '$topic' started !!"
 
+# bash scripts/create_kafka_topic.sh -t bcn_events
