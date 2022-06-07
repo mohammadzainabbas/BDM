@@ -3,6 +3,7 @@ from json import dumps, loads
 from utils import get_today_date, get_parent, fetch_data, print_log, get_kafka_producer_config, get_kafka_topic, send_data_as_stream
 from collections import defaultdict
 from kafka import KafkaProducer
+from time import sleep
 
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
@@ -33,19 +34,19 @@ def fetch_all_activities() -> list:
 
 def get_activities(server: KafkaProducer, stream_name: str):
     __total = 0
-    __timer = 2 * 60 # 2 min
+    __timer = 2 * 60 # check changes in data after every 2 min
+    
     # Continuously get the data
     while(True):
 
-        _total_ = get_total()
+        _total_ = get_total() # Get the total no. of records
 
         # if no. of records are updated -> fetch new records and push them in stream
         if __total != _total_:
             __data = fetch_all_activities()
             __total = _total_
-
-        break
-
+        else:
+            sleep(__timer)
 
 
 
