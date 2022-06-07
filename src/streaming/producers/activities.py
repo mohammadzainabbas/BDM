@@ -38,7 +38,6 @@ def get_activities(server: KafkaProducer, stream_name: str):
     
     # Continuously get the data
     while(True):
-
         _total_ = get_total() # Get the total no. of records
 
         # if no. of records are updated -> fetch new records and push them in stream
@@ -48,7 +47,7 @@ def get_activities(server: KafkaProducer, stream_name: str):
             send_data_as_stream(__data, server, stream_name)
         else:
             sleep(__timer)
-    
+
 def main():
     
     # config = get_kafka_producer_config() # Get all configurations for Kafka producer
