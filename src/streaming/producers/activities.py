@@ -31,8 +31,8 @@ def say_hello():
     print(test_data)
     config = get_kafka_config()
     server = KafkaProducer(**config)
-    # stream = get_kafka_topic()
-    # server.send(stream, value="Hello World")
+    stream = get_kafka_topic()
+    server.send(stream, value=dumps(test_data, indent=2).encode('utf-8'))
     
 def main():
     
