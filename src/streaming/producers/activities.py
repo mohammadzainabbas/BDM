@@ -28,7 +28,8 @@ def fetch_all_activities() -> list:
     return data
 
 def say_hello():
-    server = KafkaProducer(*get_kafka_config())
+    config = get_kafka_config()
+    server = KafkaProducer(**config)
     stream = get_kafka_topic()
     server.send(stream, value="Hello World")
     
