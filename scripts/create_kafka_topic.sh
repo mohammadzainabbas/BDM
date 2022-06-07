@@ -13,8 +13,7 @@ set -e -u pipefail
 . $(dirname $0)/utils.sh
 
 #Function that shows usage for this script
-function usage()
-{
+usage() {
 cat << HEREDOC
 Create Kafka topic/stream
 
@@ -51,8 +50,8 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-log "Creating Kafka topic"
+log "Creating Kafka topic/stream"
 
 sh $KAFKA_DIR/bin/kafka-topics.sh --create --topic $topic --bootstrap-server localhost:9092
 
-log "Kafka topic '$topic' started !!"
+log "Kafka topic/stream '$topic' started !!"
