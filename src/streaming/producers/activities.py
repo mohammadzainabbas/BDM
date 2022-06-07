@@ -1,6 +1,7 @@
 from os.path import join
-from utils import get_today_date, get_parent, fetch_data, json_to_csv, print_log
+from utils import get_today_date, get_parent, fetch_data, print_log
 from collections import defaultdict
+from kafka import KafkaProducer
 
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
@@ -23,6 +24,9 @@ def get_activities() -> list:
         start_url = _result_['result']['_links']['next']
         if not start_url: break
     return data
+
+def d
+
 
 def main():
     activity_type = "activities"
