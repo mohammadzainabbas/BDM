@@ -18,3 +18,4 @@ log "Starting Kafka Server"
 
 sh $KAFKA_DIR/bin/kafka-server-start.sh $KAFKA_DIR/config/server.properties
 
+log "Kafka server started !!"

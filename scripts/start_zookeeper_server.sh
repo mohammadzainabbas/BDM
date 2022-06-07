@@ -17,3 +17,5 @@ KAFKA_DIR=~/BDM_Software/kafka_2.13-3.1.0
 log "Starting Zookeeper Server"
 
 sh $KAFKA_DIR/bin/zookeeper-server-start.sh $KAFKA_DIR/config/zookeeper.properties
+
+log "Zookeeper server started !!"
