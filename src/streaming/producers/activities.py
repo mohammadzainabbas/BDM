@@ -38,8 +38,9 @@ def get_activities(server: KafkaProducer, stream_name: str):
 
         _total_ = get_total()
 
-        # if no. of records are updated -> fetch new records
+        # if no. of records are updated -> fetch new records and push them in stream
         if __total != _total_:
+            __data = fetch_all_activities()
 
 
 
