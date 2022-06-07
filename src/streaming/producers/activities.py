@@ -27,11 +27,12 @@ def fetch_all_activities() -> list:
     return data
 
 def say_hello():
-    test_data = {'name': 'dinesh', 'code': 'dr-01'}
-    config = get_kafka_config()
-    server = KafkaProducer(**config)
-    stream = get_kafka_topic()
-    server.send(stream, value="Hello World")
+    test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
+    print(test_data)
+    # config = get_kafka_config()
+    # server = KafkaProducer(**config)
+    # stream = get_kafka_topic()
+    # server.send(stream, value="Hello World")
     
 def main():
     
