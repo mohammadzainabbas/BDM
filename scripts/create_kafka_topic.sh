@@ -38,7 +38,7 @@ KAFKA_DIR=~/BDM_Software/kafka_2.13-3.1.0
 topic="random"
 
 #Get all the arguments and update accordingly
-while [[ "$#" -gt 0 ]]; do
+while [ "$#" -gt 0 ]; do
     case $1 in
         -t|--topic) topic="$2"; shift ;;
         -h|--help)
