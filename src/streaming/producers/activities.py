@@ -27,7 +27,12 @@ def fetch_all_activities() -> list:
     return data
 
 def get_activities(server: KafkaProducer, stream_name: str):
-    # Continuously get the data 
+    __total = 0
+    # Continuously get the data
+    while(True):
+        
+
+
 
     test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
     # print(test_data)
