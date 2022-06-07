@@ -36,7 +36,7 @@ def get_activities(server: KafkaProducer, stream_name: str):
     __total = 0
     __timer = 2 * 60 # check changes in data after every 2 min
     
-    # Continuously get the data
+    # Continuously get the data from the API
     while(True):
         _total_ = get_total() # Get the total no. of records
 
@@ -54,7 +54,7 @@ def main():
     stream_name = get_kafka_topic() # name of the stream
     
     server = KafkaProducer(**config)
-    get_activities(server)
+    get_activities(server, stream_name)
 
 if __name__ == '__main__':
     main()
