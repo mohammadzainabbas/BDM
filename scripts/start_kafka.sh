@@ -12,3 +12,5 @@ set -e -u pipefail
 # import helper functions from 'scripts/utils.sh'
 . $(dirname $0)/utils.sh
 
+KAFKA_DIR=~/BDM_Software/kafka_2.13-3.1.0/
+
