@@ -14,4 +14,7 @@ set -e -u pipefail
 
 KAFKA_DIR=~/BDM_Software/kafka_2.13-3.1.0/
 
-log "Starting Zookeeper Server"
+log "Starting Kafka Server"
+
+sh $KAFKA_DIR/bin/kafka-server-start.sh $KAFKA_DIR/config/server.properties
+
