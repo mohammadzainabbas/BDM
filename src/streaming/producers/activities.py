@@ -28,8 +28,7 @@ def fetch_all_activities() -> list:
 
 def send_data_as_stream(records: list, server: KafkaProducer, stream_name: str) -> None:
     for record in records:
-        server.send(stream_name, record)
-
+        server.send(stream_name, value=record)
 
 def get_activities(server: KafkaProducer, stream_name: str):
     test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
