@@ -1,11 +1,17 @@
 from os.path import join
 from json import dumps, loads
-from utils import get_today_date, get_parent, fetch_data, print_log, get_kafka_producer_config, get_kafka_topic
+from utils import get_today_date, get_parent, fetch_data, print_log, get_kafka_producer_config, get_kafka_topic, send_data_as_stream
 from collections import defaultdict
 from kafka import KafkaProducer
 
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
+
+def get_total() -> int:
+    _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, START_URL), verbose=False) )
+    _total_ = _result_['result']['total']
+    print( type(_result_['result']['records']) )
+    return int(_total_ if _total_ else 0)
 
 def fetch_all_activities() -> list:
     """
@@ -26,15 +32,32 @@ def fetch_all_activities() -> list:
         if not start_url: break
     return data
 
-def get_activities(server: KafkaProducer):
-    test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
-    # print(test_data)
-    stream = get_kafka_topic()
-    server.send(stream, value=test_data)
+def get_activities(server: KafkaProducer, stream_name: str):
+    __total = 0
+    # Continuously get the data
+    while(True):
+
+        _total_ = get_total()
+
+        # if no. of records are updated -> fetch new records and push them in stream
+        # if __total != _total_:
+        #     __data = fetch_all_activities()
+
+        break
+
+
+
+
+
+    # test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
+    # # print(test_data)
+    # server.send(stream_name, value=test_data)
     
 def main():
     
-    config = get_kafka_producer_config()
+    config = get_kafka_producer_config() # Get all configurations for Kafka producer
+    stream_name = get_kafka_topic() # name of the stream
+    
     server = KafkaProducer(**config)
     get_activities(server)
 
