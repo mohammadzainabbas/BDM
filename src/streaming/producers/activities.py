@@ -7,10 +7,9 @@ START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95
 
 def get_activities() -> list:
     """
-    Fetch all activities
+    Repeatedly call the API endpoint and fetch all records 
     """
-    start_url = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
-    data, is_first, total_data = list(), True, 0
+    data, is_first, total_data, start_url = list(), True, 0, START_URL
     # Fetch till we have all the records (a parameter 'total' in the API call)
     while(True):
         _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, start_url), verbose=True) )
