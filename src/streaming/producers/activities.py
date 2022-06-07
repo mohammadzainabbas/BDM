@@ -1,6 +1,6 @@
 from os.path import join
 from json import dumps, loads
-from utils import get_today_date, get_parent, fetch_data, print_log, get_kafka_producer_config, get_kafka_topic
+from utils import get_today_date, get_parent, fetch_data, print_log, get_kafka_producer_config, get_kafka_topic, send_data_as_stream
 from collections import defaultdict
 from kafka import KafkaProducer
 
@@ -26,11 +26,9 @@ def fetch_all_activities() -> list:
         if not start_url: break
     return data
 
-def send_data_as_stream(records: list, server: KafkaProducer, stream_name: str) -> None:
-    for record in records:
-        server.send(stream_name, value=record)
-
 def get_activities(server: KafkaProducer, stream_name: str):
+    # Continuously get the data 
+
     test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
     # print(test_data)
     server.send(stream_name, value=test_data)
