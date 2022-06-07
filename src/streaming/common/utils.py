@@ -60,9 +60,21 @@ def get_kafka_producer_config() -> dict:
     
     Reference: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html
     """
-    return {
+    __config = get_common_kafka_config()
+    return __config.update({
         "value_deserializer": lambda m: json.dumps(m, indent=2).encode('utf-8'),
-    }
+    })
+
+def get_kafka_consumer_config() -> dict:
+    """
+    Return configurations for Kafka consumer
+    
+    Reference: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html
+    """
+    __config = get_common_kafka_config()
+    return __config.update({
+        "value_deserializer": lambda m: json.dumps(m, indent=2).encode('utf-8'),
+    })
 
 def get_kafka_topic() -> str:
     """
