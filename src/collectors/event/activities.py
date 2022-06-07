@@ -27,7 +27,7 @@ def main():
     path = get_parent(join(today_date, activity_type))
     data = get_activities()
     file_path = join(path, '{}_{}.csv'.format(activity_type, today_date))
-    # json_to_csv(data, file_path)
+    json_to_csv(data, file_path)
     print_log("Fetched {} records on {} for '{}' from base url '{}' and saved to '{}'".format(len(data), today_date, activity_type, BASE_URL, file_path))
 
 if __name__ == '__main__':
