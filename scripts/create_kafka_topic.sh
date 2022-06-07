@@ -17,20 +17,39 @@ function usage()
 {
 cat << HEREDOC
 Create Kafka topic/stream
+
 Usage: 
     
     $progname [OPTION] [Value]
+
 Options:
+
     -t, --topic             Name of the topic (aka stream) [by default 'random']
     -h, --help              Show usage
+
 Examples:
+ 
     $ $progname -t bdm
     ⚐ → Creates a kafka topic/stream with name 'bdm'.
+
 HEREDOC
 }
 
 KAFKA_DIR=~/BDM_Software/kafka_2.13-3.1.0
-topic=$1
+topic="random"
+
+#Get all the arguments and update accordingly
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -t|--topic) topic="$2"; shift ;;
+        -h|--help)
+        usage
+        exit 1
+        ;;
+        *) printf "\n$progname: invalid option → '$1'\n\n⚐ Try '$progname -h' for more information\n\n"; exit 1 ;;
+    esac
+    shift
+done
 
 log "Creating Kafka topic"
 
