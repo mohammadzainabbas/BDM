@@ -26,6 +26,9 @@ def fetch_all_activities() -> list:
         if not start_url: break
     return data
 
+def send_data_as_stream(records: list) -> None:
+
+    for 
 
 
 def get_activities(server: KafkaProducer, stream: str):
