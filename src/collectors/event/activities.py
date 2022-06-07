@@ -1,5 +1,6 @@
 from os.path import join
 from utils import get_today_date, get_parent, fetch_data, json_to_csv, print_log
+from collections import defaultdict
 
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 
