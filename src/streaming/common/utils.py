@@ -57,4 +57,8 @@ def get_kafka_config() -> dict:
     }
 
 def get_kafka_topic() -> str:
-    return ""
+    """
+    Name of the Kafka topic/stream
+    """
+    # return "bcn_events"
+    return "temp"
