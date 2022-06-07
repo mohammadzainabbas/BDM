@@ -54,7 +54,7 @@ done
 
 log "Deleting Kafka topic/stream '$topic'"
 
-sh $KAFKA_DIR/bin/kafka-topics.sh --create --topic $topic --bootstrap-server localhost:9092
+sh $KAFKA_DIR/bin/kafka-topics.sh --delete --topic $topic --bootstrap-server localhost:9092
 
 log "Kafka topic/stream '$topic' deleted !!"
 
