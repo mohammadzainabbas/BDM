@@ -54,7 +54,7 @@ def get_kafka_producer_config() -> dict:
     """
     return {
         "bootstrap_servers": "localhost:9092",
-        "value_deserializer": lambda m: json.loads(m.decode('utf-8')),
+        "value_deserializer": lambda m: json.dumps(m, indent=2).encode('utf-8'),
     }
 
 def get_kafka_topic() -> str:
