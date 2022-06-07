@@ -30,7 +30,7 @@ def fetch_all_cultural_events() -> list:
         if not start_url: break
     return data
 
-def get_cultural_events(server: KafkaProducer, stream_name: str):
+def get_cultural_events(server: KafkaProducer, stream_name: str) -> None:
     __total = 0
     __timer = 2 * 60 # check changes in data after every 2 min
     
@@ -46,7 +46,7 @@ def get_cultural_events(server: KafkaProducer, stream_name: str):
         else:
             sleep(__timer)
 
-def main():
+def main() -> None:
     
     config = get_kafka_producer_config() # Get all configurations for Kafka producer
     stream_name = get_kafka_topic() # name of the stream
