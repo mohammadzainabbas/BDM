@@ -1,4 +1,6 @@
 from os.path import join
+
+import kafka
 from utils import get_today_date, get_parent, fetch_data, print_log, get_kafka_config, get_kafka_topic
 from collections import defaultdict
 from kafka import KafkaProducer
@@ -25,7 +27,10 @@ def fetch_all_activities() -> list:
         if not start_url: break
     return data
 
-def 
+def say_hello():
+    server = KafkaProducer(get_kafka_config())
+    stream = get_kafka_topic()
+    server.send(stream, value="Hello World")
 
 
 def main():
