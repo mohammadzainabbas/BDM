@@ -21,17 +21,13 @@ Usage:
     
     $progname [OPTION] [Value]
 Options:
-    -t, --topic             Name of the topic (aka stream)
-    -p, --path              Path for tpcds directory. (by default uses '../tpcds-kit')
+    -t, --topic             Name of the topic (aka stream) [by default 'random']
     -h, --help              Show usage
 Examples:
-    $ $progname -s 1
-    ⚐ → Benchmark for 1 Gb scale.
-    $ $progname -s 5 -p ../tpcds-kit/
-    ⚐ → Benchmark for 5 Gb scale with tpcds dir path as '../tpcds-kit'.
+    $ $progname -t bdm
+    ⚐ → Creates a kafka topic/stream with name 'bdm'.
 HEREDOC
 }
-
 
 KAFKA_DIR=~/BDM_Software/kafka_2.13-3.1.0
 topic=$1
