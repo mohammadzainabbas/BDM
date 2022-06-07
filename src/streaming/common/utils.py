@@ -73,7 +73,7 @@ def get_kafka_consumer_config() -> dict:
     """
     __config = get_common_kafka_config()
     return __config.update({
-        "value_deserializer": lambda m: json.dumps(m, indent=2).encode('utf-8'),
+        "value_deserializer": lambda m: json.loads(m.decode('utf-8')),
     })
 
 def get_kafka_topic() -> str:
