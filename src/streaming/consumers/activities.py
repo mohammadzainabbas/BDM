@@ -15,7 +15,9 @@ def get_hello():
         print(type(message))
         print(message)
         # print(message.value)
-        print(loads(message.value.decode('utf-8')))
+        value = loads(message.value.decode('utf-8'))
+        print(type(value))
+        print(value)
     
 def main():
     get_hello()    
