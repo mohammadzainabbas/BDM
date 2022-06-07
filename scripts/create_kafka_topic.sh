@@ -7,7 +7,7 @@
 #====================================================================================
 
 # Enable exit on error
-set -e -u pipefail
+set -e -u
 
 # import helper functions from 'scripts/utils.sh'
 . $(dirname $0)/utils.sh
@@ -34,6 +34,7 @@ Examples:
 HEREDOC
 }
 
+progname=$(basename $0)
 KAFKA_DIR=~/BDM_Software/kafka_2.13-3.1.0
 topic="random"
 
