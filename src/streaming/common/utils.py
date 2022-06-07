@@ -47,6 +47,11 @@ def create_if_not_exists(path):
     if not exists(path): makedirs(path)
 
 def get_kafka_config() -> dict:
+    """
+    Return Kafka configurations for producer and consumer
+    
+    Reference: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html
+    """
     return {
-        
+        "bootstrap_servers": "localhost:9092"
     }
