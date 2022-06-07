@@ -34,7 +34,7 @@ def get_activities(server: KafkaProducer):
     
 def main():
     
-    config = get_kafka_producer_config()
+    config = get_kafka_producer_config() # Get all configurations for Kafka producer
     server = KafkaProducer(**config)
     get_activities(server)
 
