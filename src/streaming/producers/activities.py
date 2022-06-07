@@ -10,8 +10,6 @@ START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95
 def get_total() -> int:
     _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, START_URL), verbose=False) )
     _total_ = _result_['result']['total']
-    print( _result_['result']['records'][:3] )
-    print( type(_result_['result']['records']) )
     return int(_total_ if _total_ else 0)
 
 def fetch_all_activities() -> list:
@@ -41,8 +39,9 @@ def get_activities(server: KafkaProducer, stream_name: str):
         _total_ = get_total()
 
         # if no. of records are updated -> fetch new records and push them in stream
-        # if __total != _total_:
-        #     __data = fetch_all_activities()
+        if __total != _total_:
+            __data = fetch_all_activities()
+            __total = _total_
 
         break
 
