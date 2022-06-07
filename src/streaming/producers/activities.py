@@ -42,18 +42,12 @@ def get_activities(server: KafkaProducer, stream_name: str):
         _total_ = get_total() # Get the total no. of records
 
         # if no. of records are updated -> fetch new records and push them in stream
-        if __total != _total_:
+        if __total != _total_ and _total_ != 0:
             __data = fetch_all_activities()
             __total = _total_
+            send_data_as_stream(__data, server, stream_name)
         else:
             sleep(__timer)
-
-
-
-
-    # test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
-    # # print(test_data)
-    # server.send(stream_name, value=test_data)
     
 def main():
     
