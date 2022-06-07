@@ -2,3 +2,7 @@ python-dotenv
 amadeus
 requests
 datetime
+pandas
+pyspark
+pyarrow
+kafka-python
