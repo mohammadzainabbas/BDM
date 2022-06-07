@@ -58,4 +58,4 @@ sh $KAFKA_DIR/bin/kafka-topics.sh --delete --topic $topic --bootstrap-server loc
 
 log "Kafka topic/stream '$topic' deleted !!"
 
-# bash scripts/create_kafka_topic.sh -t bcn_events
+# bash scripts/delete_kafka_topic.sh -t bcn_events
