@@ -13,7 +13,7 @@ def get_total() -> int:
     _total_ = _result_['result']['total']
     return int(_total_ if _total_ else 0)
 
-def fetch_all_activities() -> list:
+def fetch_all_cultural_events() -> list:
     """
     Repeatedly call the API endpoint and fetch all records 
     """
@@ -32,7 +32,7 @@ def fetch_all_activities() -> list:
         if not start_url: break
     return data
 
-def get_activities(server: KafkaProducer, stream_name: str):
+def get_cultural_events(server: KafkaProducer, stream_name: str):
     __total = 0
     __timer = 2 * 60 # check changes in data after every 2 min
     
@@ -42,7 +42,7 @@ def get_activities(server: KafkaProducer, stream_name: str):
 
         # if no. of records are updated -> fetch new records and push them in stream
         if __total != _total_ and _total_ != 0:
-            __data = fetch_all_activities()
+            __data = fetch_all_cultural_events()
             __total = _total_
             send_data_as_stream(__data, server, stream_name)
         else:
@@ -54,7 +54,7 @@ def main():
     stream_name = get_kafka_topic() # name of the stream
     
     server = KafkaProducer(**config)
-    get_activities(server, stream_name)
+    get_cultural_events(server, stream_name)
 
 if __name__ == '__main__':
     main()
