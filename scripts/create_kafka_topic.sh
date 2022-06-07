@@ -13,9 +13,10 @@ set -e -u pipefail
 . $(dirname $0)/utils.sh
 
 KAFKA_DIR=~/BDM_Software/kafka_2.13-3.1.0
+topic=$1
 
 log "Creating Kafka topic"
 
-sh $KAFKA_DIR/bin/kafka-topics.sh --create --topic $1 --bootstrap-server localhost:9092
+sh $KAFKA_DIR/bin/kafka-topics.sh --create --topic $topic --bootstrap-server localhost:9092
 
-log "Zookeeper server started !!"
+log "Kafka topic '$topic' started !!"
