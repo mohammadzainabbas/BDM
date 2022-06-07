@@ -26,15 +26,18 @@ def fetch_all_activities() -> list:
         if not start_url: break
     return data
 
+
+
 def get_activities(server: KafkaProducer, stream: str):
     test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
     # print(test_data)
-    stream = get_kafka_topic()
     server.send(stream, value=test_data)
     
 def main():
     
     config = get_kafka_producer_config() # Get all configurations for Kafka producer
+    stream = get_kafka_topic() # name of the stream
+    
     server = KafkaProducer(**config)
     get_activities(server)
 
