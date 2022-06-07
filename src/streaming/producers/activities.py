@@ -25,6 +25,8 @@ def fetch_all_activities() -> list:
         if not start_url: break
     return data
 
+def 
+
 
 def main():
     print(get_kafka_config())
