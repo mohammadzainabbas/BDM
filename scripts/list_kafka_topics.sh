@@ -19,5 +19,3 @@ log "Listing Kafka topic/stream"
 sh $KAFKA_DIR/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
 
 log "All done !!"
-
-# bash scripts/create_kafka_topic.sh -t bcn_events
