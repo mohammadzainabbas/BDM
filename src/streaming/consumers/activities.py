@@ -5,18 +5,16 @@ from collections import defaultdict
 from kafka import KafkaConsumer
 
 def get_hello():
-    test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
-    print(test_data)
+    # test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
+    # print(test_data)
     config = get_kafka_config()
     stream = get_kafka_topic()
-    consumer = KafkaConsumer(topics=stream, **config)
+    consumer = KafkaConsumer(stream, **config)
 
     for message in consumer:
         print(type(message))
         print(message)
         print(loads(message.decode('utf-8')))
-
-    consumer.send(stream, value=dumps(test_data, indent=2).encode('utf-8'))
     
 def main():
     get_hello()    
