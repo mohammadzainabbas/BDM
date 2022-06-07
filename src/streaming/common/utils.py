@@ -72,9 +72,10 @@ def get_kafka_consumer_config() -> dict:
     Reference: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html
     """
     __config = get_common_kafka_config()
-    return __config.update({
+    __config.update({
         "value_deserializer": lambda m: json.loads(m.decode('utf-8')),
     })
+    return __config
 
 def get_kafka_topic() -> str:
     """
