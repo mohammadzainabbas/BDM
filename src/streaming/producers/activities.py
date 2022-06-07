@@ -7,6 +7,11 @@ from kafka import KafkaProducer
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
 
+def get_total() -> int:
+    _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, START_URL), verbose=False) )
+
+
+
 def fetch_all_activities() -> list:
     """
     Repeatedly call the API endpoint and fetch all records 
@@ -30,7 +35,7 @@ def get_activities(server: KafkaProducer, stream_name: str):
     __total = 0
     # Continuously get the data
     while(True):
-        
+
 
 
 
