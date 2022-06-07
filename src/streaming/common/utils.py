@@ -46,6 +46,14 @@ def create_if_not_exists(path):
     """
     if not exists(path): makedirs(path)
 
+def get_common_kafka_config() -> dict:
+    """
+    Return common Kafka configurations
+    """
+    return {
+        "bootstrap_servers": "localhost:9092"
+    }
+
 def get_kafka_producer_config() -> dict:
     """
     Return configurations for Kafka producer
@@ -53,7 +61,6 @@ def get_kafka_producer_config() -> dict:
     Reference: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html
     """
     return {
-        "bootstrap_servers": "localhost:9092",
         "value_deserializer": lambda m: json.dumps(m, indent=2).encode('utf-8'),
     }
 
