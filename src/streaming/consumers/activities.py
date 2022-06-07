@@ -5,7 +5,7 @@ from collections import defaultdict
 from kafka import KafkaConsumer
 
 def get_activities_from_stream(consumer: KafkaConsumer, stream_name: str) -> None:
-    
+
 
 
 
@@ -23,8 +23,14 @@ def get_hello():
         print(type(value))
         print(value)
     
-def main():
-    get_hello()    
+def main() -> None:
+
+    config = get_kafka_consumer_config() # Get all configurations for Kafka consumer
+    stream_name = get_kafka_topic() # name of the stream
+    
+    server = KafkaConsumer(**config)
+    get_activities(server, stream_name)
+
 
 if __name__ == '__main__':
     main()
