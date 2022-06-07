@@ -14,8 +14,8 @@ set -e -u pipefail
 
 KAFKA_DIR=~/BDM_Software/kafka_2.13-3.1.0
 
-log "Starting Zookeeper Server"
+log "Creating Kafka topic"
 
-sh $KAFKA_DIR/bin/zookeeper-server-start.sh $KAFKA_DIR/config/zookeeper.properties
+sh $KAFKA_DIR/bin/kafka-topics.sh --create --topic $1 --bootstrap-server localhost:9092
 
 log "Zookeeper server started !!"
