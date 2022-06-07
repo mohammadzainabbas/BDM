@@ -3,8 +3,12 @@ from utils import get_today_date, get_parent, fetch_data, json_to_csv, print_log
 from collections import defaultdict
 
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
+START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
 
 def get_activities() -> list:
+    """
+    Fetch all activities
+    """
     start_url = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
     data, is_first, total_data = list(), True, 0
     # Fetch till we have all the records (a parameter 'total' in the API call)
