@@ -36,6 +36,13 @@ def get_activities(server: KafkaProducer, stream_name: str):
     # Continuously get the data
     while(True):
 
+        _total_ = get_total()
+
+        # if no. of records are updated -> fetch new records
+        if __total != _total_:
+
+
+
 
 
 
