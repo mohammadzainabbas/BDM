@@ -10,6 +10,12 @@ def get_hello():
     config = get_kafka_config()
     stream = get_kafka_topic()
     consumer = KafkaConsumer(topics=stream, **config)
+
+    for message in consumer:
+        print(type(message))
+        print(message)
+        print(loads(message.decode('utf-8')))
+
     consumer.send(stream, value=dumps(test_data, indent=2).encode('utf-8'))
     
 def main():
