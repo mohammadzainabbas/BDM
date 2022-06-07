@@ -1,6 +1,5 @@
 from os.path import join
-
-import kafka
+from json import dumps, loads
 from utils import get_today_date, get_parent, fetch_data, print_log, get_kafka_config, get_kafka_topic
 from collections import defaultdict
 from kafka import KafkaProducer
@@ -28,6 +27,7 @@ def fetch_all_activities() -> list:
     return data
 
 def say_hello():
+    test_data = {'name': 'dinesh', 'code': 'dr-01'}
     config = get_kafka_config()
     server = KafkaProducer(**config)
     stream = get_kafka_topic()
