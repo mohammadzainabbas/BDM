@@ -9,8 +9,7 @@ START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95
 
 def get_total() -> int:
     _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, START_URL), verbose=False) )
-
-
+    return int(_result_['result']['total'])
 
 def fetch_all_activities() -> list:
     """
