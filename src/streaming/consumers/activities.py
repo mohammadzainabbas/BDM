@@ -14,7 +14,8 @@ def get_hello():
     for message in consumer:
         print(type(message))
         print(message)
-        print(loads(message.decode('utf-8')))
+        # print(message.value)
+        print(loads(message.value.decode('utf-8')))
     
 def main():
     get_hello()    
