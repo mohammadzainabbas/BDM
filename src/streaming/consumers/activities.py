@@ -4,11 +4,9 @@ from utils import get_today_date, get_parent, fetch_data, print_log, get_kafka_c
 from collections import defaultdict
 from kafka import KafkaConsumer
 
-def get_activities_from_stream(consumer: KafkaConsumer, stream_name: str) -> None:
-
-
-
-
+def get_activities_from_stream(consumer: KafkaConsumer) -> None:
+    
+    
 def get_hello():
     # test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
     # print(test_data)
@@ -28,8 +26,8 @@ def main() -> None:
     config = get_kafka_consumer_config() # Get all configurations for Kafka consumer
     stream_name = get_kafka_topic() # name of the stream
     
-    server = KafkaConsumer(**config)
-    get_activities(server, stream_name)
+    consumer = KafkaConsumer(stream_name, **config)
+    get_activities(server)
 
 
 if __name__ == '__main__':
