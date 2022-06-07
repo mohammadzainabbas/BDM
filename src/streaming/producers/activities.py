@@ -28,13 +28,16 @@ def fetch_all_activities() -> list:
     return data
 
 def say_hello():
-    server = KafkaProducer(get_kafka_config())
+    server = KafkaProducer(*get_kafka_config())
     stream = get_kafka_topic()
     server.send(stream, value="Hello World")
-
-
+    
 def main():
-    print(get_kafka_config())
+    
+    say_hello()
+
+    # print(get_kafka_config())
+
     # activity_type = "activities"
     # today_date = get_today_date()
     # path = get_parent(join(today_date, activity_type))
