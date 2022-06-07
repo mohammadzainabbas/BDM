@@ -14,3 +14,4 @@ set -e -u pipefail
 
 KAFKA_DIR=~/BDM_Software/kafka_2.13-3.1.0/
 
+log "Starting Zoo"
