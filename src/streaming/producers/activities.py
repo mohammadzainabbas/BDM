@@ -27,7 +27,7 @@ def fetch_all_activities() -> list:
     return data
 
 def say_hello():
-    # test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
+    test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
     # print(test_data)
     config = get_kafka_config()
     server = KafkaProducer(**config)
