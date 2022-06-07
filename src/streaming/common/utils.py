@@ -55,3 +55,6 @@ def get_kafka_config() -> dict:
     return {
         "bootstrap_servers": "localhost:9092"
     }
+
+def get_kafka_topic() -> str:
+    return ""
