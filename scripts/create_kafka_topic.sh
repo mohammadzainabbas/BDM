@@ -13,7 +13,7 @@ set -e -u pipefail
 . $(dirname $0)/utils.sh
 
 #Function that shows usage for this script
-usage() {
+function usage() {
 cat << HEREDOC
 Create Kafka topic/stream
 
@@ -38,7 +38,7 @@ KAFKA_DIR=~/BDM_Software/kafka_2.13-3.1.0
 topic="random"
 
 #Get all the arguments and update accordingly
-while [ "$#" -gt 0 ]; do
+while [[ "$#" -gt 0 ]]; do
     case $1 in
         -t|--topic) topic="$2"; shift ;;
         -h|--help)
@@ -52,6 +52,6 @@ done
 
 log "Creating Kafka topic/stream"
 
-# sh $KAFKA_DIR/bin/kafka-topics.sh --create --topic $topic --bootstrap-server localhost:9092
+echo sh $KAFKA_DIR/bin/kafka-topics.sh --create --topic $topic --bootstrap-server localhost:9092
 
 log "Kafka topic/stream '$topic' started !!"
