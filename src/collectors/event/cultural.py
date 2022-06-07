@@ -10,7 +10,7 @@ def get_cultural_events() -> list:
     while(True):
         _result_ = fetch_data("{}{}".format(BASE_URL, start_url), verbose=True)
         _data_ = _result_['result']['records']
-        data.extend(_result_['result']['records'])
+        data.extend(_data_)
         if is_first:
             total_data = _result_['result']['total']
             is_first = False
