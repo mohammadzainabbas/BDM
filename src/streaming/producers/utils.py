@@ -18,15 +18,13 @@ def send_list_data_as_stream(records: list, server: KafkaProducer, stream_name: 
         server.send(stream_name, value=record)
 
 def send_dataframe_as_stream(df: pd.DataFrame, server: KafkaProducer, stream_name: str) -> None:
-    records = df.T.to_dict().values()
-    for record in records:
-        server.send(stream_name, value=record)
+    records = df.T.to_dict().values() # https://stackoverflow.com/a/29815523/6390175https://stackoverflow.com/a/29815523/6390175
+    send_list_data_as_stream(records, server, stream_name)
 
 def send_data_as_stream(records: Any, server: KafkaProducer, stream_name: str) -> None:
     if isinstance(records, list):
         send_list_data_as_stream(records, server, stream_name)
     elif isinstance(records, pd.DataFrame):
         send_list_data_as_stream(records, server, stream_name)
-
-    for record in records:
-        server.send(stream_name, value=record)
+    else:
+        
