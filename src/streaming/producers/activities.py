@@ -26,20 +26,20 @@ def fetch_all_activities() -> list:
         if not start_url: break
     return data
 
-def send_data_as_stream(records: list) -> None:
+def send_data_as_stream(records: list, server: KafkaProducer, stream_name: str) -> None:
+    for record in records:
+        server.send(stream_name, record)
 
-    for 
 
-
-def get_activities(server: KafkaProducer, stream: str):
+def get_activities(server: KafkaProducer, stream_name: str):
     test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
     # print(test_data)
-    server.send(stream, value=test_data)
+    server.send(stream_name, value=test_data)
     
 def main():
     
     config = get_kafka_producer_config() # Get all configurations for Kafka producer
-    stream = get_kafka_topic() # name of the stream
+    stream_name = get_kafka_topic() # name of the stream
     
     server = KafkaProducer(**config)
     get_activities(server)
