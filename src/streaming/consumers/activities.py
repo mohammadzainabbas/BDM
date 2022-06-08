@@ -19,6 +19,8 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __format = 'parquet'
 
     spark = get_streaming_spark_session()
+
+    # Read from Kafka stream
     df = spark.readStream \
         .format("kafka") \
         .option("kafka.bootstrap.servers", get_kafka_bootstrap_server_host_n_port()) \
@@ -26,7 +28,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
         .option("failOnDataLoss","false") \
         .load()
     
-    
+
 
     
 def main() -> None:
