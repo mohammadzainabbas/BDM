@@ -34,6 +34,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
         .option("failOnDataLoss","false") \
         .load()
 
+    # 
     
     
 def main() -> None:
