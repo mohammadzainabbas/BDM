@@ -9,6 +9,18 @@ import pandas as pd
 
 # Helper methods for Kafka Producer
 
+def get_kafka_producer_config() -> dict:
+    """
+    Return configurations for Kafka producer
+    
+    Reference: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html
+    """
+    __config = get_common_kafka_config()
+    __config.update({
+        "value_serializer": lambda m: json.dumps(m, indent=2).encode('utf-8'),
+    })
+    return __config
+
 def send_list_data_as_stream(records: list, server: KafkaProducer, stream_name: str) -> None:
     for record in records:
         server.send(stream_name, value=record)

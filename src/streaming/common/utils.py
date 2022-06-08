@@ -60,30 +60,6 @@ def get_common_kafka_config() -> dict:
         "bootstrap_servers": "localhost:9092"
     }
 
-def get_kafka_producer_config() -> dict:
-    """
-    Return configurations for Kafka producer
-    
-    Reference: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html
-    """
-    __config = get_common_kafka_config()
-    __config.update({
-        "value_serializer": lambda m: json.dumps(m, indent=2).encode('utf-8'),
-    })
-    return __config
-
-def get_kafka_consumer_config() -> dict:
-    """
-    Return configurations for Kafka consumer
-    
-    Reference: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html
-    """
-    __config = get_common_kafka_config()
-    __config.update({
-        "value_deserializer": lambda m: json.loads(m.decode('utf-8')),
-    })
-    return __config
-
 def get_kafka_topic() -> str:
     """
     Name of the Kafka topic/stream

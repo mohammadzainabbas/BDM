@@ -22,14 +22,6 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
             except Exception as e:
                 __function_name = stack()[0][3] if stack()[0][3] else None # https://stackoverflow.com/a/55253296/6390175
                 print_error("Something went wrong in {}\n{}".format(__function_name, e))
-
-def get_hello():
-    # test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
-    # print(test_data)
-    config = get_kafka_consumer_config()
-    stream = get_kafka_topic()
-    consumer = KafkaConsumer(stream, **config)
-
     
 def main() -> None:
 
