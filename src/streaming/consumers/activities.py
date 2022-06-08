@@ -29,10 +29,12 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
     __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "activities"))
     
-    # For schema (schema won't be changed)
+    # Since, schema won't be changed, we can get it from an old file
+    # @todo: find a better way for schema (maybe save it somewhere to reuse it later)
     data_date = "20220404"
-
+    activities_dir = join("data", "events", "activities")
     activities_file = "{}/{}/{}".format(hdfs_home, activities_dir, "activities_{}.parquet".format(data_date))
+    
 
     # Get spark streaming session
     spark = get_streaming_spark_session()
