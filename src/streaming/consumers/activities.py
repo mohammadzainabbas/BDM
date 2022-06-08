@@ -46,7 +46,8 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     # For HDFS Path
     hdfs_home = "{}{}".format(HDFS_DEFAULT, HDFS_HOME)
 
-    __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "activities"))
+    # __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "activities"))
+    __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "activities", "formatted_activities.parquet"))
 
     # Get spark streaming session
     spark = get_streaming_spark_session()
