@@ -15,7 +15,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     for message in consumer:
         value = message.value
         __data.append(value)
-        if len(__data) == __push_after_items:
+        if (len(__data) % __push_after_items) == 0:
             try:
                 store_streaming_data_in_hdfs(__data, __hdfs_location, __format)
                 __data = list() # empty out the list in 
