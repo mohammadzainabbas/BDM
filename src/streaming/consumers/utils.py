@@ -5,6 +5,14 @@ path.append(parent_dir)
 from common.utils import *
 from traitlets import Any
 import pandas as pd
+from pyspark.sql import SparkSession, session
+import pyarrow.csv as pcsv
+import pyarrow.parquet as pq
+from hdfs import InsecureClient
+from hdfs.util import HdfsError
+
+def get_spark_session() -> session.SparkSession:
+    return SparkSession.builder.appName("bdm").getOrCreate()
 
 # Helper methods for Kafka consumer
 
