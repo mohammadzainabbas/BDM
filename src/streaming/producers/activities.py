@@ -11,14 +11,14 @@ def get_total() -> int:
     _total_ = _result_['result']['total']
     return int(_total_ if _total_ else 0)
 
-def fetch_all_activities() -> list:
+def fetch_all_activities(verbose: bool = False) -> list:
     """
     Repeatedly call the API endpoint and fetch all records 
     """
     data, is_first, total_data, start_url = list(), True, 0, START_URL
     # Fetch till we have all the records (a parameter 'total' in the API call)
     while(True):
-        _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, start_url), verbose=True) )
+        _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, start_url), verbose=verbose) )
         _data_ = _result_['result']['records']
         data.extend(_data_)
         if is_first:
@@ -30,7 +30,7 @@ def fetch_all_activities() -> list:
         if not start_url: break
     return data
 
-def get_activities(server: KafkaProducer, stream_name: str, verbose: bool) -> None:
+def get_activities(server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     __total = 0
     __timer = 2 * 60 # check changes in data after every 2 min
     
@@ -40,9 +40,9 @@ def get_activities(server: KafkaProducer, stream_name: str, verbose: bool) -> No
 
         # if no. of records are updated -> fetch new records and push them in stream
         if __total != _total_ and _total_ != 0:
-            __data = fetch_all_activities()
+            __data = fetch_all_activities(verbose=verbose)
             __total = _total_
-            send_data_as_stream(__data, server, stream_name)
+            send_data_as_stream(__data, server, stream_name, verbose)
         else:
             sleep(__timer)
 
