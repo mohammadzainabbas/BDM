@@ -19,23 +19,15 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __format = 'parquet'
 
     spark = get_streaming_spark_session()
-    df = spark.readStream.format("kafka").option("kafka.bootstrap.servers", get_kafka_bootstrap_server_host_n_port()) \
-        .option("subscribe", "twitter") \
+    df = spark.readStream \
+        .format("kafka") \
+        .option("kafka.bootstrap.servers", get_kafka_bootstrap_server_host_n_port()) \
+        .option("subscribe", get_kafka_topic()) \
         .option("failOnDataLoss","false") \
         .load()
+    
+    
 
-
-    for message in consumer:
-        value = message.value
-        # @todo: Do any preprocessing on streaming data that you need to do here
-        __data.append(value)
-        if (len(__data) % __push_after_items) == 0:
-            try:
-                store_streaming_data_in_hdfs(__data, __hdfs_location, __format)
-                __data = list() # empty out the list in 
-            except Exception as e:
-                __function_name = stack()[0][3] if stack()[0][3] else None # https://stackoverflow.com/a/55253296/6390175
-                print_error("Something went wrong in {}\n{}".format(__function_name, e))
     
 def main() -> None:
 
