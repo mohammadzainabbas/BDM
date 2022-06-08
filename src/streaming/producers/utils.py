@@ -7,7 +7,7 @@ from traitlets import Any
 from kafka import KafkaProducer
 import pandas as pd
 
-# Helper method for Kafka Producer
+# Helper methods for Kafka Producer
 
 def send_list_data_as_stream(records: list, server: KafkaProducer, stream_name: str) -> None:
     for record in records:
