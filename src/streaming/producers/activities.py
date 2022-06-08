@@ -30,7 +30,7 @@ def fetch_all_activities() -> list:
         if not start_url: break
     return data
 
-def get_activities(server: KafkaProducer, stream_name: str) -> None:
+def get_activities(server: KafkaProducer, stream_name: str, verbose: bool) -> None:
     __total = 0
     __timer = 2 * 60 # check changes in data after every 2 min
     
@@ -52,7 +52,7 @@ def main() -> None:
     stream_name = get_kafka_topic() # name of the stream
     
     server = KafkaProducer(**config)
-    get_activities(server, stream_name)
+    get_activities(server, stream_name, verbose=True)
 
 if __name__ == '__main__':
     main()
