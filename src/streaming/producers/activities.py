@@ -20,6 +20,7 @@ def fetch_n_send_all_activities_as_stream(server: KafkaProducer, stream_name: st
     while(True):
         _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, start_url), verbose=verbose) )
         _data_ = _result_['result']['records']
+        
 
         if is_first:
             total_data = _result_['result']['total']
