@@ -5,6 +5,12 @@ from collections import defaultdict
 from kafka import KafkaConsumer
 
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
+    for message in consumer:
+        print(type(message))
+        print(message)
+        value = message.value
+        print(type(value))
+        print(value)
     
     
 def get_hello():
@@ -14,12 +20,6 @@ def get_hello():
     stream = get_kafka_topic()
     consumer = KafkaConsumer(stream, **config)
 
-    for message in consumer:
-        print(type(message))
-        print(message)
-        value = message.value
-        print(type(value))
-        print(value)
     
 def main() -> None:
 
