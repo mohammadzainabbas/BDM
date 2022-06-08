@@ -7,8 +7,8 @@ from collections import defaultdict
 from kafka import KafkaConsumer
 from inspect import stack
 
-from pyspark.sql import functions as F
-from pyspark.sql import SparkSession
+from pyspark.sql import functions as SF
+from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.window import Window
 from pyspark.sql.types import StructType,StructField,StringType, FloatType, ArrayType,IntegerType,TimestampType, LongType, BinaryType, MapType
 
