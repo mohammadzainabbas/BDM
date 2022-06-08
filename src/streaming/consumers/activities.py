@@ -10,6 +10,9 @@ from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.window import Window
 from pyspark.sql.types import StructType,StructField,StringType, FloatType, ArrayType,IntegerType,TimestampType, LongType, BinaryType, MapType
 
+import warnings
+warnings.filterwarnings("ignore") # disable warnings
+
 def remove_missing_data(df, cols):
     for col in cols:
         df = df.filter(SF.col(col).isNotNull())
@@ -78,9 +81,10 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
     __df = df.withColumn("formatted_value", binary_to_str( SF.col("value")))
 
-    # __df.select("formatted_value").writeStream.format("console").start().awaitTermination()
 
     __df = __df.select(SF.from_json(SF.col("formatted_value"), __schema).alias("activities_records"), "timestamp")
+    
+    __df.select("activities_records").writeStream.format("console").start()
     
     # __df = df.select(SF.from_json(SF.explode(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
     # __df = df.select(SF.from_json(SF.col("value"), __schema).alias("activities_records"), "timestamp")
