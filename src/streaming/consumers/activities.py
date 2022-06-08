@@ -88,8 +88,9 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
 
     __df = __df.select(SF.from_json(SF.col("formatted_value"), __schema).alias("activities_records"), "timestamp")
+    __df.printSchema()
     
-    __df.select("activities_records.*").writeStream.format("console").start()
+    __df.select("activities_records.*").writeStream.format("console").start().awaitTermination()
     
     # __df = df.select(SF.from_json(SF.explode(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
     # __df = df.select(SF.from_json(SF.col("value"), __schema).alias("activities_records"), "timestamp")
@@ -98,13 +99,13 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __df.printSchema()
     
     # required columns
-    __columns = required_columns()
+    # __columns = required_columns()
 
     # remove missing values
     # __df = remove_missing_data(__df, __columns[0:4])
 
     # filter out un-neccessary columns
-    __df = __df.select(__columns)
+    # __df = __df.select(__columns)
 
     # drop duplicates for 'register_id'
     __df = __df.withWatermark('timestamp', '10 minutes').dropDuplicates(subset=['register_id'])
