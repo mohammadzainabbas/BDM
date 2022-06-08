@@ -19,7 +19,10 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __format = 'parquet'
 
     spark = get_streaming_spark_session()
-    df = spark.readStream.format("kafka")
+    df = spark.readStream.format("kafka").option("kafka.bootstrap.servers", "localhost:9092") \
+        .option("subscribe", "twitter") \
+        .option("failOnDataLoss","false") \
+        .load()
 
 
     for message in consumer:
