@@ -2,7 +2,7 @@ import imp
 from os.path import join
 from json import dumps, loads
 from streaming.common.utils import print_error
-from utils import get_today_date, get_parent, store_streaming_data_in_hdfs, print_log, get_kafka_consumer_config, get_kafka_topic
+from utils import get_today_date, get_parent, store_streaming_data_in_hdfs, print_log, get_kafka_consumer_config, get_kafka_topic, get_streaming_spark_session
 from collections import defaultdict
 from kafka import KafkaConsumer
 from inspect import stack
@@ -17,6 +17,11 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __data = list()
     __hdfs_location = None
     __format = 'parquet'
+
+    spark = get_streaming_spark_session()
+    df = spark.readStream.
+
+
     for message in consumer:
         value = message.value
         # @todo: Do any preprocessing on streaming data that you need to do here
