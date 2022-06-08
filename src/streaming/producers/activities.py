@@ -11,16 +11,16 @@ def get_total() -> int:
     _total_ = _result_['result']['total']
     return int(_total_ if _total_ else 0)
 
-def fetch_all_activities(verbose: bool = False) -> list:
+def fetch_n_send_all_activities_as_stream(server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     """
-    Repeatedly call the API endpoint and fetch all records 
+    Repeatedly call the API endpoint and fetch all records and send the result in a stream 
     """
-    data, is_first, total_data, start_url = list(), True, 0, START_URL
+    is_first, total_data, start_url = True, 0, START_URL
     # Fetch till we have all the records (a parameter 'total' in the API call)
     while(True):
         _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, start_url), verbose=verbose) )
         _data_ = _result_['result']['records']
-        data.extend(_data_)
+
         if is_first:
             total_data = _result_['result']['total']
             is_first = False
@@ -28,7 +28,6 @@ def fetch_all_activities(verbose: bool = False) -> list:
         if total_data == 0: break
         start_url = _result_['result']['_links']['next']
         if not start_url: break
-    return data
 
 def get_activities(server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     __total = 0
