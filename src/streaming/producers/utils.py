@@ -33,9 +33,9 @@ def send_data_as_stream(records: Any, server: KafkaProducer, stream_name: str, v
     if isinstance(records, list):
         send_list_data_as_stream(records, server, stream_name, verbose)
     elif isinstance(records, pd.DataFrame):
-        send_list_data_as_stream(records, server, stream_name, verbose)
+        send_dataframe_as_stream(records, server, stream_name, verbose)
     else:
-        print_log("Sending raw data as stream")
+        print_log("Sending raw data as stream ...")
         server.send(stream_name, value=records) # assumes 'records' is serializable
         print_log("Sent raw data as stream")
 
