@@ -14,9 +14,6 @@ from hdfs.util import HdfsError
 
 # Spark Streaming
 
-def get_spark_session() -> session.SparkSession:
-    return SparkSession.builder.appName("bdm").getOrCreate()
-
 def get_streaming_spark_session() -> session.SparkSession:
     return SparkSession.builder.appName("bdm").config('spark.jars.packages','org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.0').getOrCreate()
 
