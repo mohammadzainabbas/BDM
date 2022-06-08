@@ -7,11 +7,13 @@ from kafka import KafkaConsumer
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __push_after_items = 1000 # No. of messages after which you have to store the data in HDFS  
     __data = list()
+    __hdfs_location = None
+    __format = 'parquet'
     for message in consumer:
         value = message.value
         __data.append(value)
         if len(__data) == __push_after_items:
-            store_streaming_data_in_hdfs() 
+            store_streaming_data_in_hdfs(__data, __hdfs_location, __format)
 
 
 
