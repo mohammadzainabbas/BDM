@@ -17,7 +17,8 @@ def get_kafka_producer_config() -> dict:
     """
     __config = get_common_kafka_config()
     __config.update({
-        "value_serializer": lambda m: json.dumps(m, indent=2).encode('utf-8'),
+        # "value_serializer": lambda m: json.dumps(m, indent=2).encode('utf-8'),
+        "value_serializer": lambda m: json.dumps(m, indent=2),
     })
     return __config
 
