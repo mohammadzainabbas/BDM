@@ -24,7 +24,13 @@ def get_kafka_producer_config() -> dict:
 def send_list_data_as_stream(records: list, server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     total = len(records)
     if verbose: print_log("Sending {} records as stream '{}' ...".format(total, stream_name))
-    for record in records:
+    # for record in records:
+    for index, record in enumerate(records):
+        if index == 0:
+            if isinstance(record, dict):
+                keys = record.keys()
+                for key in keys:
+                    print("{}: {}".format(key, type(record[key])))
         server.send(stream_name, value=record)
     if verbose: print_log("Sent {} records as stream '{}'".format(total, stream_name))
 
