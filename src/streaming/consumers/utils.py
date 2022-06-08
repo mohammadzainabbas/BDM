@@ -8,6 +8,18 @@ import pandas as pd
 
 # Helper methods for Kafka consumer
 
+def get_kafka_consumer_config() -> dict:
+    """
+    Return configurations for Kafka consumer
+    
+    Reference: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html
+    """
+    __config = get_common_kafka_config()
+    __config.update({
+        "value_deserializer": lambda m: json.loads(m.decode('utf-8')),
+    })
+    return __config
+
 def store_raw_data_in_hdfs(data: Any, hdfs_location: str, format: str = 'parquet') -> None:
     return None
 

@@ -38,7 +38,7 @@ def fetch_data(url, verbose=False, raw=False, **kwargs):
         if raw: return result
         return json.loads(result.text)
 
-    except Exception as e: print("[Error] {}".format(e))
+    except Exception as e: print_error("Unable to fetch the data due to '{}'".format(e))
 
 def get_today_date(format='%Y%m%d'):
     """
