@@ -82,7 +82,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
     # write stream to a 'parquet' file in an 'append' mode
     # https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.sql.streaming.DataStreamWriter.foreachBatch.html
-    __df.writeStream.foreachBatch(lambda x, _: save_stream_in_hdfs(x, __hdfs_location)).start(outputMode='append').awaitTermination()
+    __df.writeStream.foreachBatch(lambda batch_df, batch_id: save_stream_in_hdfs(batch_df, __hdfs_location)).start(outputMode='append').awaitTermination()
     
 def main() -> None:
 
