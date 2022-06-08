@@ -19,7 +19,8 @@ def parse_record(record: dict) -> dict:
     """
     __record, __keys = dict(), record.keys()
     for __key in __keys:
-        __record[__key] = safe_load( record[__key] )
+        __value = record[__key]
+        __record[__key] = safe_load( str(__value) ) if __value else None
     return __record
 
 # Helper methods for Kafka Producer
