@@ -26,6 +26,10 @@ def required_columns() -> list:
         'timestamp' # For time keeping
     ]
 
+def save_stream_in_hdfs(df_stream, hdfs_location):
+    df_stream.write.parquet(hdfs_location)
+    # df_stream.show(10)
+
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     r"""
     
@@ -73,7 +77,10 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __columns = required_columns()
     __df = __df.select(__columns)
 
-    
+    # drop duplicates for 'register_id'
+    __df = __df.withWatermark('timestamp', '10 minutes').dropDuplicates(subset=['register_id'])
+
+
 
 
      
