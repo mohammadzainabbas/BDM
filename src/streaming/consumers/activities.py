@@ -73,7 +73,11 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     activities_file = "{}/{}/{}".format(hdfs_home, activities_dir, "activities_{}.parquet".format(data_date))
     df_activities = spark.read.format("parquet").load(activities_file)
 
-    __schema = df_activities.schema # schema for activities
+    # __schema = df_activities.schema # schema for activities
+    __schema = StructType(
+        
+
+    )
 
     df.printSchema()
 
