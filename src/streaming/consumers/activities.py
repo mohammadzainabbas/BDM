@@ -74,10 +74,14 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     df_activities = spark.read.format("parquet").load(activities_file)
 
     # __schema = df_activities.schema # schema for activities
-    __schema = StructType(
-        
-
-    )
+    __schema = StructType([ \
+    StructField("firstname",StringType(),True), \
+    StructField("middlename",StringType(),True), \
+    StructField("lastname",StringType(),True), \
+    StructField("id", StringType(), True), \
+    StructField("gender", StringType(), True), \
+    StructField("salary", IntegerType(), True) \
+  ])
 
     df.printSchema()
 
