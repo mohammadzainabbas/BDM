@@ -7,11 +7,6 @@ from collections import defaultdict
 from kafka import KafkaConsumer
 from inspect import stack
 
-from pyspark.sql import functions as F
-from pyspark.sql import SparkSession
-from pyspark.sql.window import Window
-from pyspark.sql.types import StructType,StructField,StringType, FloatType, ArrayType,IntegerType,TimestampType, LongType, BinaryType, MapType
-
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __push_after_items = 10000 # No. of messages after which you have to store the data in HDFS  
     __data = list()
