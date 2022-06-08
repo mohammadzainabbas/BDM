@@ -18,6 +18,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __hdfs_location = None
     __format = 'parquet'
 
+    # Get spark streaming session
     spark = get_streaming_spark_session()
 
     # Read from Kafka stream
