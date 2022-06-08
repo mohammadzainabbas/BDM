@@ -7,6 +7,8 @@ from traitlets import Any
 from kafka import KafkaProducer
 import pandas as pd
 
+# Helper method for Kafka Producer
+
 def send_list_data_as_stream(records: list, server: KafkaProducer, stream_name: str) -> None:
     for record in records:
         server.send(stream_name, value=record)
@@ -22,3 +24,4 @@ def send_data_as_stream(records: Any, server: KafkaProducer, stream_name: str) -
         send_list_data_as_stream(records, server, stream_name)
     else:
         server.send(stream_name, value=records) # assumes 'records' is serializable
+
