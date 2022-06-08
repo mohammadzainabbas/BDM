@@ -5,14 +5,21 @@ path.append(parent_dir)
 from common.utils import *
 from traitlets import Any
 import pandas as pd
+
 from pyspark.sql import SparkSession, session
 import pyarrow.csv as pcsv
 import pyarrow.parquet as pq
 from hdfs import InsecureClient
 from hdfs.util import HdfsError
 
+# Spark Streaming
+
 def get_spark_session() -> session.SparkSession:
     return SparkSession.builder.appName("bdm").getOrCreate()
+
+def save_df_as_parquet(file_path: str, df: pd.DataFrame) -> None:
+    spark = get_spark_session()
+    spark.createDataFrame(df).write.parquet(file_path)
 
 # Helper methods for Kafka consumer
 

@@ -12,13 +12,6 @@ from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.window import Window
 from pyspark.sql.types import StructType,StructField,StringType, FloatType, ArrayType,IntegerType,TimestampType, LongType, BinaryType, MapType
 
-def get_spark_session() -> session.SparkSession:
-    return SparkSession.builder.appName("bdm").getOrCreate()
-
-def save_df_as_parquet(file_path: str, df: pd.DataFrame) -> None:
-    spark = get_spark_session()
-    spark.createDataFrame(df).write.parquet(file_path)
-
 
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __push_after_items = 10000 # No. of messages after which you have to store the data in HDFS  
