@@ -19,7 +19,8 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
             try:
                 store_streaming_data_in_hdfs(__data, __hdfs_location, __format)
             except Exception as e:
-                print_error("Something went wrong {}".format(e))
+                __function_name = stack()[0][3] if stack()[0][3] else None # https://stackoverflow.com/a/55253296/6390175
+                print_error("Something went wrong in {}\n{}".format(__function_name, e))
 
             __data = list() # empty out the list
     
