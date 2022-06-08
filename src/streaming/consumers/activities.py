@@ -76,8 +76,8 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
     binary_to_str = SF.udf(parse_value_from_string, StringType())
 
-    __df = df.withColumn("value", binary_to_str( SF.col("value")))
-    __df = df.select(SF.from_json(SF.col("value"), __schema).alias("activities_records"), "timestamp")
+    __df = df.withColumn("formatted_value", binary_to_str( SF.col("value")))
+    __df = df.select(SF.from_json(SF.col("formatted_value").cast("string"), __schema).alias("activities_records"), "timestamp")
     
     # __df = df.select(SF.from_json(SF.explode(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
     # __df = df.select(SF.from_json(SF.col("value"), __schema).alias("activities_records"), "timestamp")
