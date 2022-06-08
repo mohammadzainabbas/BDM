@@ -56,12 +56,15 @@ def create_if_not_exists(path):
 # Kafka related methods
 #===============================
 
+def get_kafka_bootstrap_server_host_n_port() -> str:
+    return "localhost:9092"
+
 def get_common_kafka_config() -> dict:
     """
     Return common Kafka configurations
     """
     return {
-        "bootstrap_servers": "localhost:9092"
+        "bootstrap_servers": get_kafka_bootstrap_server_host_n_port()
     }
 
 def get_kafka_topic() -> str:
