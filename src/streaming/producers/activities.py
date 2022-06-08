@@ -1,4 +1,4 @@
-from utils import fetch_data, get_kafka_producer_config, get_kafka_topic, send_data_as_stream
+from utils import fetch_data, get_kafka_producer_config, get_kafka_topic, send_data_as_stream, print_log
 from collections import defaultdict
 from kafka import KafkaProducer
 from time import sleep
@@ -11,16 +11,17 @@ def get_total() -> int:
     _total_ = _result_['result']['total']
     return int(_total_ if _total_ else 0)
 
-def fetch_all_activities() -> list:
+def fetch_n_send_all_activities_as_stream(server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     """
-    Repeatedly call the API endpoint and fetch all records 
+    Repeatedly call the API endpoint and fetch all records and send the result in a stream 
     """
-    data, is_first, total_data, start_url = list(), True, 0, START_URL
+    is_first, total_data, start_url = True, 0, START_URL
     # Fetch till we have all the records (a parameter 'total' in the API call)
     while(True):
-        _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, start_url), verbose=True) )
+        _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, start_url), verbose=verbose) )
         _data_ = _result_['result']['records']
-        data.extend(_data_)
+        if verbose: print_log("Fetched {} records from the API '{}{}'".format( len(_data_), BASE_URL, start_url))
+        send_data_as_stream(_data_, server, stream_name, verbose)
         if is_first:
             total_data = _result_['result']['total']
             is_first = False
@@ -28,22 +29,23 @@ def fetch_all_activities() -> list:
         if total_data == 0: break
         start_url = _result_['result']['_links']['next']
         if not start_url: break
-    return data
 
-def get_activities(server: KafkaProducer, stream_name: str) -> None:
+def get_activities(server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     __total = 0
     __timer = 2 * 60 # check changes in data after every 2 min
     
     # Continuously get the data from the API
     while(True):
+        if verbose: print_log("Checking API again to see if we have some change...")
         _total_ = get_total() # Get the total no. of records
 
         # if no. of records are updated -> fetch new records and push them in stream
         if __total != _total_ and _total_ != 0:
-            __data = fetch_all_activities()
+            if verbose: print_log("We have some change...")
+            fetch_n_send_all_activities_as_stream(server, stream_name, verbose)
             __total = _total_
-            send_data_as_stream(__data, server, stream_name)
         else:
+            if verbose: print_log("No change! Waiting to check API again after '{}' seconds ...".format(__timer))
             sleep(__timer)
 
 def main() -> None:
@@ -52,7 +54,7 @@ def main() -> None:
     stream_name = get_kafka_topic() # name of the stream
     
     server = KafkaProducer(**config)
-    get_activities(server, stream_name)
+    get_activities(server, stream_name, verbose=True)
 
 if __name__ == '__main__':
     main()

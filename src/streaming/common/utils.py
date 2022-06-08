@@ -11,6 +11,12 @@ def print_log(text):
     """
     print("[ log ] {}".format(text))
 
+def print_error(text):
+    """
+    Logger for error
+    """
+    print("[ error ] {}".format(text))
+
 def json_to_csv(records, path):
     """
     Convert json and save as csv
@@ -32,7 +38,7 @@ def fetch_data(url, verbose=False, raw=False, **kwargs):
         if raw: return result
         return json.loads(result.text)
 
-    except Exception as e: print("[Error] {}".format(e))
+    except Exception as e: print_error("Unable to fetch the data due to '{}'".format(e))
 
 def get_today_date(format='%Y%m%d'):
     """
@@ -46,37 +52,20 @@ def create_if_not_exists(path):
     """
     if not exists(path): makedirs(path)
 
+#===============================
+# Kafka related methods
+#===============================
+
+def get_kafka_bootstrap_server_host_n_port() -> str:
+    return "localhost:9092"
+
 def get_common_kafka_config() -> dict:
     """
     Return common Kafka configurations
     """
     return {
-        "bootstrap_servers": "localhost:9092"
+        "bootstrap_servers": get_kafka_bootstrap_server_host_n_port()
     }
-
-def get_kafka_producer_config() -> dict:
-    """
-    Return configurations for Kafka producer
-    
-    Reference: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html
-    """
-    __config = get_common_kafka_config()
-    __config.update({
-        "value_serializer": lambda m: json.dumps(m, indent=2).encode('utf-8'),
-    })
-    return __config
-
-def get_kafka_consumer_config() -> dict:
-    """
-    Return configurations for Kafka consumer
-    
-    Reference: https://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html
-    """
-    __config = get_common_kafka_config()
-    __config.update({
-        "value_deserializer": lambda m: json.loads(m.decode('utf-8')),
-    })
-    return __config
 
 def get_kafka_topic() -> str:
     """
