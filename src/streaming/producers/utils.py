@@ -13,7 +13,7 @@ from yaml import safe_load
 def parse_record(record: dict) -> dict:
     """
     Parse 'str' to correct types
-     
+
     Reference: https://stackoverflow.com/a/71167976/6390175
     """
     __record, __keys = dict(), record.keys()
@@ -40,6 +40,7 @@ def send_list_data_as_stream(records: list, server: KafkaProducer, stream_name: 
     # for record in records:
     for index, record in enumerate(records):
         if index == 0:
+            record = parse_record( record )
             if isinstance(record, dict):
                 keys = record.keys()
                 for key in keys:
