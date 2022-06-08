@@ -27,8 +27,7 @@ def main() -> None:
     stream_name = get_kafka_topic() # name of the stream
     
     consumer = KafkaConsumer(stream_name, **config)
-    get_activities(server)
-
+    get_activities_from_stream(consumer)
 
 if __name__ == '__main__':
     main()
