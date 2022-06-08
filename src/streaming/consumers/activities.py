@@ -28,21 +28,6 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     hdfs_home = "{}{}".format(HDFS_DEFAULT, HDFS_HOME)
 
     __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "activities"))
-    
-    # Since, schema won't be changed, we can get it from an old file
-    # @todo: find a better way for schema (maybe save it somewhere to reuse it later)
-    data_date = "20220404"
-    activities_dir = join("data", "events", "activities")
-    activities_file = "{}/{}/{}".format(hdfs_home, activities_dir, "activities_{}.parquet".format(data_date))
-    df_activities = spark.read.format("parquet").load(activities_file)
-
-    __schema = df_activities.schema
-
-
-    __df = df.select(SF.from_json(df.value.cast("string"), __schema).alias("activities_records"), "timestamp")
-    __df = __df.select("activities_records.*", "timestamp")
-    __df.printSchema()
-
 
     # Get spark streaming session
     spark = get_streaming_spark_session()
@@ -55,7 +40,18 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
         .option("failOnDataLoss","false") \
         .load()
 
-    # 
+    # Since, schema won't be changed, we can get it from an old file
+    # @todo: find a better way for schema (maybe save it somewhere to reuse it later)
+    data_date = "20220404"
+    activities_dir = join("data", "events", "activities")
+    activities_file = "{}/{}/{}".format(hdfs_home, activities_dir, "activities_{}.parquet".format(data_date))
+    df_activities = spark.read.format("parquet").load(activities_file)
+
+    __schema = df_activities.schema # schema for activities
+
+    __df = df.select(SF.from_json(df.value.cast("string"), __schema).alias("activities_records"), "timestamp")
+    __df = __df.select("activities_records.*", "timestamp")
+    __df.printSchema()
     
     
 def main() -> None:
