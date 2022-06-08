@@ -5,4 +5,4 @@ pandas
 pyspark
 pyarrow
 kafka-python
-yaml
+pyyaml
