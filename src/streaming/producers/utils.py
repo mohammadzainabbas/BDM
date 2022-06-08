@@ -1,3 +1,4 @@
+from os import system
 from os.path import join, abspath, pardir, dirname
 from sys import path
 parent_dir = abspath(join(dirname(abspath(__file__)), pardir))
@@ -45,6 +46,7 @@ def send_list_data_as_stream(records: list, server: KafkaProducer, stream_name: 
                 keys = record.keys()
                 for key in keys:
                     print("{}: {}".format(key, type(record[key])))
+            exit(1)
         server.send(stream_name, value=record)
     if verbose: print_log("Sent {} records as stream '{}'".format(total, stream_name))
 
