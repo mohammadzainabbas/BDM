@@ -32,6 +32,14 @@ def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
     batch_df.show(10)
     print("\n============================================\n")
 
+def parse_value_from_string(x):
+    res = loads(x).decor
+    return res
+
+parse_float_array = F.udf(parse_value_from_string, ArrayType(FloatType()))
+
+
+
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     r"""
     
