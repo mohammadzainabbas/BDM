@@ -13,7 +13,11 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
         value = message.value
         __data.append(value)
         if len(__data) == __push_after_items:
-            store_streaming_data_in_hdfs(__data, __hdfs_location, __format)
+            try:
+                store_streaming_data_in_hdfs(__data, __hdfs_location, __format)
+            except Exception e:
+                print_log
+
             __data = list() # empty out the list
     
     

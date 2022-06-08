@@ -11,6 +11,12 @@ def print_log(text):
     """
     print("[ log ] {}".format(text))
 
+def print_error(text):
+    """
+    Logger for error
+    """
+    print("[ error ] {}".format(text))
+
 def json_to_csv(records, path):
     """
     Convert json and save as csv
