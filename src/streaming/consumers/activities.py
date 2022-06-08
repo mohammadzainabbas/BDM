@@ -14,6 +14,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __format = 'parquet'
     for message in consumer:
         value = message.value
+        # @todo: Do any preprocessing on streaming data that you need to do here
         __data.append(value)
         if (len(__data) % __push_after_items) == 0:
             try:
