@@ -26,9 +26,9 @@ def required_columns() -> list:
         'timestamp' # For time keeping
     ]
 
-def save_stream_in_hdfs(df_stream, hdfs_location):
-    df_stream.write.parquet(hdfs_location)
-    # df_stream.show(10)
+def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
+    batch_df.write.parquet(hdfs_location)
+    # batch_df.show(10)
 
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     r"""
@@ -82,7 +82,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
     # write stream to a 'parquet' file in an 'append' mode
     # https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.sql.streaming.DataStreamWriter.foreachBatch.html
-    __df.writeStream.foreachBatch(lambda batch_df, batch_id: save_stream_in_hdfs(batch_df, __hdfs_location)).start(outputMode='append').awaitTermination()
+    __df.writeStream.foreachBatch(lambda batch_df, batch_id: save_stream_in_hdfs(batch_df, batch_id, __hdfs_location)).start(outputMode='append').awaitTermination()
     
 def main() -> None:
 
