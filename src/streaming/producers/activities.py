@@ -44,8 +44,7 @@ def get_activities(server: KafkaProducer, stream_name: str, verbose: bool = Fals
             __total = _total_
             send_data_as_stream(__data, server, stream_name, verbose)
         else:
-            if verbose:
-                print_log("No data change")
+            if verbose: print_log("Waiting to check API again ...")
             sleep(__timer)
 
 def main() -> None:
