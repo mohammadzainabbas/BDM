@@ -5,7 +5,7 @@ from collections import defaultdict
 from kafka import KafkaConsumer
 
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
-    __push_after_items = 1000 # No. of messages after which you have to store the data in HDFS  
+    __push_after_items = 10000 # No. of messages after which you have to store the data in HDFS  
     __data = list()
     __hdfs_location = None
     __format = 'parquet'
