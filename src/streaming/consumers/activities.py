@@ -74,14 +74,10 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     df_activities = spark.read.format("parquet").load(activities_file)
 
     # __schema = df_activities.schema # schema for activities
-    __schema = StructType([ \
-    StructField("firstname",StringType(),True), \
-    StructField("middlename",StringType(),True), \
-    StructField("lastname",StringType(),True), \
-    StructField("id", StringType(), True), \
-    StructField("gender", StringType(), True), \
-    StructField("salary", IntegerType(), True) \
-  ])
+    __schema = StructType([
+        StructField("geo_epgs_4326_x", FloatType(), True), \
+        StructField("geo_epgs_4326_y", FloatType(), True), \
+    ])
 
     df.printSchema()
 
@@ -92,7 +88,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
     __df = __df.select(SF.from_json(SF.col("formatted_value"), __schema).alias("activities_records"), "timestamp")
     
-    __df.select("activities_records").writeStream.format("console").start()
+    __df.select("activities_records.*").writeStream.format("console").start()
     
     # __df = df.select(SF.from_json(SF.explode(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
     # __df = df.select(SF.from_json(SF.col("value"), __schema).alias("activities_records"), "timestamp")
