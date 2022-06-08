@@ -25,8 +25,9 @@ def required_columns() -> list:
     ]
 
 def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
-    batch_df.write.mode('append').parquet(hdfs_location)
-    # batch_df.show(10)
+    # batch_df.write.mode('append').parquet(hdfs_location)
+    batch_df.write.mode('append').csv(hdfs_location)
+    batch_df.show(10)
 
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     r"""
@@ -66,7 +67,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
     __df = df.select(SF.from_json(df.value.cast("string"), __schema).alias("activities_records"), "timestamp")
     __df = __df.select("activities_records.*", "timestamp")
-    # __df.printSchema()
+    __df.printSchema()
     
     # required columns
     __columns = required_columns()
