@@ -76,8 +76,8 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     # __schema = df_activities.schema # schema for activities
     __schema = StructType([
         StructField("register_id", StringType(), True), \
-        StructField("geo_epgs_4326_x", FloatType(), True), \
-        StructField("geo_epgs_4326_y", FloatType(), True), \
+        StructField("geo_epgs_4326_x", StringType(), True), \
+        StructField("geo_epgs_4326_y", StringType(), True), \
     ])
 
     df.printSchema()
