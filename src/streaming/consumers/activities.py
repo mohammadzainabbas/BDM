@@ -78,7 +78,9 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
     df.printSchema()
 
-    __df = df.select(SF.from_json(SF.explode(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
+    __df = df.withColumn(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
+    
+    # __df = df.select(SF.from_json(SF.explode(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
     # __df = df.select(SF.from_json(SF.col("value"), __schema).alias("activities_records"), "timestamp")
     # __df = df.select(SF.from_json(df.value.cast("string"), __schema).alias("activities_records"), "timestamp")
     __df = __df.select("activities_records.*", "timestamp")
