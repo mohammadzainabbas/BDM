@@ -20,7 +20,7 @@ def fetch_n_send_all_activities_as_stream(server: KafkaProducer, stream_name: st
     while(True):
         _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, start_url), verbose=verbose) )
         _data_ = _result_['result']['records']
-        if verbose: print_log("Fetched {} records from the API '{}'".format( len(_data_), URL))
+        if verbose: print_log("Fetched {} records from the API '{}{}'".format( len(_data_), BASE_URL, start_url))
         send_data_as_stream(_data_, server, stream_name, verbose)
         if is_first:
             total_data = _result_['result']['total']
@@ -42,9 +42,8 @@ def get_activities(server: KafkaProducer, stream_name: str, verbose: bool = Fals
         # if no. of records are updated -> fetch new records and push them in stream
         if __total != _total_ and _total_ != 0:
             if verbose: print_log("We have some change...")
-            __data = fetch_all_activities(verbose=verbose)
+            __data = fetch_n_send_all_activities_as_stream(__data, server, stream_name, verbose)
             __total = _total_
-            send_data_as_stream(__data, server, stream_name, verbose)
         else:
             if verbose: print_log("No change! Waiting to check API again after '{}' seconds ...".format(__timer))
             sleep(__timer)
