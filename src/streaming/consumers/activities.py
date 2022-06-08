@@ -14,13 +14,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
         __data.append(value)
         if len(__data) == __push_after_items:
             store_streaming_data_in_hdfs(__data, __hdfs_location, __format)
-
-
-
-        print(type(message))
-        print(message)
-        print(type(value))
-        print(value)
+            __data = list() # empty out the list
     
     
 def get_hello():
