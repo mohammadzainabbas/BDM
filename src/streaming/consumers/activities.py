@@ -25,10 +25,12 @@ def required_columns() -> list:
     ]
 
 def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
-    # batch_df.write.mode('append').parquet(hdfs_location)
-    batch_df.write.mode('append').csv(hdfs_location)
+    batch_df.write.mode('append').parquet(hdfs_location)
+    # batch_df.write.mode('append').csv(hdfs_location)
     print_log("Batch ID: {}".format(batch_id))
+    batch_df.printSchema()
     batch_df.show(10)
+    print("\n============================================\n")
 
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     r"""
