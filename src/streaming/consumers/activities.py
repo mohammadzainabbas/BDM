@@ -80,10 +80,9 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     # drop duplicates for 'register_id'
     __df = __df.withWatermark('timestamp', '10 minutes').dropDuplicates(subset=['register_id'])
 
-
-
-
-     
+    # write stream to a 'parquet' file in an 'append' mode
+    # https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.sql.streaming.DataStreamWriter.foreachBatch.html
+    __df.writeStream.foreachBatch(lambda x, _: save_stream_in_hdfs(x, __hdfs_location)).start(outputMode='append').awaitTermination()
     
 def main() -> None:
 
