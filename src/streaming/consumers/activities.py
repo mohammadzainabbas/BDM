@@ -33,7 +33,7 @@ def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
     print("\n============================================\n")
 
 def parse_value_from_string(x):
-    return loads(x.decode('utf-8'))
+    return x.decode('utf-8')
     
 parse_float_array = F.udf(parse_value_from_string, ArrayType(FloatType()))
 
