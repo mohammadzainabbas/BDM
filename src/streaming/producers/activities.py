@@ -1,4 +1,4 @@
-from utils import fetch_data, get_kafka_producer_config, get_kafka_topic, send_data_as_stream
+from utils import fetch_data, get_kafka_producer_config, get_kafka_topic, send_data_as_stream, print_log
 from collections import defaultdict
 from kafka import KafkaProducer
 from time import sleep
@@ -44,6 +44,8 @@ def get_activities(server: KafkaProducer, stream_name: str, verbose: bool = Fals
             __total = _total_
             send_data_as_stream(__data, server, stream_name, verbose)
         else:
+            if verbose:
+                print_log("No data change")
             sleep(__timer)
 
 def main() -> None:
