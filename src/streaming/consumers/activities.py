@@ -78,7 +78,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
     __df = df.withColumn("formatted_value", binary_to_str( SF.col("value")))
 
-    __df.select("formatted_value").writeStream.format("console").start().awaitTermination()
+    # __df.select("formatted_value").writeStream.format("console").start().awaitTermination()
 
     __df = __df.select(SF.from_json(SF.col("formatted_value"), __schema).alias("activities_records"), "timestamp")
     
