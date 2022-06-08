@@ -19,7 +19,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __format = 'parquet'
 
     spark = get_streaming_spark_session()
-    df = spark.readStream.
+    df = spark.readStream.format("kafka")
 
 
     for message in consumer:
