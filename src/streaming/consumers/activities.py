@@ -34,10 +34,6 @@ def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
 
 def parse_value_from_string(x):
     return x.decode('utf-8')
-    
-parse_float_array = F.udf(parse_value_from_string, ArrayType(FloatType()))
-
-
 
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     r"""
@@ -78,7 +74,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
     df.printSchema()
 
-    __df = df.withColumn(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
+    __df = df.withColumn(SF.col("value")) , __schema).alias("activities_records"), "timestamp")
     
     # __df = df.select(SF.from_json(SF.explode(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
     # __df = df.select(SF.from_json(SF.col("value"), __schema).alias("activities_records"), "timestamp")
