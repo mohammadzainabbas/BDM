@@ -6,6 +6,16 @@ from common.utils import *
 from traitlets import Any
 from kafka import KafkaProducer
 import pandas as pd
+from yaml import safe_load
+
+# Parsing helper methods
+
+def parse_record(record: dict) -> dict:
+    __record, __keys = dict(), record.keys()
+    for __key in __keys:
+        __record[__key] = safe_load( record[__key] )
+    return __record
+
 
 # Helper methods for Kafka Producer
 
