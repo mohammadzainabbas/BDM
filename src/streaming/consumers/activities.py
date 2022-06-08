@@ -17,6 +17,15 @@ def remove_missing_data(df, cols):
         df = df.filter(SF.col(col).isNotNull())
     return df
 
+def required_columns() -> list:
+    return [
+        'register_id', 'name', 'geo_epgs_4326_x', 'geo_epgs_4326_y', # Must
+        'addresses_neighborhood_id', 'addresses_neighborhood_name', # For neighborhood's query
+        'addresses_district_id', 'addresses_district_name', # For district query
+        'addresses_road_name', 'addresses_road_id', # Maybe useful to search events on that road
+        'timestamp' # For time keeping
+    ]
+
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     r"""
     
