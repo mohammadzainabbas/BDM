@@ -19,9 +19,13 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     Offical documentation for streaming: https://spark.apache.org/docs/latest/streaming-programming-guide.html
 
     """
-    __push_after_items = 10000 # No. of messages after which you have to store the data in HDFS  
-    __data = list()
-    __hdfs_location = None
+    # For HDFS
+    HDFS_DEFAULT = "hdfs://alakazam.fib.upc.es:27000"
+    HDFS_USER = "bdm"
+    HDFS_HOME = "/user/{}".format(HDFS_USER)
+
+    # For HDFS Path
+    hdfs_home = "{}{}".format(HDFS_DEFAULT, HDFS_HOME)
 
     # Get spark streaming session
     spark = get_streaming_spark_session()
