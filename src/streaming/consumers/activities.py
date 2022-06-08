@@ -68,11 +68,13 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __df = __df.select("activities_records.*", "timestamp")
     # __df.printSchema()
     
+    # required columns
+    __columns = required_columns()
+
     # remove missing values
-    __df = remove_missing_data(__df)
+    __df = remove_missing_data(__df, __columns)
 
     # filter out un-neccessary columns
-    __columns = required_columns()
     __df = __df.select(__columns)
 
     # drop duplicates for 'register_id'
