@@ -18,13 +18,11 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
         if len(__data) == __push_after_items:
             try:
                 store_streaming_data_in_hdfs(__data, __hdfs_location, __format)
+                __data = list() # empty out the list in 
             except Exception as e:
                 __function_name = stack()[0][3] if stack()[0][3] else None # https://stackoverflow.com/a/55253296/6390175
                 print_error("Something went wrong in {}\n{}".format(__function_name, e))
 
-            __data = list() # empty out the list
-    
-    
 def get_hello():
     # test_data = { 'name': 'Mohammad', 'age': 27, 'x': -5.12, 'y': 34.48 }
     # print(test_data)
