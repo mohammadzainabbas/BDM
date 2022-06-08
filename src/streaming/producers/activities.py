@@ -36,16 +36,17 @@ def get_activities(server: KafkaProducer, stream_name: str, verbose: bool = Fals
     
     # Continuously get the data from the API
     while(True):
-        if verbose: print_log("Check API again to see if we have some change ...".format(__timer))
+        if verbose: print_log("Checking API again to see if we have some change...")
         _total_ = get_total() # Get the total no. of records
 
         # if no. of records are updated -> fetch new records and push them in stream
         if __total != _total_ and _total_ != 0:
+            if verbose: print_log("We have some change...")
             __data = fetch_all_activities(verbose=verbose)
             __total = _total_
             send_data_as_stream(__data, server, stream_name, verbose)
         else:
-            if verbose: print_log("Waiting to check API again after '{}' seconds ...".format(__timer))
+            if verbose: print_log("No change! Waiting to check API again after '{}' seconds ...".format(__timer))
             sleep(__timer)
 
 def main() -> None:
