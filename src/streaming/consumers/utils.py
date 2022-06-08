@@ -6,10 +6,16 @@ from common.utils import *
 
 from traitlets import Any
 
+
 # Helper methods for Kafka consumer
 
+def store_list_data_in_hdfs(data: list, hdfs_location: str, format: str = 'parquet') -> None:
+
+def store_dataframe_data_in_hdfs(data: list, hdfs_location: str, format: str = 'parquet') -> None:
+
+
 def store_streaming_data_in_hdfs(data: Any, hdfs_location: str, format: str = 'parquet') -> None:
-    
+
 
 
 
