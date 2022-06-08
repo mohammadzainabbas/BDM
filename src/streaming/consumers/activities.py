@@ -68,6 +68,14 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     
     # remove missing values
     __df = remove_missing_data(__df)
+
+    # filter out un-neccessary columns
+    __columns = required_columns()
+    __df = __df.select(__columns)
+
+    
+
+
      
     
 def main() -> None:
