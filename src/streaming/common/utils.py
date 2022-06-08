@@ -52,6 +52,10 @@ def create_if_not_exists(path):
     """
     if not exists(path): makedirs(path)
 
+#===============================
+# Kafka related methods
+#===============================
+
 def get_common_kafka_config() -> dict:
     """
     Return common Kafka configurations
