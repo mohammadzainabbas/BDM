@@ -12,15 +12,16 @@ from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.window import Window
 from pyspark.sql.types import StructType,StructField,StringType, FloatType, ArrayType,IntegerType,TimestampType, LongType, BinaryType, MapType
 
-"""
-Official
-"""
 
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
+    r"""
+    
+    Offical documentation for streaming: https://spark.apache.org/docs/latest/streaming-programming-guide.html
+
+    """
     __push_after_items = 10000 # No. of messages after which you have to store the data in HDFS  
     __data = list()
     __hdfs_location = None
-    __format = 'parquet'
 
     # Get spark streaming session
     spark = get_streaming_spark_session()
