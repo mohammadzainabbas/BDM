@@ -5,10 +5,13 @@ from collections import defaultdict
 from kafka import KafkaConsumer
 
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
+    data = d
     for message in consumer:
+        value = message.value
+
+
         print(type(message))
         print(message)
-        value = message.value
         print(type(value))
         print(value)
     
