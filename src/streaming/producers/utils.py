@@ -29,11 +29,13 @@ def send_dataframe_as_stream(df: pd.DataFrame, server: KafkaProducer, stream_nam
     records = df.T.to_dict().values() # https://stackoverflow.com/a/29815523/6390175https://stackoverflow.com/a/29815523/6390175
     send_list_data_as_stream(records, server, stream_name)
 
-def send_data_as_stream(records: Any, server: KafkaProducer, stream_name: str) -> None:
+def send_data_as_stream(records: Any, server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     if isinstance(records, list):
-        send_list_data_as_stream(records, server, stream_name)
+        send_list_data_as_stream(records, server, stream_name, verbose)
     elif isinstance(records, pd.DataFrame):
-        send_list_data_as_stream(records, server, stream_name)
+        send_list_data_as_stream(records, server, stream_name, verbose)
     else:
+        print_log("Sending raw data as stream")
         server.send(stream_name, value=records) # assumes 'records' is serializable
+        print_log("Sent raw data as stream")
 
