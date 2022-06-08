@@ -34,7 +34,15 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     data_date = "20220404"
     activities_dir = join("data", "events", "activities")
     activities_file = "{}/{}/{}".format(hdfs_home, activities_dir, "activities_{}.parquet".format(data_date))
-    
+    df_activities = spark.read.format("parquet").load(activities_file)
+
+    __schema = df_activities.schema
+
+
+    __df = df.select(SF.from_json(df.value.cast("string"), __schema).alias("activities_records"), "timestamp")
+    __df = __df.select("activities_records.*", "timestamp")
+    __df.printSchema()
+
 
     # Get spark streaming session
     spark = get_streaming_spark_session()
