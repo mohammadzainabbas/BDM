@@ -1,5 +1,6 @@
 from os.path import join
 from json import dumps, loads
+from streaming.common.utils import print_error
 from utils import get_today_date, get_parent, store_streaming_data_in_hdfs, print_log, get_kafka_consumer_config, get_kafka_topic
 from collections import defaultdict
 from kafka import KafkaConsumer
@@ -15,8 +16,8 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
         if len(__data) == __push_after_items:
             try:
                 store_streaming_data_in_hdfs(__data, __hdfs_location, __format)
-            except Exception e:
-                print_log
+            except Exception as e:
+                print_error("Something went wrong {}".format(e))
 
             __data = list() # empty out the list
     
