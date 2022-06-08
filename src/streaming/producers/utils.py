@@ -21,16 +21,16 @@ def get_kafka_producer_config() -> dict:
     })
     return __config
 
-def send_list_data_as_stream(records: list, server: KafkaProducer, stream_name: str) -> None:
+def send_list_data_as_stream(records: list, server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     total = len(records)
-    print_log("Sending {} records as stream '{}' ...".format(total, stream_name))
+    if verbose: print_log("Sending {} records as stream '{}' ...".format(total, stream_name))
     for record in records:
         server.send(stream_name, value=record)
-    print_log("Sent {} records as stream '{}'".format(total, stream_name))
+    if verbose: print_log("Sent {} records as stream '{}'".format(total, stream_name))
 
-def send_dataframe_as_stream(df: pd.DataFrame, server: KafkaProducer, stream_name: str) -> None:
+def send_dataframe_as_stream(df: pd.DataFrame, server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     records = df.T.to_dict().values() # https://stackoverflow.com/a/29815523/6390175https://stackoverflow.com/a/29815523/6390175
-    send_list_data_as_stream(records, server, stream_name)
+    send_list_data_as_stream(records, server, stream_name, verbose)
 
 def send_data_as_stream(records: Any, server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     if isinstance(records, list):
