@@ -10,6 +10,9 @@ from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.window import Window
 from pyspark.sql.types import StructType,StructField,StringType, FloatType, ArrayType,IntegerType,TimestampType, LongType, BinaryType, MapType
 
+import warnings
+warnings.filterwarnings("ignore") # disable warnings
+
 def remove_missing_data(df, cols):
     for col in cols:
         df = df.filter(SF.col(col).isNotNull())
@@ -32,6 +35,9 @@ def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
     batch_df.show(10)
     print("\n============================================\n")
 
+def parse_value_from_string(x):
+    return x.decode('utf-8')
+
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     r"""
     
@@ -47,7 +53,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     hdfs_home = "{}{}".format(HDFS_DEFAULT, HDFS_HOME)
 
     # __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "activities"))
-    __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "activities", "formatted_activities.parquet"))
+    __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "activities"))
 
     # Get spark streaming session
     spark = get_streaming_spark_session()
@@ -67,20 +73,39 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     activities_file = "{}/{}/{}".format(hdfs_home, activities_dir, "activities_{}.parquet".format(data_date))
     df_activities = spark.read.format("parquet").load(activities_file)
 
-    __schema = df_activities.schema # schema for activities
+    # __schema = df_activities.schema # schema for activities
+    __schema = StructType([
+        StructField("register_id", StringType(), True), \
+        StructField("geo_epgs_4326_x", StringType(), True), \
+        StructField("geo_epgs_4326_y", StringType(), True), \
+    ])
 
-    __df = df.select(SF.from_json(df.value.cast("string"), __schema).alias("activities_records"), "timestamp")
+    df.printSchema()
+
+    binary_to_str = SF.udf(parse_value_from_string, StringType())
+
+    __df = df.withColumn("formatted_value", binary_to_str( SF.col("value")))
+
+
+    __df = __df.select(SF.from_json(SF.col("formatted_value"), __schema).alias("activities_records"), "timestamp")
+    __df.printSchema()
+    
+    __df.select("activities_records.*").writeStream.format("console").start().awaitTermination()
+    
+    # __df = df.select(SF.from_json(SF.explode(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
+    # __df = df.select(SF.from_json(SF.col("value"), __schema).alias("activities_records"), "timestamp")
+    # __df = df.select(SF.from_json(df.value.cast("string"), __schema).alias("activities_records"), "timestamp")
     __df = __df.select("activities_records.*", "timestamp")
     __df.printSchema()
     
     # required columns
-    __columns = required_columns()
+    # __columns = required_columns()
 
     # remove missing values
     # __df = remove_missing_data(__df, __columns[0:4])
 
     # filter out un-neccessary columns
-    __df = __df.select(__columns)
+    # __df = __df.select(__columns)
 
     # drop duplicates for 'register_id'
     __df = __df.withWatermark('timestamp', '10 minutes').dropDuplicates(subset=['register_id'])

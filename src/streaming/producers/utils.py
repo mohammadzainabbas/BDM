@@ -1,3 +1,4 @@
+from os import system
 from os.path import join, abspath, pardir, dirname
 from sys import path
 parent_dir = abspath(join(dirname(abspath(__file__)), pardir))
@@ -6,6 +7,21 @@ from common.utils import *
 from traitlets import Any
 from kafka import KafkaProducer
 import pandas as pd
+from yaml import safe_load
+
+# Parsing helper methods
+
+def parse_record(record: dict) -> dict:
+    """
+    Parse 'str' to correct types
+
+    Reference: https://stackoverflow.com/a/71167976/6390175
+    """
+    __record, __keys = dict(), record.keys()
+    for __key in __keys:
+        __value = record[__key]
+        __record[__key] = safe_load( str(__value) ) if __value else None
+    return __record
 
 # Helper methods for Kafka Producer
 
@@ -17,7 +33,7 @@ def get_kafka_producer_config() -> dict:
     """
     __config = get_common_kafka_config()
     __config.update({
-        "value_serializer": lambda m: json.dumps(m, indent=2).encode('utf-8'),
+        "value_serializer": lambda m: json.dumps(m).encode('utf-8'),
     })
     return __config
 
@@ -25,6 +41,7 @@ def send_list_data_as_stream(records: list, server: KafkaProducer, stream_name: 
     total = len(records)
     if verbose: print_log("Sending {} records as stream '{}' ...".format(total, stream_name))
     for record in records:
+        # record = parse_record( record )
         server.send(stream_name, value=record)
     if verbose: print_log("Sent {} records as stream '{}'".format(total, stream_name))
 
