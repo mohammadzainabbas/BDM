@@ -184,19 +184,13 @@ def get_activities_from_stream() -> None:
         .option("failOnDataLoss","false") \
         .load()
 
+    # schema which is coming from the API
     __schema = get_api_activities_data_schema()
 
-    # __schema = StructType([
-    #     StructField("register_id", StringType(), True), \
-    #     StructField("geo_epgs_4326_x", StringType(), True), \
-    #     StructField("geo_epgs_4326_y", StringType(), True), \
-    # ])
-
-
-    # df.printSchema()
-
+    # parse values by decoding byte-arrays
     binary_to_str = SF.udf(parse_value_from_string, StringType())
 
+    # formatted values
     __df = df.withColumn("formatted_value", binary_to_str( SF.col("value")))
 
 
