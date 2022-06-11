@@ -193,7 +193,7 @@ def get_activities_from_stream() -> None:
     # formatted values
     __df = df.withColumn("formatted_value", binary_to_str( SF.col("value")))
 
-
+    # parse formatted value via "from_json" 
     __df = __df.select(SF.from_json(SF.col("formatted_value"), __schema).alias("activities_records"), "timestamp")
     # __df.printSchema()
     
