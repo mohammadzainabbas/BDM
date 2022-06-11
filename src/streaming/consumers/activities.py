@@ -59,46 +59,48 @@ def get_activities_data_schema() -> StructType:
 
 def get_api_activities_data_schema() -> StructType:
     """
-    Return the data schema for activities
+    Return the data schema for activities coming from the API calls
+
+    https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c
     """
     return StructType([
-        StructField("addresses_roadtype_name", IntegerType(), True),
-        StructField("addresses_end_street_number", LongType(), True),
+        StructField("_id", LongType(), True),
+        StructField("addresses_roadtype_name", StringType(), True),
+        StructField("addresses_end_street_number", StringType(), True),
         StructField("values_attribute_name", StringType(), True),
         StructField("addresses_road_name", StringType(), True),
         StructField("values_category", StringType(), True),
-        StructField("addresses_zip_code", LongType(), True),
-        StructField("secondary_filters_id", LongType(), True),
+        StructField("addresses_zip_code", StringType(), True),
+        StructField("secondary_filters_id", StringType(), True),
         StructField("values_value", StringType(), True),
         StructField("addresses_town", StringType(), True),
-        StructField("geo_epgs_4326_y", DoubleType(), True),
-        StructField("geo_epgs_4326_x", DoubleType(), True),
+        StructField("geo_epgs_4326_y", StringType(), True),
+        StructField("geo_epgs_4326_x", StringType(), True),
         StructField("secondary_filters_name", StringType(), True),
-        StructField("secondary_filters_tree", LongType(), True),
+        StructField("secondary_filters_tree", StringType(), True),
         StructField("addresses_district_name", StringType(), True),
-        StructField("geo_epgs_25831_x", DoubleType(), True),
-        StructField("addresses_start_street_number", LongType(), True),
+        StructField("geo_epgs_25831_x", StringType(), True),
+        StructField("addresses_start_street_number", StringType(), True),
         StructField("register_id", StringType(), True),
-        StructField("institution_id", LongType(), True),
-        StructField("addresses_main_address", BooleanType(), True),
-        StructField("addresses_district_id", LongType(), True),
-        StructField("addresses_roadtype_id", IntegerType(), True),
-        StructField("addresses_type", IntegerType(), True),
-        StructField("addresses_neighborhood_id", LongType(), True),
-        StructField("_id", LongType(), True),
+        StructField("institution_id", StringType(), True),
+        StructField("addresses_main_address", StringType(), True),
+        StructField("addresses_district_id", StringType(), True),
+        StructField("addresses_roadtype_id", StringType(), True),
+        StructField("addresses_type", StringType(), True),
+        StructField("addresses_neighborhood_id", StringType(), True),
         StructField("name", StringType(), True),
-        StructField("addresses_road_id", LongType(), True),
-        StructField("created", TimestampType(), True),
-        StructField("geo_epgs_25831_y", DoubleType(), True),
+        StructField("addresses_road_id", StringType(), True),
+        StructField("created", StringType(), True),
+        StructField("geo_epgs_25831_y", StringType(), True),
         StructField("institution_name", StringType(), True),
-        StructField("modified", TimestampType(), True),
-        StructField("secondary_filters_asia_id", LongType(), True),
+        StructField("modified", StringType(), True),
+        StructField("secondary_filters_asia_id", StringType(), True),
         StructField("secondary_filters_fullpath", StringType(), True),
         StructField("values_description", StringType(), True),
-        StructField("values_id", LongType(), True),
+        StructField("values_id", StringType(), True),
         StructField("addresses_neighborhood_name", StringType(), True),
-        StructField("values_outstanding", BooleanType(), True),
-        StructField("values_attribute_id", LongType(), True)
+        StructField("values_outstanding", StringType(), True),
+        StructField("values_attribute_id", StringType(), True)
     ])
 
 def remove_missing_data(df, cols):
