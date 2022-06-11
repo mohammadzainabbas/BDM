@@ -8,7 +8,7 @@ from inspect import stack
 from pyspark.sql import functions as SF
 from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.window import Window
-from pyspark.sql.types import StructType,StructField,StringType, FloatType, ArrayType,IntegerType,TimestampType, LongType, BinaryType, MapType
+from pyspark.sql.types import StructType, StructField, StringType, DoubleType, BooleanType, FloatType, ArrayType, IntegerType, TimestampType, LongType, BinaryType, MapType
 
 import warnings
 warnings.filterwarnings("ignore") # disable warnings
@@ -80,7 +80,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
         StructField("geo_epgs_4326_y", StringType(), True), \
     ])
 
-    StructType([
+    __schema = StructType([
         StructField("addresses_roadtype_name", IntegerType(), True),
         StructField("addresses_end_street_number", LongType(), True),
         StructField("values_attribute_name", StringType(), True),
@@ -118,7 +118,6 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
         StructField("addresses_neighborhood_name", StringType(), True),
         StructField("values_outstanding", BooleanType(), True),
         StructField("values_attribute_id", LongType(), True)
-    
     ])
 
     df.printSchema()
