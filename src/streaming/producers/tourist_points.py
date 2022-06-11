@@ -20,6 +20,7 @@ def fetch_n_send_all_touristic_points_as_stream(server: KafkaProducer, stream_na
     # Fetch till we have all the records (a parameter 'total' in the API call)
     while(True):
         _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, start_url), verbose=verbose) )
+        if not _result_: break
         _data_ = _result_['result']['records']
         if verbose: print_log("Fetched {} records from the API '{}{}'".format( len(_data_), BASE_URL, start_url))
         send_data_as_stream(_data_, server, stream_name, verbose)
