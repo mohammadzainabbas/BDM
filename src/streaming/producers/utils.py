@@ -10,7 +10,7 @@ from traitlets import Any
 from kafka import KafkaProducer
 import pandas as pd
 from yaml import safe_load
-
+from datetime import datetime
 # Parsing helper methods
 
 def parse_record(record: dict) -> dict:
@@ -23,7 +23,7 @@ def parse_record(record: dict) -> dict:
     for __key in __keys:
         __value = record[__key]
         try:
-            
+
             __record[__key] = safe_load( str(__value) ) if __value else None
 
         except Exception as e:
