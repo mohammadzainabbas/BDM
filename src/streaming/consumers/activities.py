@@ -108,24 +108,24 @@ def remove_missing_data(df, cols):
     return df
 
 def update_schema(df, new_schema, list_cols):
-
+    """
+    Update the schema of the dataframe
+    """
     cols = [col.name for col in df.schema.fields]
-
     for col in list_cols:
         if col in cols:
             __type = [item.dataType for item in new_schema if item.name == col]
-
             if not isinstance(__type, list): continue
-
             __type = __type[0]
-
             df = df.withColumn("{}_new".format(col), df[col].cast(__type)).drop(col)
             df = df.withColumn(col, df["{}_new".format(col)]).drop("{}_new".format(col))
             # df = df(col).cast(__type)
-    
     return df
 
 def required_columns() -> list:
+    """
+    List of required columns
+    """
     return [
         'register_id', 'name', 'geo_epgs_4326_x', 'geo_epgs_4326_y', # Must
         'addresses_neighborhood_id', 'addresses_neighborhood_name', # For neighborhood's query
