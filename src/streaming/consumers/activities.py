@@ -135,6 +135,9 @@ def required_columns() -> list:
     ]
 
 def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
+    """
+    Save the stream in HDFS as parquet files
+    """
     __count = batch_df.count()
     print_log("Batch ID: {}".format(batch_id))
     if __count > 0: # don't store empty dataframes (in case we don't have any stream at that moment)
@@ -181,14 +184,6 @@ def get_activities_from_stream() -> None:
         .option("failOnDataLoss","false") \
         .load()
 
-    # Since, schema won't be changed, we can get it from an old file
-    # # @todo: find a better way for schema (maybe save it somewhere to reuse it later)
-    # data_date = "20220404"
-    # activities_dir = join("data", "events", "activities")
-    # activities_file = "{}/{}/{}".format(hdfs_home, activities_dir, "activities_{}.parquet".format(data_date))
-    # df_activities = spark.read.format("parquet").load(activities_file)
-    # __schema = df_activities.schema # schema for activities
-    
     __schema = get_api_activities_data_schema()
 
     # __schema = StructType([
