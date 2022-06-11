@@ -1,6 +1,6 @@
 from os.path import join
 from json import dumps, loads
-from utils import get_today_date, get_kafka_topic, get_kafka_bootstrap_server_host_n_port, store_streaming_data_in_hdfs, print_log, get_kafka_consumer_config, get_kafka_topic, get_streaming_spark_session
+from utils import get_today_date, get_kafka_topic, get_kafka_bootstrap_server_host_n_port, store_streaming_data_in_hdfs, print_error, print_log, get_kafka_consumer_config, get_kafka_topic, get_streaming_spark_session
 from collections import defaultdict
 from kafka import KafkaConsumer
 from inspect import stack
