@@ -110,7 +110,10 @@ def remove_missing_data(df, cols):
 
 def update_schema(new_schema, list_cols) -> StructType:
 
-    for 
+    cols = [col.name for col in new_schema.fields]
+
+    for col in list_cols:
+        
 
 
 
