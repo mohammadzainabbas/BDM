@@ -108,11 +108,14 @@ def remove_missing_data(df, cols):
         df = df.filter(SF.col(col).isNotNull())
     return df
 
-def update_schema(new_schema, list_cols) -> StructType:
+def update_schema(df, new_schema, list_cols) -> StructType:
 
-    cols = [col.name for col in new_schema.fields]
+    cols = [col.name for col in df.schema.fields]
 
     for col in list_cols:
+        if col in cols:
+            df.
+
         
 
 
