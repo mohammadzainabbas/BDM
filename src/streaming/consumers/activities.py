@@ -114,7 +114,11 @@ def update_schema(df, new_schema, list_cols):
 
     for col in list_cols:
         if col in cols:
-            __type = [item.dataType for item in new_schema if item.name == col][0]
+            __type = [item.dataType for item in new_schema if item.name == col]
+
+            if not isinstance(__type, list): continue
+
+            __type = __type[0]
 
             df = df.withColumn("{}_new".format(col), df[col].cast(__type)).drop(col)
             df = df.withColumn(col, df["{}_new".format(col)]).drop("{}_new".format(col))
