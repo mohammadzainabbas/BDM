@@ -116,9 +116,10 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     # activities_dir = join("data", "events", "activities")
     # activities_file = "{}/{}/{}".format(hdfs_home, activities_dir, "activities_{}.parquet".format(data_date))
     # df_activities = spark.read.format("parquet").load(activities_file)
+    # __schema = df_activities.schema # schema for activities
+    
     __schema = get_activities_data_schema()
 
-    # __schema = df_activities.schema # schema for activities
     __schema = StructType([
         StructField("register_id", StringType(), True), \
         StructField("geo_epgs_4326_x", StringType(), True), \
