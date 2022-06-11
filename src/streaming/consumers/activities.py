@@ -118,11 +118,8 @@ def update_schema(df, new_schema, list_cols) -> StructType:
 
             # df = df.withColumn("{}_new".format(col), df(col).cast(__type)).drop(col)
             df = df(col).cast(__type)
-
-
-        
-
-
+    
+    return df
 
 def required_columns() -> list:
     return [
