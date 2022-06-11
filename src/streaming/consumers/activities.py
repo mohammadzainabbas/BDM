@@ -114,7 +114,8 @@ def update_schema(df, new_schema, list_cols) -> StructType:
 
     for col in list_cols:
         if col in cols:
-            
+            __type = [item.dataType for item in a if item[0] == 1]
+
             df = df.withColumn("{}_new".format(col), df(col).cast(IntegerType)).drop("proc_date")
 
 
