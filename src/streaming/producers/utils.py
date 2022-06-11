@@ -22,10 +22,12 @@ def parse_record(record: dict) -> dict:
     __record, __keys = dict(), record.keys()
     for __key in __keys:
         __value = record[__key]
-        if isinstance(__value, datetime):
-            __record[__key] = __value
-        else:        
+        try:
+
             __record[__key] = safe_load( str(__value) ) if __value else None
+
+        except Exception as e:
+            print_error("{} has type {}".format(__key, type(__value)))
     return __record
 
 # Helper methods for Kafka Producer
