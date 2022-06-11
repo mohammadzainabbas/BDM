@@ -1,4 +1,3 @@
-from os import system
 from os.path import join, abspath, pardir, dirname
 from sys import path
 parent_dir = abspath(join(dirname(abspath(__file__)), pardir))

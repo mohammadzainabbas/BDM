@@ -1,10 +1,11 @@
-from utils import fetch_data, get_kafka_producer_config, get_kafka_topic, send_data_as_stream, print_log
+from utils import fetch_data, get_kafka_producer_config, send_data_as_stream, print_log
 from collections import defaultdict
 from kafka import KafkaProducer
 from time import sleep
 
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
 START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
+STREAM_NAME = "activities"
 
 def get_total() -> int:
     _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, START_URL), verbose=False) )
@@ -51,7 +52,7 @@ def get_activities(server: KafkaProducer, stream_name: str, verbose: bool = Fals
 def main() -> None:
     
     config = get_kafka_producer_config() # Get all configurations for Kafka producer
-    stream_name = get_kafka_topic() # name of the stream
+    stream_name = STREAM_NAME # name of the stream
     
     server = KafkaProducer(**config)
     get_activities(server, stream_name, verbose=True)

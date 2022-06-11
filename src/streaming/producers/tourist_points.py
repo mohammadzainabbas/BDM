@@ -4,15 +4,15 @@ from kafka import KafkaProducer
 from time import sleep
 
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
-START_URL = "/api/action/datastore_search?resource_id=3abb2414-1ee0-446e-9c25-380e938adb73"
-STREAM_NAME = "cultural_events"
+START_URL = "/api/action/datastore_search?resource_id=31431b23-d5b9-42b8-bcd0-a84da9d8c7fa"
+STREAM_NAME = "touristic_points"
 
 def get_total() -> int:
     _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, START_URL), verbose=False) )
     _total_ = _result_['result']['total']
     return int(_total_ if _total_ else 0)
 
-def fetch_n_send_all_cultural_events_as_stream(server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
+def fetch_n_send_all_touristic_points_as_stream(server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     """
     Repeatedly call the API endpoint and fetch all records and send the result in a stream 
     """
@@ -31,7 +31,7 @@ def fetch_n_send_all_cultural_events_as_stream(server: KafkaProducer, stream_nam
         start_url = _result_['result']['_links']['next']
         if not start_url: break
 
-def get_cultural_events(server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
+def get_touristic_points(server: KafkaProducer, stream_name: str, verbose: bool = False) -> None:
     __total = 0
     __timer = 2 * 60 # check changes in data after every 2 min
     
@@ -43,7 +43,7 @@ def get_cultural_events(server: KafkaProducer, stream_name: str, verbose: bool =
         # if no. of records are updated -> fetch new records and push them in stream
         if __total != _total_ and _total_ != 0:
             if verbose: print_log("We have some change...")
-            fetch_n_send_all_cultural_events_as_stream(server, stream_name, verbose)
+            fetch_n_send_all_touristic_points_as_stream(server, stream_name, verbose)
             __total = _total_
         else:
             if verbose: print_log("No change! Waiting to check API again after '{}' seconds ...".format(__timer))
@@ -55,7 +55,7 @@ def main() -> None:
     stream_name = STREAM_NAME # name of the stream
     
     server = KafkaProducer(**config)
-    get_cultural_events(server, stream_name, verbose=True)
+    get_touristic_points(server, stream_name, verbose=True)
 
 if __name__ == '__main__':
     main()

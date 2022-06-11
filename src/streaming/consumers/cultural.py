@@ -7,11 +7,11 @@ from pyspark.sql.types import StructType, StructField, StringType, DoubleType, B
 import warnings
 warnings.filterwarnings("ignore") # disable warnings
 
-STREAM_NAME = "activities"
+STREAM_NAME = "cultural_events"
 
-def get_activities_data_schema() -> StructType:
+def get_cultural_events_data_schema() -> StructType:
     """
-    Return the data schema for activities
+    Return the data schema for cultural_events
     """
     return StructType([
         StructField("addresses_roadtype_name", IntegerType(), True),
@@ -53,9 +53,9 @@ def get_activities_data_schema() -> StructType:
         StructField("values_attribute_id", LongType(), True)
     ])
 
-def get_api_activities_data_schema() -> StructType:
+def get_api_cultural_events_data_schema() -> StructType:
     """
-    Return the data schema for activities coming from the API calls
+    Return the data schema for cultural_events coming from the API calls
 
     https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c
     """
@@ -156,7 +156,7 @@ def parse_value_from_string(x):
     """
     return x.decode('utf-8')
 
-def get_activities_from_stream() -> None:
+def get_cultural_events_from_stream() -> None:
     r"""
     
     Offical documentation for streaming: https://spark.apache.org/docs/latest/streaming-programming-guide.html
@@ -170,8 +170,8 @@ def get_activities_from_stream() -> None:
     # For HDFS Path
     hdfs_home = "{}{}".format(HDFS_DEFAULT, HDFS_HOME)
 
-    # __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "activities"))
-    __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "activities"))
+    # __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "cultural_events"))
+    __hdfs_location = "{}/{}".format(hdfs_home, join("formatted_data", "cultural_events"))
 
     # Get spark streaming session
     spark = get_streaming_spark_session()
@@ -185,7 +185,7 @@ def get_activities_from_stream() -> None:
         .load()
 
     # schema which is coming from the API
-    __schema = get_api_activities_data_schema()
+    __schema = get_api_cultural_events_data_schema()
 
     # parse values by decoding byte-arrays
     binary_to_str = SF.udf(parse_value_from_string, StringType())
@@ -194,14 +194,14 @@ def get_activities_from_stream() -> None:
     __df = df.withColumn("formatted_value", binary_to_str( SF.col("value")))
 
     # parse formatted value via "from_json" (https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.sql.functions.from_json.html)
-    __df = __df.select(SF.from_json(SF.col("formatted_value"), __schema).alias("activities_records"), "timestamp")
-    __df = __df.select("activities_records.*", "timestamp")
+    __df = __df.select(SF.from_json(SF.col("formatted_value"), __schema).alias("cultural_events_records"), "timestamp")
+    __df = __df.select("cultural_events_records.*", "timestamp")
     
     # required columns
     __columns = required_columns()
 
     # update the schema (we can't do this in streaming sources)
-    # __new_schema = get_activities_data_schema()
+    # __new_schema = get_cultural_events_data_schema()
     # __df = spark.createDataFrame(__df.rdd, __new_schema)
     # __df.printSchema()
 
@@ -223,7 +223,7 @@ def get_activities_from_stream() -> None:
     
 def main() -> None:
 
-    get_activities_from_stream()
+    get_cultural_events_from_stream()
 
 if __name__ == '__main__':
     main()
