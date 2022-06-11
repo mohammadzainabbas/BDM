@@ -1,13 +1,8 @@
 from os.path import join
-from utils import get_kafka_bootstrap_server_host_n_port, store_streaming_data_in_hdfs, print_error, print_log, get_kafka_consumer_config, get_streaming_spark_session
-from collections import defaultdict
-from kafka import KafkaConsumer
-from inspect import stack
+from utils import get_kafka_bootstrap_server_host_n_port, print_error, print_log, get_streaming_spark_session
 
 from pyspark.sql import functions as SF
-from pyspark.sql import SparkSession, SQLContext
-from pyspark.sql.window import Window
-from pyspark.sql.types import StructType, StructField, StringType, DoubleType, BooleanType, FloatType, ArrayType, IntegerType, TimestampType, LongType, BinaryType, MapType
+from pyspark.sql.types import StructType, StructField, StringType, DoubleType, BooleanType, IntegerType, TimestampType, LongType
 
 import warnings
 warnings.filterwarnings("ignore") # disable warnings
@@ -105,6 +100,9 @@ def get_api_activities_data_schema() -> StructType:
     ])
 
 def remove_missing_data(df, cols):
+    """
+    Remove missing data
+    """
     for col in cols:
         df = df.filter(SF.col(col).isNotNull())
     return df
