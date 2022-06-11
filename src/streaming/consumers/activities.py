@@ -126,6 +126,9 @@ def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
     print("\n============================================\n")
 
 def parse_value_from_string(x):
+    """
+    Decode byte-type to string
+    """
     return x.decode('utf-8')
 
 def get_activities_from_stream(consumer: KafkaConsumer) -> None:
@@ -164,16 +167,16 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     # df_activities = spark.read.format("parquet").load(activities_file)
     # __schema = df_activities.schema # schema for activities
     
-    __schema = get_activities_data_schema()
+    __schema = get_api_activities_data_schema()
 
-    __schema = StructType([
-        StructField("register_id", StringType(), True), \
-        StructField("geo_epgs_4326_x", StringType(), True), \
-        StructField("geo_epgs_4326_y", StringType(), True), \
-    ])
+    # __schema = StructType([
+    #     StructField("register_id", StringType(), True), \
+    #     StructField("geo_epgs_4326_x", StringType(), True), \
+    #     StructField("geo_epgs_4326_y", StringType(), True), \
+    # ])
 
 
-    df.printSchema()
+    # df.printSchema()
 
     binary_to_str = SF.udf(parse_value_from_string, StringType())
 
@@ -181,7 +184,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
 
 
     __df = __df.select(SF.from_json(SF.col("formatted_value"), __schema).alias("activities_records"), "timestamp")
-    __df.printSchema()
+    # __df.printSchema()
     
     __df.select("activities_records.*").writeStream.format("console").start().awaitTermination()
     
