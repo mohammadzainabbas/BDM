@@ -4,6 +4,7 @@
 # Date: 11th June, 2022
 #====================================================================================
 # This script is used to read kafka topic/stream on ubuntu. 
+# doc: https://kafka.apache.org/quickstart
 #====================================================================================
 
 # Enable exit on error
