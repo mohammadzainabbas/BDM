@@ -215,16 +215,21 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     # required columns
     __columns = required_columns()
 
+    # update the schema
+    __new_schema = get_activities_data_schema()
+    __df = spark.createDataFrame(__df.rdd, __new_schema)
+    __df.printSchema()
+
     # remove missing values
     __df = remove_missing_data(__df, __columns[0:4])
 
     # filter out un-neccessary columns
     __df = __df.select(__columns)
 
-    # update the schema
-    __df = update_schema(__df, get_activities_data_schema(), __columns)
+    # # update the schema
+    # __df = update_schema(__df, get_activities_data_schema(), __columns)
 
-    __df.printSchema()
+    # __df.printSchema()
 
     # drop duplicates for 'register_id'
     __df = __df.withWatermark('timestamp', '10 minutes').dropDuplicates(subset=['register_id'])
