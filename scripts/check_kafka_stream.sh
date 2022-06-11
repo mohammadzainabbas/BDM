@@ -1,9 +1,9 @@
 #!/bin/bash
 #====================================================================================
 # Author: Mohammad Zain Abbas
-# Date: 7th June, 2022
+# Date: 11th June, 2022
 #====================================================================================
-# This script is used to create kafka topic on ubuntu. 
+# This script is used to check kafka topic on ubuntu. 
 #====================================================================================
 
 # Enable exit on error
@@ -51,10 +51,10 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-log "Creating Kafka topic/stream"
+log "Reading Kafka topic/stream from the beginning"
 
 sh $KAFKA_DIR/bin/kafka-console-consumer.sh --topic $topic --from-beginning --bootstrap-server localhost:9092
 
-log "Kafka topic/stream '$topic' started !!"
+log "Read Kafka topic/stream '$topic' from beginning !!"
 
-# bash scripts/create_kafka_topic.sh -t bcn_events
+# bash scripts/check_kafka_stream.sh -t bcn_events
