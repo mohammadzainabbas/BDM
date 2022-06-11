@@ -1,8 +1,6 @@
 from os import system
 from os.path import join, abspath, pardir, dirname
 from sys import path
-
-from numpy import isin
 parent_dir = abspath(join(dirname(abspath(__file__)), pardir))
 path.append(parent_dir)
 from common.utils import *
@@ -10,7 +8,7 @@ from traitlets import Any
 from kafka import KafkaProducer
 import pandas as pd
 from yaml import safe_load
-from datetime import datetime
+
 # Parsing helper methods
 
 def parse_record(record: dict) -> dict:
@@ -22,15 +20,7 @@ def parse_record(record: dict) -> dict:
     __record, __keys = dict(), record.keys()
     for __key in __keys:
         __value = record[__key]
-        try:
-            if isinstance(__value, datetime):
-                __record[__key] = str( __value )
-            else:
-                __record[__key] = safe_load( str(__value) ) if __value else None
-        except TypeError as e:
-            print_error("{} has type {}".format(__key, type(__value)))
-        except Exception as e:
-            print_error("{} has type {}".format(__key, type(__value)))
+        __record[__key] = safe_load( str(__value) ) if __value else None
     return __record
 
 # Helper methods for Kafka Producer
