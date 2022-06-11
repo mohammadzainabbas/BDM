@@ -13,6 +13,8 @@ from pyspark.sql.types import StructType, StructField, StringType, DoubleType, B
 import warnings
 warnings.filterwarnings("ignore") # disable warnings
 
+STREAM_NAME = "bcn_activities"
+
 def get_activities_data_schema() -> StructType:
     """
     Return the data schema for activities
@@ -154,7 +156,7 @@ def parse_value_from_string(x):
     """
     return x.decode('utf-8')
 
-def get_activities_from_stream(consumer: KafkaConsumer) -> None:
+def get_activities_from_stream() -> None:
     r"""
     
     Offical documentation for streaming: https://spark.apache.org/docs/latest/streaming-programming-guide.html
