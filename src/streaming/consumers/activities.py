@@ -140,9 +140,10 @@ def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
     print_log("Batch ID: {}".format(batch_id))
     if __count > 0: # don't store empty dataframes (in case we don't have any stream at that moment)
         batch_df.write.mode('append').parquet(hdfs_location)
+        print_log("Wrote {} records at '{}' as parquet file".format(__count, hdfs_location))
         # batch_df.write.mode('append').csv(hdfs_location)
     else:
-        print_log("No data to store")
+        print_error("No data to store")
     batch_df.printSchema()
     batch_df.show(10)
     print("\n============================================\n")
