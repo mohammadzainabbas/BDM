@@ -32,12 +32,10 @@ def fetch_data(url, verbose=False, raw=False, **kwargs):
     Send a GET request to a given url
     """
     try:
-
         if verbose: print_log("Fetching data from: {}".format(url))
         result = requests.get(url, **kwargs)
         if raw: return result
         return json.loads(result.text)
-
     except Exception as e:
         print_error("Unable to fetch the data due to '{}'".format(e))
         return dict()
