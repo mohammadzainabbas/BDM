@@ -136,12 +136,15 @@ def required_columns() -> list:
     ]
 
 def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
-    batch_df.write.mode('append').parquet(hdfs_location)
-    # batch_df.write.mode('append').csv(hdfs_location)
-    print_log("Batch ID: {}".format(batch_id))
-    batch_df.printSchema()
-    batch_df.show(10)
-    print("\n============================================\n")
+    __count = batch_df.count()
+    if __count > 0:
+        batch_df.write.mode('append').parquet(hdfs_location)
+        # batch_df.write.mode('append').csv(hdfs_location)
+
+        print_log("Batch ID: {}".format(batch_id))
+        batch_df.printSchema()
+        batch_df.show(10)
+        print("\n============================================\n")
 
 def parse_value_from_string(x):
     """
