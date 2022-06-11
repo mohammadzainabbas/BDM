@@ -3,7 +3,7 @@
 # Author: Mohammad Zain Abbas
 # Date: 11th June, 2022
 #====================================================================================
-# This script is used to check kafka topic on ubuntu. 
+# This script is used to read kafka topic/stream on ubuntu. 
 #====================================================================================
 
 # Enable exit on error
@@ -15,7 +15,7 @@ set -e -u
 #Function that shows usage for this script
 function usage() {
 cat << HEREDOC
-Create Kafka topic/stream
+Read Kafka topic/stream
 
 Usage: 
     
@@ -29,7 +29,7 @@ Options:
 Examples:
  
     $ $progname -t bdm
-    ⚐ → Creates a kafka topic/stream with name 'bdm'.
+    ⚐ → Reads a kafka topic/stream with name 'bdm'.
 
 HEREDOC
 }
@@ -57,4 +57,4 @@ sh $KAFKA_DIR/bin/kafka-console-consumer.sh --topic $topic --from-beginning --bo
 
 log "Read Kafka topic/stream '$topic' from beginning !!"
 
-# bash scripts/check_kafka_stream.sh -t bcn_events
+# bash scripts/read_kafka_stream.sh -t bcn_events
