@@ -215,10 +215,10 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     # required columns
     __columns = required_columns()
 
-    # update the schema
-    __new_schema = get_activities_data_schema()
-    __df = spark.createDataFrame(__df.rdd, __new_schema)
-    __df.printSchema()
+    # update the schema (we can't do this in streaming sources)
+    # __new_schema = get_activities_data_schema()
+    # __df = spark.createDataFrame(__df.rdd, __new_schema)
+    # __df.printSchema()
 
     # remove missing values
     __df = remove_missing_data(__df, __columns[0:4])
