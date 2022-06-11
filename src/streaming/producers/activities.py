@@ -9,6 +9,7 @@ STREAM_NAME = "activities"
 
 def get_total() -> int:
     _result_ = defaultdict(lambda: None, fetch_data("{}{}".format(BASE_URL, START_URL), verbose=False) )
+    if not _result_.keys(): return 0
     _total_ = _result_['result']['total']
     return int(_total_ if _total_ else 0)
 
