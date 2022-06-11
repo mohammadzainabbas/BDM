@@ -1,6 +1,8 @@
 from os import system
 from os.path import join, abspath, pardir, dirname
 from sys import path
+
+from numpy import isin
 parent_dir = abspath(join(dirname(abspath(__file__)), pardir))
 path.append(parent_dir)
 from common.utils import *
@@ -20,7 +22,10 @@ def parse_record(record: dict) -> dict:
     __record, __keys = dict(), record.keys()
     for __key in __keys:
         __value = record[__key]
-        __record[__key] = safe_load( str(__value) ) if __value else None
+        if isinstance(__value, datetime):
+            __record[__key] = __value
+        else:        
+            __record[__key] = safe_load( str(__value) ) if __value else None
     return __record
 
 # Helper methods for Kafka Producer
