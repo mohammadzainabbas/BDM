@@ -4,7 +4,7 @@ from kafka import KafkaProducer
 from time import sleep
 
 BASE_URL = "https://opendata-ajuntament.barcelona.cat/data"
-START_URL = "/api/action/datastore_search?resource_id=877ccf66-9106-4ae2-be51-95a9f6469e4c"
+START_URL = "/api/action/datastore_search?resource_id=31431b23-d5b9-42b8-bcd0-a84da9d8c7fa"
 STREAM_NAME = "activities"
 
 def get_total() -> int:
