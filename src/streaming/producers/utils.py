@@ -23,7 +23,7 @@ def parse_record(record: dict) -> dict:
     for __key in __keys:
         __value = record[__key]
         try:
-
+            
             __record[__key] = safe_load( str(__value) ) if __value else None
 
         except Exception as e:
