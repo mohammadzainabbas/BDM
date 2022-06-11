@@ -144,8 +144,8 @@ def save_stream_in_hdfs(batch_df, batch_id, hdfs_location):
         # batch_df.write.mode('append').csv(hdfs_location)
     else:
         print_error("No data to store")
-    batch_df.printSchema()
-    batch_df.show(10)
+    # batch_df.printSchema()
+    # batch_df.show(10)
     print("\n============================================\n")
 
 def parse_value_from_string(x):
