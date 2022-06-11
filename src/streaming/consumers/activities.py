@@ -195,13 +195,13 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __df.printSchema()
     
     # required columns
-    # __columns = required_columns()
+    __columns = required_columns()
 
     # remove missing values
-    # __df = remove_missing_data(__df, __columns[0:4])
+    __df = remove_missing_data(__df, __columns[0:4])
 
     # filter out un-neccessary columns
-    # __df = __df.select(__columns)
+    __df = __df.select(__columns)
 
     # drop duplicates for 'register_id'
     __df = __df.withWatermark('timestamp', '10 minutes').dropDuplicates(subset=['register_id'])
