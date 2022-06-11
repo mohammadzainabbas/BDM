@@ -180,7 +180,7 @@ def get_activities_from_stream() -> None:
     df = spark.readStream \
         .format("kafka") \
         .option("kafka.bootstrap.servers", get_kafka_bootstrap_server_host_n_port()) \
-        .option("subscribe", get_kafka_topic()) \
+        .option("subscribe", STREAM_NAME) \
         .option("failOnDataLoss","false") \
         .load()
 
