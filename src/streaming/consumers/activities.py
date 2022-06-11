@@ -108,6 +108,12 @@ def remove_missing_data(df, cols):
         df = df.filter(SF.col(col).isNotNull())
     return df
 
+def update_schema(new_schema, list_cols) -> StructType:
+
+    for 
+
+
+
 def required_columns() -> list:
     return [
         'register_id', 'name', 'geo_epgs_4326_x', 'geo_epgs_4326_y', # Must
