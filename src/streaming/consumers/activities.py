@@ -186,7 +186,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     __df = __df.select(SF.from_json(SF.col("formatted_value"), __schema).alias("activities_records"), "timestamp")
     # __df.printSchema()
     
-    __df.select("activities_records.*").writeStream.format("console").start().awaitTermination()
+    # __df.select("activities_records.*").writeStream.format("console").start().awaitTermination()
     
     # __df = df.select(SF.from_json(SF.explode(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
     # __df = df.select(SF.from_json(SF.col("value"), __schema).alias("activities_records"), "timestamp")
@@ -206,6 +206,7 @@ def get_activities_from_stream(consumer: KafkaConsumer) -> None:
     # drop duplicates for 'register_id'
     __df = __df.withWatermark('timestamp', '10 minutes').dropDuplicates(subset=['register_id'])
 
+    __df.writeStream.format("console").start().awaitTermination()
     # write stream to a 'parquet' file in an 'append' mode
     # https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.sql.streaming.DataStreamWriter.foreachBatch.html
     __df.writeStream.foreachBatch(lambda batch_df, batch_id: save_stream_in_hdfs(batch_df, batch_id, __hdfs_location)).start(outputMode='append').awaitTermination()
