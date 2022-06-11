@@ -117,6 +117,7 @@ def update_schema(df, new_schema, list_cols) -> StructType:
             __type = [item.dataType for item in new_schema if item.name == col][0]
 
             df = df.withColumn("{}_new".format(col), df[col].cast(__type)).drop(col)
+            df = df.withColumn(col, df["{}_new".format(col)]).drop("{}_new".format(col))
             # df = df(col).cast(__type)
     
     return df
