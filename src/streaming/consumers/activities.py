@@ -193,17 +193,9 @@ def get_activities_from_stream() -> None:
     # formatted values
     __df = df.withColumn("formatted_value", binary_to_str( SF.col("value")))
 
-    # parse formatted value via "from_json" 
+    # parse formatted value via "from_json" (https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.sql.functions.from_json.html)
     __df = __df.select(SF.from_json(SF.col("formatted_value"), __schema).alias("activities_records"), "timestamp")
-    # __df.printSchema()
-    
-    # __df.select("activities_records.*").writeStream.format("console").start().awaitTermination()
-    
-    # __df = df.select(SF.from_json(SF.explode(SF.col("value")).cast("string"), __schema).alias("activities_records"), "timestamp")
-    # __df = df.select(SF.from_json(SF.col("value"), __schema).alias("activities_records"), "timestamp")
-    # __df = df.select(SF.from_json(df.value.cast("string"), __schema).alias("activities_records"), "timestamp")
     __df = __df.select("activities_records.*", "timestamp")
-    # __df.printSchema()
     
     # required columns
     __columns = required_columns()
@@ -219,15 +211,12 @@ def get_activities_from_stream() -> None:
     # filter out un-neccessary columns
     __df = __df.select(__columns)
 
-    # # update the schema
-    # __df = update_schema(__df, get_activities_data_schema(), __columns)
-
-    # __df.printSchema()
-
     # drop duplicates for 'register_id'
     __df = __df.withWatermark('timestamp', '10 minutes').dropDuplicates(subset=['register_id'])
-
+    
+    # write stream to console
     # __df.writeStream.format("console").start().awaitTermination()
+
     # write stream to a 'parquet' file in an 'append' mode
     # https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.sql.streaming.DataStreamWriter.foreachBatch.html
     __df.writeStream.foreachBatch(lambda batch_df, batch_id: save_stream_in_hdfs(batch_df, batch_id, __hdfs_location)).start(outputMode='append').awaitTermination()
