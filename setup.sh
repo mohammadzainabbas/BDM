@@ -4,7 +4,6 @@ set -e -u
 
 sudo apt update && apt upgrade -y
 sudo apt install git gcc make zlib1g-dev python3-pip -y
-
 sudo apt-get install bison flex gdb -y
 
 cd 
@@ -24,9 +23,9 @@ mkdir /usr/local/pgsql/data
 
 echo 'export PATH="/usr/local/pgsql/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
 
-useradd -m postgres
+sudo useradd -m postgres
 
-chown postgres /usr/local/pgsql/data
+sudo chown postgres /usr/local/pgsql/data
 
 su - postgres -c bash
 
