@@ -6,3 +6,4 @@ pyspark
 pyarrow
 kafka-python
 pyyaml
+folium
