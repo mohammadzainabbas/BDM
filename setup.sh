@@ -2,11 +2,10 @@
 
 set -e -u
 
-apt update && apt upgrade -y
+sudo apt update && apt upgrade -y
+sudo apt install git gcc make zlib1g-dev python3-pip -y
 
-apt install git gcc make zlib1g-dev python3-pip -y
-
-apt-get install bison flex gdb -y
+sudo apt-get install bison flex gdb -y
 
 cd 
 
@@ -14,10 +13,10 @@ git clone https://github.com/postgres/postgres.git
 
 cd postgres
 
-git checkout REL_13_STABLE
+# git checkout REL_13_STABLE
 
-# ./configure --without-readline --enable-debug
-./configure --without-readline --enable-cassert --enable-debug CFLAGS="-ggdb -Og -g3 -fno-omit-frame-pointer"
+./configure --without-readline --enable-debug
+# ./configure --without-readline --enable-cassert --enable-debug CFLAGS="-ggdb -Og -g3 -fno-omit-frame-pointer"
 
 make && make install
 
