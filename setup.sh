@@ -2,8 +2,8 @@
 
 set -e -u
 
-sudo apt update && apt upgrade -y
-sudo apt install git gcc make zlib1g-dev python3-pip -y
+# sudo apt update && apt upgrade -y
+# sudo apt install git gcc make zlib1g-dev python3-pip -y
 sudo apt-get install bison flex gdb -y
 
 cd 
