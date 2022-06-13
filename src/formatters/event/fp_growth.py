@@ -69,7 +69,7 @@ def main():
     # concat all dfs
     df = concat_dataframes([df_activities, df_culture, df_tourist_points])
 
-    # generate random users
+    # generate random users and add them as a new column 'user'
     generate_random = SF.udf(lambda : get_random_name(), StringType())
     df = df.withColumn("user", generate_random())
 
