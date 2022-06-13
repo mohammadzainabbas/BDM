@@ -7,3 +7,5 @@ pyarrow
 kafka-python
 pyyaml
 folium
+flask
+names
