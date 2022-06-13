@@ -4,7 +4,7 @@ from pyspark.sql import SparkSession, SQLContext, functions as SF
 from pyspark import SparkContext, SQLContext
 from pyspark.sql.types import StringType
 from pyspark.ml.fpm import FPGrowth
-
+from time import time
 from random import choice
 
 import names
