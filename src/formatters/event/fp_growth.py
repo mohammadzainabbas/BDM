@@ -121,6 +121,9 @@ def main():
     model.associationRules.show()
 
     print_log("\n===============\n")
+    print_log("Saving model at '{}' ...".format( model_location ))
+
+
 
     # transform examines the input items against all the association rules and summarize the
     # consequents as prediction
