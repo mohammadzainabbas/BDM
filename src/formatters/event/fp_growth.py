@@ -80,7 +80,7 @@ def main():
     df = concat_dataframes([df_activities, df_culture, df_tourist_points])
 
     # generate random users and add them as a new column 'user'
-    generate_random = SF.udf(lambda : get_random_name(), StringType())
+    generate_random = SF.udf(lambda : choice(users), StringType())
     df = df.withColumn("user", generate_random())
 
     # filter out columns which we don't need
