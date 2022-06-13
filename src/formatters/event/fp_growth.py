@@ -77,10 +77,11 @@ def main():
     hdfs_home = get_hdfs_home()
     # For users
     users_dir = join(parent_dir, "users")
-    hdfs_users_dir = "{}/{}".format(hdfs_home, join(parent_dir, "users"))
+    hdfs_users_dir = "{}/{}".format(hdfs_home, users_dir)
 
     # For model
-    model_location = "{}/{}".format(hdfs_home, join(parent_dir, "model"))
+    model_location = join(parent_dir, "model")
+    hdfs_model_location = "{}/{}".format(hdfs_home, model_location)
 
     #=======================
     # Spark settings
@@ -103,7 +104,7 @@ def main():
         # show error if no files/data found for users
         print_error("No users founds")
     else:
-        train_and_save_model(sqlContext, users_dir, model_location)
+        train_and_save_model(sqlContext, hdfs_users_dir, hdfs_model_location)
 
 if __name__ == '__main__':
     main()
