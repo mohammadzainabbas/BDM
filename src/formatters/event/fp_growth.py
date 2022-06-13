@@ -19,6 +19,12 @@ def concat_dataframes(dfs):
     """
     return reduce(lambda df1, df2: df1.union( df2.select( df1.columns ) ), dfs)
 
+def get_random_name():
+    """
+    Generate random names
+    """
+    return names.get_full_name()
+
 def main():
 
     #=======================
@@ -36,6 +42,14 @@ def main():
     culture_dir = "{}/{}".format(hdfs_home, join(parent_dir, "cultural_events"))
     tourist_points_dir = "{}/{}".format(hdfs_home, join(parent_dir, "touristic_points"))
 
+    spark = SparkSession.builder.appName("bdm").master('local').getOrCreate()
+    sc = spark.sparkContext
+    sqlContext = SQLContext(sc)
+
+    #=======================
+    # 
+    #=======================
+ 
 
 
 
