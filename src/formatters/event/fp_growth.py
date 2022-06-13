@@ -1,4 +1,5 @@
 from os.path import join
+from pyexpat import model
 
 from pyspark.sql import SparkSession, SQLContext, functions as SF
 from pyspark import SparkContext, SQLContext
@@ -110,9 +111,11 @@ def main():
 
     start_time = time()
 
-    fpm = fp.fit(data)
+    model = fp.fit(data)
 
     print_log("Took {} seconds to fit the data ...".format(time() - start_time))
+
+    # show most 
 
 
 
