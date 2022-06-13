@@ -106,6 +106,10 @@ def main():
 
     fp = FPGrowth(minSupport=0.2, minConfidence=0.7)
 
+    print_log("Fitting FPGrowth model ...")
+
+    start_time = time()
+
     fpm = fp.fit(data)
 
 
