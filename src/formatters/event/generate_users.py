@@ -5,7 +5,7 @@ from pyspark.sql.types import StringType
 from random import choice
 from functools import reduce
 import names
-from utils import get_hdfs_home, print_log
+from utils import get_hdfs_home, print_log, print_error
 
 def concat_dataframes(dfs):
     """
@@ -73,6 +73,10 @@ def main():
     df_culture = df_culture.withColumn("type", culture_type())
     df_tourist_points = df_tourist_points.withColumn("type", tourist_points_type())
 
+    #=====================================================================
+    # Combine all dfs and add users with random sampling
+    #=====================================================================
+
     # concat all dfs
     df = concat_dataframes([df_activities, df_culture, df_tourist_points])
 
@@ -86,9 +90,11 @@ def main():
 
     # save the data for users
     __count = df.count()
-    if __count:
+    if __count > 0: # don't store empty dataframe
         print_log("Wrote {} user records at '{}' as parquet file".format(__count, hdfs_location))
         df.write.mode("append").parquet(hdfs_location)
+    else:
+        print_error("No users data to store")
 
 if __name__ == '__main__':
     main()
