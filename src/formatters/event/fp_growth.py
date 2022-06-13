@@ -4,7 +4,7 @@ from pyspark import SQLContext
 from pyspark.ml.fpm import FPGrowth
 from time import time
 
-from utils import get_hdfs_client, get_hdfs_home, print_error, print_log
+from utils import get_hdfs_client, get_hdfs_home, print_error, print_log, lint_separator
 
 def train_and_save_model(sqlContext, location, model_location):
     """
@@ -18,7 +18,7 @@ def train_and_save_model(sqlContext, location, model_location):
     df = sqlContext.read.parquet(location)
 
     # get all users and places where they have visited
-    df = df.groupBy("user").agg(SF.collect_list("register_id").alias("items"))
+    df = df.groupBy("user").agg(SF.collect_set("register_id").alias("items"))
 
     #=======================
     # FP Growth
@@ -36,22 +36,21 @@ def train_and_save_model(sqlContext, location, model_location):
 
     print_log("Took {} seconds to fit the data ...".format(time() - start_time))
 
-    print_log("Showing most frequent itemset ...")
+    # print_log("Showing most frequent itemset ...")
+    # # show most frequent itemsets.
+    # model.freqItemsets.show()
+    # lint_separator()
 
-    # show most frequent itemsets.
-    model.freqItemsets.show()
 
-    print_log("\n===============\n")
-    print_log("Showing generated association rules ...")
+    # print_log("Showing generated association rules ...")
+    # # show generated association rules.
+    # model.associationRules.show()
+    # lint_separator()
 
-    # show generated association rules.
-    model.associationRules.show()
-
-    print_log("\n===============\n")
     print_log("Saving model at '{}' ...".format( model_location ))
 
     # save FPGrowth model
-    model.save(model_location)
+    model.write().overwrite().save(model_location)
 
     # transform examines the input items against all the association rules and summarize the
     # consequents as prediction
@@ -76,10 +75,12 @@ def main():
     # For HDFS Path
     hdfs_home = get_hdfs_home()
     # For users
-    users_dir = "{}/{}".format(hdfs_home, join(parent_dir, "users"))
+    users_dir = join(parent_dir, "users")
+    hdfs_users_dir = "{}/{}".format(hdfs_home, users_dir)
 
     # For model
-    model_location = "{}/{}".format(hdfs_home, join(parent_dir, "model"))
+    model_location = join(parent_dir, "model")
+    hdfs_model_location = "{}/{}".format(hdfs_home, model_location)
 
     #=======================
     # Spark settings
@@ -93,16 +94,15 @@ def main():
     # Pre-process
     #=======================
 
-    # first check if you have user's data saved
-
     client = get_hdfs_client()
+    files = client.list(users_dir) # list all the files at user dir in HDFS
 
-    files = client.list(users_dir)
+    # first check if you have user's data saved
     if not len(files):
         # show error if no files/data found for users
         print_error("No users founds")
     else:
-        train_and_save_model(sqlContext, users_dir, model_location)
+        train_and_save_model(sqlContext, hdfs_users_dir, hdfs_model_location)
 
 if __name__ == '__main__':
     main()
