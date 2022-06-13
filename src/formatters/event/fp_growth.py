@@ -1,6 +1,9 @@
 from os.path import join
+
 from pyspark.sql import SparkSession, SQLContext, functions as SF
 from pyspark import SparkContext, SQLContext
+from pyspark.sql.types import StringType
+
 import names
 from functools import reduce
 from utils import get_hdfs_client, get_hdfs_home, get_files, write_to_hdfs, print_log
@@ -58,6 +61,12 @@ def main():
     culture_type = SF.udf(lambda : "cultural events", StringType())
     tourist_points_type = SF.udf(lambda : "tourist points", StringType())
 
+    # add 'type' column
+    df_activities = df_activities.withColumn("type", activities_type())
+    df_culture = df_culture.withColumn("type", culture_type())
+    df_tourist_points = df_tourist_points.withColumn("type", tourist_points_type())
+
+    
 
 
     activity_type = "activities"
