@@ -18,6 +18,8 @@ def main():
     This will help us in the future for recommending users to visit new places. (based on the association rules)
     
     In order to do that, we first generated users' data via 'formatters/event/generate_users.py' script and saved the users data in HDFS
+    
+    doc: https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.ml.fpm.FPGrowth.html
     """
 
     #=======================
@@ -41,37 +43,12 @@ def main():
     #=======================
     # Pre-process
     #=======================
- 
-    df_activities = sqlContext.read.parquet(activities_dir)
-    df_culture = sqlContext.read.parquet(culture_dir)
-    df_tourist_points = sqlContext.read.parquet(tourist_points_dir)
 
-    activities_type = SF.udf(lambda : "activities", StringType())
-    culture_type = SF.udf(lambda : "cultural events", StringType())
-    tourist_points_type = SF.udf(lambda : "tourist points", StringType())
-
-    # add 'type' column
-    df_activities = df_activities.withColumn("type", activities_type())
-    df_culture = df_culture.withColumn("type", culture_type())
-    df_tourist_points = df_tourist_points.withColumn("type", tourist_points_type())
-
-    # concat all dfs
-    df = concat_dataframes([df_activities, df_culture, df_tourist_points])
-
-    # generate random users and add them as a new column 'user'
-    generate_random = SF.udf(lambda : choice(users), StringType())
-    df = df.withColumn("user", generate_random())
-
-    # filter out columns which we don't need
-    cols = ["user", "type", "name", "register_id"]
-    df = df.select(cols)
+    # read the data from users location
+    df = sqlContext.read.parquet(users_dir)
 
     # get all users and places where they have visited
     df = df.groupBy("user").agg(SF.collect_list("register_id").alias("items"))
-
-    # for each type and name, get the count for how many times that place was visited
-    # df1 = df.groupBy('type', 'name').agg(SF.count('name').alias('trip_count'))
-    # df2 = df1.sort(df1.trip_count.desc()).show()
 
     #=======================
     # FP Growth
@@ -102,7 +79,6 @@ def main():
 
     print_log("\n===============\n")
     print_log("Saving model at '{}' ...".format( model_location ))
-
 
 
     # transform examines the input items against all the association rules and summarize the
