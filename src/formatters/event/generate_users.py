@@ -90,52 +90,10 @@ def main():
     df = df.select(cols)
 
     # save the data for users
-    print_log("Fitting FPGrowth model ...")
-
-    df.write.mode("append").parquet(hdfs_location)
-
-    print_log("Fitting FPGrowth model ...")
-    # get all users and places where they have visited
-    df = df.groupBy("user").agg(SF.collect_list("register_id").alias("items"))
-
-    # for each type and name, get the count for how many times that place was visited
-    # df1 = df.groupBy('type', 'name').agg(SF.count('name').alias('trip_count'))
-    # df2 = df1.sort(df1.trip_count.desc()).show()
-
-    #=======================
-    # FP Growth
-    #=======================
-
-    data = df.select("items")
-
-    fp = FPGrowth(minSupport=0.2, minConfidence=0.7)
-
-
-    start_time = time()
-
-    model = fp.fit(data)
-
-    print_log("Took {} seconds to fit the data ...".format(time() - start_time))
-
-    print_log("Showing most frequent itemset ...")
-
-    # show most frequent itemsets.
-    model.freqItemsets.show()
-
-    print_log("\n===============\n")
-    print_log("Showing generated association rules ...")
-
-    # show generated association rules.
-    model.associationRules.show()
-
-    print_log("\n===============\n")
-    print_log("Saving model at '{}' ...".format( model_location ))
-
-
-
-    # transform examines the input items against all the association rules and summarize the
-    # consequents as prediction
-    # model.transform(df).show()
+    __count = df.count()
+    if __count:
+        print_log("Wrote {} user records at '{}' as parquet file".format(__count, hdfs_location))
+        df.write.mode("append").parquet(hdfs_location)
 
 if __name__ == '__main__':
     main()
