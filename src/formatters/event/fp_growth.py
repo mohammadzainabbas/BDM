@@ -66,8 +66,10 @@ def main():
     df_culture = df_culture.withColumn("type", culture_type())
     df_tourist_points = df_tourist_points.withColumn("type", tourist_points_type())
 
-    
+    # concat all dfs
+    df = concat_dataframes([df_activities, df_culture, df_tourist_points])
 
+    
 
     activity_type = "activities"
     files, prefix = get_files(activity_type)
