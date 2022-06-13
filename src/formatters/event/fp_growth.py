@@ -12,23 +12,6 @@ import names
 from functools import reduce
 from utils import get_hdfs_client, get_hdfs_home, get_files, write_to_hdfs, print_log
 
-def concat_dataframes(dfs):
-    """
-    Concat multiple pyspark dataframe(s)
-
-    https://www.geeksforgeeks.org/concatenate-two-pyspark-dataframes/
-    """
-    return reduce(lambda df1, df2: df1.union( df2.select( df1.columns ) ), dfs)
-
-def get_random_name():
-    """
-    Generate random names
-    """
-    return names.get_full_name()
-
-def get_random_users_list(users_count = 100):
-    return [get_random_name() for i in range(0, users_count)]
-
 def main():
     """
     Since, we don't have the users data, so, we decided to generate the users data and then build an FP growth model to get most frequent sets.

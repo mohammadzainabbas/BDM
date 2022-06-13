@@ -94,7 +94,7 @@ def main():
         print_log("Wrote {} user records at '{}' as parquet file".format(__count, hdfs_location))
         df.write.mode("append").parquet(hdfs_location)
     else:
-        print_error("No users data to store")
+        print_error("No user record(s) to store")
 
 if __name__ == '__main__':
     main()
