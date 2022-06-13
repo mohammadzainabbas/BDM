@@ -34,6 +34,9 @@ def main():
     #=======================
     # Configurations
     #=======================
+
+    # max users
+    max_users = 100
  
     parent_dir = "formatted_data"
     # For HDFS Path
