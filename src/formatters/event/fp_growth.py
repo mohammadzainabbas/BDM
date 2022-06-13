@@ -11,23 +11,32 @@ activities_cols = ['register_id', 'name', 'geo_epgs_4326_x', 'geo_epgs_4326_y', 
     'addresses_road_name', 'addresses_road_id' # Maybe useful to search events on that road
 ]
 
+def concat_dataframes(dfs):
+    """
+    Concat multiple pyspark dataframe(s)
+
+    https://www.geeksforgeeks.org/concatenate-two-pyspark-dataframes/
+    """
+    return reduce(lambda df1, df2: df1.union( df2.select( df1.columns ) ), dfs)
+
 def main():
 
+    #=======================
+    # Configurations
+    #=======================
+ 
     parent_dir = "formatted_data"
-
     # For HDFS Path
     hdfs_home = get_hdfs_home()
-
     # For users
     users_dir = join(parent_dir, "users")
     hdfs_location = "{}/{}".format(hdfs_home, users_dir)
-
     # For events
     activities_dir = "{}/{}".format(hdfs_home, join(parent_dir, "activities"))
     culture_dir = "{}/{}".format(hdfs_home, join(parent_dir, "cultural_events"))
     tourist_points_dir = "{}/{}".format(hdfs_home, join(parent_dir, "touristic_points"))
 
-    
+
 
 
     activity_type = "activities"
