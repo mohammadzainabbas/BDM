@@ -6,6 +6,52 @@ from time import time
 
 from utils import get_hdfs_client, get_hdfs_home, get_files, write_to_hdfs, print_log
 
+def train_and_save_model(sqlContext, location):
+
+    # read the data from users location
+    df = sqlContext.read.parquet(location)
+
+    # get all users and places where they have visited
+    df = df.groupBy("user").agg(SF.collect_list("register_id").alias("items"))
+
+    #=======================
+    # FP Growth
+    #=======================
+
+    data = df.select("items")
+
+    fp = FPGrowth(minSupport=0.2, minConfidence=0.7)
+
+    print_log("Fitting FPGrowth model ...")
+
+    start_time = time()
+
+    model = fp.fit(data)
+
+    print_log("Took {} seconds to fit the data ...".format(time() - start_time))
+
+    print_log("Showing most frequent itemset ...")
+
+    # show most frequent itemsets.
+    model.freqItemsets.show()
+
+    print_log("\n===============\n")
+    print_log("Showing generated association rules ...")
+
+    # show generated association rules.
+    model.associationRules.show()
+
+    print_log("\n===============\n")
+    print_log("Saving model at '{}' ...".format( model_location ))
+
+    # save FPGrowth model
+    model.save(model_location)
+
+    # transform examines the input items against all the association rules and summarize the
+    # consequents as prediction
+    # model.transform(df).show()
+
+
 def main():
     """
     Since, we don't have the users data, so, we decided to generate the users data and then build an FP growth model to get most frequent sets.
@@ -49,48 +95,7 @@ def main():
         df = sqlContext.read.parquet(hdfs_location)
         df.show(10)
 
-    # read the data from users location
-    df = sqlContext.read.parquet(users_dir)
 
-    # get all users and places where they have visited
-    df = df.groupBy("user").agg(SF.collect_list("register_id").alias("items"))
-
-    #=======================
-    # FP Growth
-    #=======================
-
-    data = df.select("items")
-
-    fp = FPGrowth(minSupport=0.2, minConfidence=0.7)
-
-    print_log("Fitting FPGrowth model ...")
-
-    start_time = time()
-
-    model = fp.fit(data)
-
-    print_log("Took {} seconds to fit the data ...".format(time() - start_time))
-
-    print_log("Showing most frequent itemset ...")
-
-    # show most frequent itemsets.
-    model.freqItemsets.show()
-
-    print_log("\n===============\n")
-    print_log("Showing generated association rules ...")
-
-    # show generated association rules.
-    model.associationRules.show()
-
-    print_log("\n===============\n")
-    print_log("Saving model at '{}' ...".format( model_location ))
-
-    # save FPGrowth model
-    model.save(model_location)
-
-    # transform examines the input items against all the association rules and summarize the
-    # consequents as prediction
-    # model.transform(df).show()
 
 if __name__ == '__main__':
     main()
