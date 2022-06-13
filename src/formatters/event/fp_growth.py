@@ -112,6 +112,8 @@ def main():
 
     fpm = fp.fit(data)
 
+    print_log("Took {} seconds to fit the data ...".format(time() - start_time))
+
 
 
 
