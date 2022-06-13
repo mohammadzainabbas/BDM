@@ -115,12 +115,19 @@ def main():
 
     print_log("Took {} seconds to fit the data ...".format(time() - start_time))
 
-    # show most 
+    # show most frequent itemsets.
+    model.freqItemsets.show()
 
+    print_log("\n===============\n")
 
+    # show generated association rules.
+    model.associationRules.show()
 
+    print_log("\n===============\n")
 
-
+    # transform examines the input items against all the association rules and summarize the
+    # consequents as prediction
+    model.transform(df).show()
 
 if __name__ == '__main__':
     main()
