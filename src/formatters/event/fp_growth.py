@@ -12,12 +12,6 @@ import names
 from functools import reduce
 from utils import get_hdfs_client, get_hdfs_home, get_files, write_to_hdfs, print_log
 
-activities_cols = ['register_id', 'name', 'geo_epgs_4326_x', 'geo_epgs_4326_y', # Must
-    'addresses_neighborhood_id', 'addresses_neighborhood_name', # For neighborhood's query
-    'addresses_district_id', 'addresses_district_name', # For district query
-    'addresses_road_name', 'addresses_road_id' # Maybe useful to search events on that road
-]
-
 def concat_dataframes(dfs):
     """
     Concat multiple pyspark dataframe(s)
@@ -130,7 +124,7 @@ def main():
 
     # transform examines the input items against all the association rules and summarize the
     # consequents as prediction
-    model.transform(df).show()
+    # model.transform(df).show()
 
 if __name__ == '__main__':
     main()
