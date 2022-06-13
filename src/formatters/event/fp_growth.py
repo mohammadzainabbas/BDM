@@ -29,6 +29,9 @@ def get_random_name():
     """
     return names.get_full_name()
 
+def get_random_users_list(users_count = 100):
+    return [get_random_name() for i in range(0, users_count)]
+
 def main():
 
     #=======================
