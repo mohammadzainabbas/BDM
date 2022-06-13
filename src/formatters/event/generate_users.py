@@ -90,8 +90,11 @@ def main():
     df = df.select(cols)
 
     # save the data for users
-    
+    print_log("Fitting FPGrowth model ...")
 
+    df.write.mode("append").parquet(hdfs_location)
+
+    print_log("Fitting FPGrowth model ...")
     # get all users and places where they have visited
     df = df.groupBy("user").agg(SF.collect_list("register_id").alias("items"))
 
@@ -107,7 +110,6 @@ def main():
 
     fp = FPGrowth(minSupport=0.2, minConfidence=0.7)
 
-    print_log("Fitting FPGrowth model ...")
 
     start_time = time()
 
