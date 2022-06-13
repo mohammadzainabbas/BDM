@@ -63,6 +63,10 @@ def main():
     sc = spark.sparkContext
     sqlContext = SQLContext(sc)
 
+    #=======================
+    # Pre-process
+    #=======================
+ 
     df_activities = sqlContext.read.parquet(activities_dir)
     df_culture = sqlContext.read.parquet(culture_dir)
     df_tourist_points = sqlContext.read.parquet(tourist_points_dir)
@@ -94,9 +98,16 @@ def main():
     # df1 = df.groupBy('type', 'name').agg(SF.count('name').alias('trip_count'))
     # df2 = df1.sort(df1.trip_count.desc()).show()
 
-
+    #=======================
+    # FP Growth
+    #=======================
 
     data = df.select("items")
+
+    fp = FPGrowth(minSupport=0.2, minConfidence=0.7)
+
+    fpm = fp.fit(data)
+    
 
 
 
