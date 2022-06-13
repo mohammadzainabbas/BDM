@@ -6,7 +6,7 @@ from time import time
 
 from utils import get_hdfs_client, get_hdfs_home, get_files, write_to_hdfs, print_log
 
-def train_and_save_model(sqlContext, location):
+def train_and_save_model(sqlContext, location, model_location):
 
     # read the data from users location
     df = sqlContext.read.parquet(location)
@@ -86,6 +86,10 @@ def main():
     #=======================
     # Pre-process
     #=======================
+
+    # first check if you have user's data saved
+
+    client = get_hdfs_client()
 
     files = client.list(users_dir)
     if not len(files):
