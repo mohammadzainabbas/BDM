@@ -16,6 +16,8 @@ def main():
     """
     Since, we don't have the users data, so, we decided to generate the users data and then build an FP growth model to get most frequent sets.
     This will help us in the future for recommending users to visit new places. (based on the association rules)
+    
+    In order to do that, we first generated users' data via 'formatters/event/generate_users.py' script and saved the users data in HDFS
     """
 
     #=======================
