@@ -32,7 +32,7 @@ def get_random_users_list(users_count = 100):
 def main():
     """
     Since, we don't have the users data, so, we decided to generate the users data and then build an FP growth model to get most frequent sets.
-    This will help us in the future for recommending users to visit new places.
+    This will help us in the future for recommending users to visit new places. (based on the association rules)
     """
 
     #=======================
