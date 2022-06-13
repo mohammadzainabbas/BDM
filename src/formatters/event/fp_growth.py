@@ -13,18 +13,21 @@ activities_cols = ['register_id', 'name', 'geo_epgs_4326_x', 'geo_epgs_4326_y', 
 
 def main():
 
-    # For HDFS Path
+    parent_dir = "formatted_data"
 
-    hdfs_home = "{}{}".format(HDFS_DEFAULT, HDFS_HOME)
+    # For HDFS Path
+    hdfs_home = get_hdfs_home()
 
     # For users
-    users_dir = join("formatted_data", "users")
+    users_dir = join(parent_dir, "users")
     hdfs_location = "{}/{}".format(hdfs_home, users_dir)
 
     # For events
-    activities_dir = "{}/{}".format(hdfs_home, join("formatted_data", "activities"))
-    culture_dir = "{}/{}".format(hdfs_home, join("formatted_data", "cultural_events"))
-    tourist_points_dir = "{}/{}".format(hdfs_home, join("formatted_data", "touristic_points"))
+    activities_dir = "{}/{}".format(hdfs_home, join(parent_dir, "activities"))
+    culture_dir = "{}/{}".format(hdfs_home, join(parent_dir, "cultural_events"))
+    tourist_points_dir = "{}/{}".format(hdfs_home, join(parent_dir, "touristic_points"))
+
+    
 
 
     activity_type = "activities"
