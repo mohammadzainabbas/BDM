@@ -51,7 +51,7 @@ def train_and_save_model(sqlContext, location, model_location):
     print_log("Saving model at '{}' ...".format( model_location ))
 
     # save FPGrowth model
-    model.save(model_location)
+    model.write().overwrite().save(model_location)
 
     # transform examines the input items against all the association rules and summarize the
     # consequents as prediction
