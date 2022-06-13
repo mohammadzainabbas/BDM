@@ -24,20 +24,11 @@ def main():
     # Configurations
     #=======================
 
-    # max users
-    max_users = 100
-    users = get_random_users_list(max_users)
- 
     parent_dir = "formatted_data"
     # For HDFS Path
     hdfs_home = get_hdfs_home()
     # For users
-    users_dir = join(parent_dir, "users")
-    hdfs_location = "{}/{}".format(hdfs_home, users_dir)
-    # For events
-    activities_dir = "{}/{}".format(hdfs_home, join(parent_dir, "activities"))
-    culture_dir = "{}/{}".format(hdfs_home, join(parent_dir, "cultural_events"))
-    tourist_points_dir = "{}/{}".format(hdfs_home, join(parent_dir, "touristic_points"))
+    users_dir = "{}/{}".format(hdfs_home, join(parent_dir, "users"))
 
     #=======================
     # Spark settings
