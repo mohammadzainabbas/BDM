@@ -93,13 +93,10 @@ def main():
 
     files = client.list(users_dir)
     if not len(files):
-        # no files
+        # show error if no files/data found for users
         print_error("No users founds")
     else:
-        df = sqlContext.read.parquet(hdfs_location)
-        df.show(10)
-
-
+        train_and_save_model(sqlContext, users_dir, model_location)
 
 if __name__ == '__main__':
     main()
