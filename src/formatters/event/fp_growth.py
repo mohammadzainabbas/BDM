@@ -7,6 +7,12 @@ from time import time
 from utils import get_hdfs_client, get_hdfs_home, print_error, print_log
 
 def train_and_save_model(sqlContext, location, model_location):
+    """
+    1. Load users data
+    2. Group by 'users' to get all places where users have visited
+    3. Prepare the data and fit FPGrowth model
+    4. Save the model 
+    """
 
     # read the data from users location
     df = sqlContext.read.parquet(location)
