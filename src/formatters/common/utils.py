@@ -42,6 +42,9 @@ def print_error(text):
     """
     print("[ error ] {}".format(text))
 
+def lint_separator():
+    print("")
+
 # client = InsecureClient('http://10.4.41.44:9870', user='bdm')
 
 def mkdirs_hdfs(dir_path):
