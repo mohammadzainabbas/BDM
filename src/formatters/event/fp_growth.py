@@ -4,7 +4,7 @@ from pyspark import SQLContext
 from pyspark.ml.fpm import FPGrowth
 from time import time
 
-from utils import get_hdfs_client, get_hdfs_home, print_error, print_log
+from utils import get_hdfs_client, get_hdfs_home, print_error, print_log, lint_separator
 
 def train_and_save_model(sqlContext, location, model_location):
     """
@@ -36,18 +36,17 @@ def train_and_save_model(sqlContext, location, model_location):
 
     print_log("Took {} seconds to fit the data ...".format(time() - start_time))
 
-    print_log("Showing most frequent itemset ...")
-
-    # show most frequent itemsets.
-    model.freqItemsets.show()
+    # print_log("Showing most frequent itemset ...")
+    # # show most frequent itemsets.
+    # model.freqItemsets.show()
 
     lint_separator()
-    print_log("Showing generated association rules ...")
 
-    # show generated association rules.
-    model.associationRules.show()
+    # print_log("Showing generated association rules ...")
+    # # show generated association rules.
+    # model.associationRules.show()
 
-    print("\n===============\n")
+    lint_separator()
     print_log("Saving model at '{}' ...".format( model_location ))
 
     # save FPGrowth model
