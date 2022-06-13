@@ -84,7 +84,7 @@ def main():
     df = df.withColumn("user", generate_random())
 
     # filter out columns which we don't need
-    cols = ["user", "type", "name"]
+    cols = ["user", "type", "name", "register_id"]
     df = df.select(cols)
 
     # get all users and places where they have visited
@@ -94,7 +94,7 @@ def main():
     # df1 = df.groupBy('type', 'name').agg(SF.count('name').alias('trip_count'))
     # df2 = df1.sort(df1.trip_count.desc()).show()
 
-    
+
 
     data = df.select("items")
 
