@@ -12,6 +12,21 @@ activities_cols = ['register_id', 'name', 'geo_epgs_4326_x', 'geo_epgs_4326_y', 
 ]
 
 def main():
+
+    # For HDFS Path
+
+    hdfs_home = "{}{}".format(HDFS_DEFAULT, HDFS_HOME)
+
+    # For users
+    users_dir = join("formatted_data", "users")
+    hdfs_location = "{}/{}".format(hdfs_home, users_dir)
+
+    # For events
+    activities_dir = "{}/{}".format(hdfs_home, join("formatted_data", "activities"))
+    culture_dir = "{}/{}".format(hdfs_home, join("formatted_data", "cultural_events"))
+    tourist_points_dir = "{}/{}".format(hdfs_home, join("formatted_data", "touristic_points"))
+
+
     activity_type = "activities"
     files, prefix = get_files(activity_type)
     print_log("Loading {} files of '{}' into HDFS".format(len(files), activity_type))
