@@ -4,7 +4,7 @@ from pyspark import SQLContext
 from pyspark.ml.fpm import FPGrowth
 from time import time
 
-from utils import get_hdfs_client, get_hdfs_home, get_files, write_to_hdfs, print_log
+from utils import get_hdfs_client, get_hdfs_home, print_error, print_log
 
 def train_and_save_model(sqlContext, location, model_location):
 
@@ -94,7 +94,7 @@ def main():
     files = client.list(users_dir)
     if not len(files):
         # no files
-        print("No users")
+        print_error("No users founds")
     else:
         df = sqlContext.read.parquet(hdfs_location)
         df.show(10)
