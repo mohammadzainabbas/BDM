@@ -1,16 +1,11 @@
 from os.path import join
-from pyexpat import model
-
 from pyspark.sql import SparkSession, SQLContext, functions as SF
-from pyspark import SparkContext, SQLContext
+from pyspark import SQLContext
 from pyspark.sql.types import StringType
-from pyspark.ml.fpm import FPGrowth
-from time import time
 from random import choice
-
-import names
 from functools import reduce
-from utils import get_hdfs_client, get_hdfs_home, get_files, write_to_hdfs, print_log
+import names
+from utils import get_hdfs_home, print_log
 
 def concat_dataframes(dfs):
     """
