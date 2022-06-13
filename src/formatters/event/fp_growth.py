@@ -94,6 +94,8 @@ def main():
     # df1 = df.groupBy('type', 'name').agg(SF.count('name').alias('trip_count'))
     # df2 = df1.sort(df1.trip_count.desc()).show()
 
+    
+
     data = df.select("items")
 
 
