@@ -5,6 +5,8 @@ from pyspark import SparkContext, SQLContext
 from pyspark.sql.types import StringType
 from pyspark.ml.fpm import FPGrowth
 
+from random import choice
+
 import names
 from functools import reduce
 from utils import get_hdfs_client, get_hdfs_home, get_files, write_to_hdfs, print_log
