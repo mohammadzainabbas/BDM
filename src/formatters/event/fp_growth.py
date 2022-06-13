@@ -42,14 +42,21 @@ def main():
     culture_dir = "{}/{}".format(hdfs_home, join(parent_dir, "cultural_events"))
     tourist_points_dir = "{}/{}".format(hdfs_home, join(parent_dir, "touristic_points"))
 
+    #=======================
+    # Spark settings
+    #=======================
+ 
     spark = SparkSession.builder.appName("bdm").master('local').getOrCreate()
     sc = spark.sparkContext
     sqlContext = SQLContext(sc)
 
-    #=======================
-    # 
-    #=======================
- 
+    df_activities = sqlContext.read.parquet(activities_dir)
+    df_culture = sqlContext.read.parquet(culture_dir)
+    df_tourist_points = sqlContext.read.parquet(tourist_points_dir)
+
+    activities_type = SF.udf(lambda : "activities", StringType())
+    culture_type = SF.udf(lambda : "cultural events", StringType())
+    tourist_points_type = SF.udf(lambda : "tourist points", StringType())
 
 
 
