@@ -41,6 +41,14 @@ def main():
     # Pre-process
     #=======================
 
+    files = client.list(users_dir)
+    if not len(files):
+        # no files
+        print("No users")
+    else:
+        df = sqlContext.read.parquet(hdfs_location)
+        df.show(10)
+
     # read the data from users location
     df = sqlContext.read.parquet(users_dir)
 
