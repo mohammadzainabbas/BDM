@@ -40,6 +40,7 @@ def main():
 
     # max users
     max_users = 100
+    users = get_random_users_list(max_users)
  
     parent_dir = "formatted_data"
     # For HDFS Path
