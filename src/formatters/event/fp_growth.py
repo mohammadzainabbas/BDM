@@ -90,13 +90,13 @@ def main():
     # get all users and places where they have visited
     df = df.groupBy("user").agg(SF.collect_list("name"))
 
-    #df.select(SF.collect_set("name").alias("name")).first()["name"]
-
     # for each type and name, get the count for how many times that place was visited
     # df1 = df.groupBy('type', 'name').agg(SF.count('name').alias('trip_count'))
     # df2 = df1.sort(df1.trip_count.desc()).show()
 
-    
+    data = df.
+
+
 
 
 
