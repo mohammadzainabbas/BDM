@@ -18,7 +18,7 @@ def train_and_save_model(sqlContext, location, model_location):
     df = sqlContext.read.parquet(location)
 
     # get all users and places where they have visited
-    df = df.groupBy("user").agg(SF.collect_list("register_id").alias("items"))
+    df = df.groupBy("user").agg(SF.collect_set("register_id").alias("items"))
 
     #=======================
     # FP Growth
