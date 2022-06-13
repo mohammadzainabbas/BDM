@@ -73,7 +73,9 @@ def main():
     generate_random = SF.udf(lambda : get_random_name(), StringType())
     df = df.withColumn("user", generate_random())
 
-    
+    # filter out columns which we don't need
+    cols = ["user", "type", "name"]
+    df = df.select(cols)
 
     activity_type = "activities"
     files, prefix = get_files(activity_type)
