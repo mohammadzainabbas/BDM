@@ -73,12 +73,14 @@ def main():
     #=======================
 
     parent_dir = "formatted_data"
-    
+    # For HDFS Path
+    hdfs_home = get_hdfs_home()
     # For users
     users_dir = join(parent_dir, "users")
+    hdfs_users_dir = "{}/{}".format(hdfs_home, join(parent_dir, "users"))
 
     # For model
-    model_location = join(parent_dir, "model")
+    model_location = "{}/{}".format(hdfs_home, join(parent_dir, "model"))
 
     #=======================
     # Spark settings
