@@ -87,6 +87,10 @@ def main():
     cols = ["user", "type", "name"]
     df = df.select(cols)
 
+    # get all users and places where they have visited
+    df = df.groupBy("user").agg(SF.collect_list("name"))
+
+    
 
 
 
