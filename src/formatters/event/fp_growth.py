@@ -3,6 +3,7 @@ from os.path import join
 from pyspark.sql import SparkSession, SQLContext, functions as SF
 from pyspark import SparkContext, SQLContext
 from pyspark.sql.types import StringType
+from pyspark.ml.fpm import FPGrowth
 
 import names
 from functools import reduce
@@ -77,7 +78,7 @@ def main():
     cols = ["user", "type", "name"]
     df = df.select(cols)
 
-    
+
 
 
 if __name__ == '__main__':
