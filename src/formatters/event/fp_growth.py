@@ -94,11 +94,10 @@ def main():
     # Pre-process
     #=======================
 
-    # first check if you have user's data saved
-
     client = get_hdfs_client()
+    files = client.list(users_dir) # list all the files at user dir in HDFS
 
-    files = client.list(users_dir)
+    # first check if you have user's data saved
     if not len(files):
         # show error if no files/data found for users
         print_error("No users founds")
