@@ -69,7 +69,8 @@ def main():
     # concat all dfs
     df = concat_dataframes([df_activities, df_culture, df_tourist_points])
 
-    
+    generate_random = SF.udf(lambda : get_random_name(), StringType())
+
 
     activity_type = "activities"
     files, prefix = get_files(activity_type)
