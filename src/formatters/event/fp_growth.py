@@ -1,15 +1,9 @@
 from os.path import join
-from pyexpat import model
-
 from pyspark.sql import SparkSession, SQLContext, functions as SF
-from pyspark import SparkContext, SQLContext
-from pyspark.sql.types import StringType
+from pyspark import SQLContext
 from pyspark.ml.fpm import FPGrowth
 from time import time
-from random import choice
 
-import names
-from functools import reduce
 from utils import get_hdfs_client, get_hdfs_home, get_files, write_to_hdfs, print_log
 
 def main():
@@ -83,6 +77,8 @@ def main():
     print_log("\n===============\n")
     print_log("Saving model at '{}' ...".format( model_location ))
 
+    # save FPGrowth model
+    model.save(model_location)
 
     # transform examines the input items against all the association rules and summarize the
     # consequents as prediction
