@@ -21,6 +21,9 @@ def get_hdfs_user():
 def get_hdfs_user_home():
     return HDFS_HOME
 
+def get_hdfs_home():
+    return HDFS_HOME
+
 def get_hdfs_client():
     return InsecureClient(url=get_hdfs_address(), user=get_hdfs_user())
 
