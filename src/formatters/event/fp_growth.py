@@ -115,10 +115,13 @@ def main():
 
     print_log("Took {} seconds to fit the data ...".format(time() - start_time))
 
+    print_log("Showing most frequent itemset ...")
+
     # show most frequent itemsets.
     model.freqItemsets.show()
 
     print_log("\n===============\n")
+    print_log("Showing generated association rules ...")
 
     # show generated association rules.
     model.associationRules.show()
