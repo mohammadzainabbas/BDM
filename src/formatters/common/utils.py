@@ -10,7 +10,7 @@ from hdfs import InsecureClient
 from hdfs.util import HdfsError
 # from hdfs.ext.avro import AvroWriter
 # from hdfs.ext.avro import AvroReader
-from .constants import HDFS_ADDRESS, HDFS_HOME, HDFS_USER
+from .constants import HDFS_ADDRESS, HDFS_HOME, HDFS_USER, HDFS_DEFAULT
 
 def get_hdfs_address():
     return HDFS_ADDRESS
@@ -22,7 +22,7 @@ def get_hdfs_user_home():
     return HDFS_HOME
 
 def get_hdfs_home():
-    return HDFS_HOME
+    return "{}{}".format(HDFS_DEFAULT, HDFS_HOME)
 
 def get_hdfs_client():
     return InsecureClient(url=get_hdfs_address(), user=get_hdfs_user())
