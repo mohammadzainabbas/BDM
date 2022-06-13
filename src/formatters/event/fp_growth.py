@@ -32,6 +32,9 @@ def main():
     # For users
     users_dir = "{}/{}".format(hdfs_home, join(parent_dir, "users"))
 
+    # For model
+    model_location = "{}/{}".format(hdfs_home, join(parent_dir, "model"))
+
     #=======================
     # Spark settings
     #=======================
