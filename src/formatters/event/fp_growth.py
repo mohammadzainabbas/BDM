@@ -39,14 +39,14 @@ def train_and_save_model(sqlContext, location, model_location):
     # print_log("Showing most frequent itemset ...")
     # # show most frequent itemsets.
     # model.freqItemsets.show()
+    # lint_separator()
 
-    lint_separator()
 
     # print_log("Showing generated association rules ...")
     # # show generated association rules.
     # model.associationRules.show()
+    # lint_separator()
 
-    lint_separator()
     print_log("Saving model at '{}' ...".format( model_location ))
 
     # save FPGrowth model
