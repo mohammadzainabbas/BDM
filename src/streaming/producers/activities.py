@@ -43,8 +43,7 @@ def get_activities(server: KafkaProducer, stream_name: str, verbose: bool = Fals
         _total_ = get_total() # Get the total no. of records
 
         # if no. of records are updated -> fetch new records and push them in stream
-        # if __total != _total_ and _total_ != 0:
-        if  _total_ != 0:
+        if __total != _total_ and _total_ != 0:
             if verbose: print_log("We have some change...")
             fetch_n_send_all_activities_as_stream(server, stream_name, verbose)
             __total = _total_
