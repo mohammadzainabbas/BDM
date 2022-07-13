@@ -1,0 +1,26 @@
+==================================================
+Big Data Management
+
+Deadline Submission: 21st June, 2022
+==================================================
+
+==================================================
+01 - 21st April, 2022
+
+- Finish up the P1 tasks
+
+1. Data scrappers needs to be implemented
+2. File formats (avro vs parquet)
+3. Put the document data in MongoDB
+---
+4. For flights, fix the IATA codes for src airports
+    - Hardcore some airports for dev
+    - Maybe find some alternatives to get the flights for barcelona (skyscanner's output fixing style)
+5. Update the loaders
+    - Make a generic class for dumping data for the following:
+        i)      MongoDB
+        ii)     HDFS (Plain, SequenceFile, Avro, Parquet)
+
+- Research about the tools we can use for P2
+- By next thursday, finish all the P1 related tasks (must)
+==================================================
